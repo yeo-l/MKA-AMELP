@@ -1,0 +1,14 @@
+{
+  "/api": {
+    "target": "https://integration.usaidmomentum.org/",
+    "secure": "false",
+    "auth": "admin:District@1",
+    "changeOrigin": "true"
+  },
+  "/": {
+    "target": "https://integration.usaidmomentum.org/",
+    "secure": "false",
+    "auth": "admin:District@1",
+    "changeOrigin": "true"
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "version": "0.1",
+    "name": "mka-amelp",
+    "description": "this is the Amelp",
+    "launch_path": "index.html",
+    "language": "en",
+    "appType": "APP",
+    "icons": {
+        "16": "msc.png",
+        "48": "msc.png",
+        "128": "msc.png"
+    },
+    "developer": {
+        "name": "HISP-CI",
+        "url": "http://hispci.org"
+    },
+    "default_locale": "en",
+    "activities": {
+        "dhis": {
+            "href": "*"
+        }
+    }
+}
