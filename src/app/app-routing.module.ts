@@ -15,28 +15,28 @@ const routes: Routes = [
     }
   },
   {
-    path: 'form311',
+    path: 'form3.1.1/:id',
     component: Form311Component,
     data: {
       title: '3.1.1'
     }
   },
   {
-    path: 'form321',
+    path: 'form3.2.1/:id',
     component: Form321Component,
     data: {
       title: '3.2.1'
     }
   },
   {
-    path: 'form322',
+    path: 'form3.2.2/:id',
     component: Form322Component,
     data: {
       title: '3.2.2'
     }
   },
   {
-    path: 'form323',
+    path: 'form3.2.3/:id',
     component: Form323Component,
     data: {
       title: '3.2.3'

@@ -9,6 +9,10 @@ import {FormsModule} from '@angular/forms';
 import { Form321Component } from './forms/form321/form321.component';
 import { Form322Component } from './forms/form322/form322.component';
 import { Form323Component } from './forms/form323/form323.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgxDhis2MenuModule} from '@iapps/ngx-dhis2-menu';
+import {NgxDhis2HttpClientModule} from '@iapps/ngx-dhis2-http-client';
+import {NgxDhis2PeriodFilterModule} from '@iapps/ngx-dhis2-period-filter';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,21 @@ import { Form323Component } from './forms/form323/form323.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    NgxDhis2MenuModule,
+    NgxDhis2PeriodFilterModule,
+    NgxDhis2HttpClientModule.forRoot({
+      namespace: 'mka-amelp',
+      version: 1,
+      models: {
+        users: 'id',
+        dataElements: 'id',
+        organisationUnitLevels: 'id',
+        organisationUnits: 'id,name,level',
+        organisationUnitGroups: 'id',
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
