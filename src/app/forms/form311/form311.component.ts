@@ -3,6 +3,7 @@ import {AggregationService} from '../../services/aggregation.service';
 import {DataSets, IDataSets} from '../../models/dataSets.model';
 import {ActivatedRoute} from '@angular/router';
 import {UsefulFunctions} from '../../../shared/useful-functions';
+import {AreaGroup} from '../../models/areaGroups.model';
 
 @Component({
   selector: 'app-form311',
@@ -12,7 +13,9 @@ import {UsefulFunctions} from '../../../shared/useful-functions';
 export class Form311Component implements OnInit {
   orgUnits: any = [{}];
   dataSet: DataSets;
+  areaGroup: AreaGroup;
   selectedOrgUnit: string;
+  organisationUnitName: string;
   selectedPeriod: string;
   periodFilterConfig: any = {
     singleSelection: true,
@@ -26,7 +29,7 @@ export class Form311Component implements OnInit {
   action: any;
   periodList: any[] = [];
   currentYear: number;
-  choicePeriod: number
+  choicePeriod: number;
 
   constructor(private aggregationService: AggregationService, private route: ActivatedRoute) {
     if (route.snapshot.params.id) {
@@ -36,7 +39,7 @@ export class Form311Component implements OnInit {
 
   ngOnInit(): void {
     this.choicePeriod = 0;
-    this.getOrgUnit();
+    // this.getOrgUnit();
     this.getPeriod();
   }
   getPeriod(){
@@ -76,6 +79,11 @@ export class Form311Component implements OnInit {
   getOneDataSets(id: number) {
      this.aggregationService.getDataSetId(id).subscribe((dataSets: IDataSets) => {
        this.dataSet = dataSets;
+       this.selectedOrgUnit = dataSets.organisationUnits[0].id;
+       this.organisationUnitName = dataSets.organisationUnits[0].name;
+       console.log('one Dataset', this.dataSet);
+       console.log('one selectedOrgUnit', this.selectedOrgUnit);
+       console.log('one organisationUnitName', this.organisationUnitName);
      }, error => {
        console.log(error);
      });
@@ -88,7 +96,6 @@ export class Form311Component implements OnInit {
   selectOrgUnit($event) {
     if ($event.target.value){
       this.selectedOrgUnit = $event.target.value;
-      console.log('selectedOrgUnitEvent', $event);
     }
   }
 }

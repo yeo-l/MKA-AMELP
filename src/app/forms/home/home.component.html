@@ -3,22 +3,10 @@
   <div class="row">
     <div class="col-lg-4 margetop">
       <div class="card-header">
-        <div class="card-title text-justify"><h3>project areas IR (intermediate result)</h3></div>
+        <div class="card-title"><h4>Project areas IR (intermediate result)</h4></div>
       </div>
-      <div class="card-body" style="background-color: seashell">
-        <h5><a href="#">Monitoring and evaluation (ME / IR3.1)</a></h5>
-      </div>
-      <div class="card-body" style="background-color: seashell">
-        <h5><a href="#">Innovations and Learning (IL / IR3.3))</a></h5>
-      </div>
-      <div class="card-body" style="background-color: seashell">
-        <h5><a href="#">Knowledge Management (KM / IR3.2)</a></h5>
-      </div>
-      <div class="card-body" style="background-color: seashell">
-        <h5><a href="#">Strategic Communications (SC / IR3.4)</a></h5>
-      </div>
-      <div class="card-body" style="background-color: seashell">
-        <h5><a href="#">Other</a></h5>
+      <div class="card-body" style="background-color: seashell" *ngFor="let area of dataStore.areaGroups">
+        <h5><a href="#" (click)="getAreaDataSets(area.code)">{{area.name}}</a></h5>
       </div>
     </div>
     <div class="container-fluid col-lg-8 margetop">
@@ -26,19 +14,15 @@
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
           <tr class="text-center">
-            <th>Type</th>
             <th>Code</th>
             <th>Indicateur Name</th>
-            <th>Designation</th>
             <th>Action</th>
           </tr>
           </thead>
           <tbody>
           <tr class="text-justify" *ngFor="let dataSet of dataSets">
-            <td><i class="bg-warning"></i></td>
             <td>{{dataSet.code}}</td>
             <td>{{dataSet.name}}</td>
-            <td>Description if exist</td>
             <td>
               <button class="btn btn-primary mr-2" [routerLink]="['/form'+dataSet.code, dataSet.id]"> Data Entry </button>
 <!--              <button class="btn btn-warning" [routerLink]="['/form',dataSet.id]"><i class="fa fa-edit"></i> Edit</button>-->

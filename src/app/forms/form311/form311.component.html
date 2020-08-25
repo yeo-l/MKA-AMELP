@@ -22,11 +22,12 @@
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label col-form-label-sm">Intermediate Result :</label>
-          <div class="col-sm-2">
-            <select type="text" class="form-control form-control-sm" name="" (change)="selectOrgUnit($event)" >
-              <option value=""></option>
-              <option *ngFor="let orgUnit of orgUnits" value="{{orgUnit.id}}">{{orgUnit.name}} </option>
-            </select>
+          <div class="col-sm-10">
+<!--            <select type="text" class="form-control form-control-sm" name="" (change)="selectOrgUnit($event)" >-->
+<!--              <option value=""></option>-->
+<!--              <option *ngFor="let orgUnit of orgUnits" value="{{orgUnit.id}}">{{orgUnit.name}} </option>-->
+<!--            </select>-->
+            <label class="col-sm-8 col-form-label col-form-label-sm">{{dataSet.organisationUnits[0].name}}</label>
           </div>
         </div>
         <div class="form-group row">
@@ -237,32 +238,32 @@
         </tr>
         <tr class="border" class="fixed-side">
           <th>Total</th>
-          <td><input type="text" class="form-control" id="" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
         </tr>
         <tr class="text-center">
           <td colspan="21">
-            <button class="btn btn-primary mt-3 mr-5">Valided</button>
+            <button class="btn btn-primary mt-3 mr-5">Complete</button>
             <button class="btn btn-success mt-3" routerLink="/home"> << Back</button>
           </td>
         </tr>

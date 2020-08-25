@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {IDataSets} from '../models/dataSets.model';
 import {DataValueSet} from '../models/dataSetValues.model';
 import {DataValue} from '../models/dataValues.model';
+import {IDataStore} from '../models/dataStore.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AggregationService {
 
   constructor(private httpClient: HttpClient) { }
   loadDataSets(){
-    return this.httpClient.get(SERVER_API_URL + '/dataSets?fields=id,name,code&paging=false');
+    return this.httpClient.get(SERVER_API_URL + '/dataSets?fields=id,name,code,organisationUnits[id,name]&paging=false');
   }
   loadMetaData(metaData: string, params: string[]){
     return this.httpClient.get<[]>(SERVER_API_URL + '/' + metaData + '?paging=false' + (params ? '&' + params.join('&') : ''));
@@ -44,4 +45,11 @@ export class AggregationService {
     });
   }
   validateData(){}
+
+  getDataStore(){
+    return this.httpClient.get<IDataStore>(SERVER_API_URL + '/dataStore/projectAreaDataStore/area');
+  }
+  getOneDataStore(id){
+    return this.httpClient.get<IDataStore>(SERVER_API_URL + '/dataStore/projectAreaDataStore/area', id);
+  }
 }
