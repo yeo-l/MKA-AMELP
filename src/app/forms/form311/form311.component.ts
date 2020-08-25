@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AggregationService} from '../../services/aggregation.service';
 import {DataSets, IDataSets} from '../../models/dataSets.model';
 import {ActivatedRoute} from '@angular/router';
+import {UsefulFunctions} from '../../../shared/useful-functions';
 
 @Component({
   selector: 'app-form311',
@@ -23,6 +24,9 @@ export class Form311Component implements OnInit {
   };
   periodObject: any;
   action: any;
+  periodList: any[] = [];
+  currentYear: number;
+  choicePeriod: number
 
   constructor(private aggregationService: AggregationService, private route: ActivatedRoute) {
     if (route.snapshot.params.id) {
@@ -31,19 +35,43 @@ export class Form311Component implements OnInit {
   }
 
   ngOnInit(): void {
+    this.choicePeriod = 0;
     this.getOrgUnit();
+    this.getPeriod();
+  }
+  getPeriod(){
+    this.currentYear = new Date().getFullYear();
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+    this.selectedPeriod = this.periodList[0].id;
+    console.log(this.periodList);
+  }
+  previewsYearPeriod(){
+    this.currentYear -= 1;
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+  }
+  nextYearPeriod(){
+    this.currentYear += 1;
+    if (this.currentYear > new Date().getFullYear()){
+      this.currentYear -= 1;
+    }
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+  }
+  selectPeriod(data){
+    if (data.target.value){
+      this.selectedPeriod = data.target.value;
+      this.choicePeriod = 1;
+    }
   }
   onPeriodUpdate(periodObject, action){
     this.periodObject = periodObject;
     this.action = action;
-    console.log(this.periodObject);
   }
   getOrgUnit() {
     const params: string[] = ['fields=id,name,level'];
     this.aggregationService.loadOrganisationUnits(params).subscribe( (result: any) => {
       this.orgUnits = result.organisationUnits;
+      console.log('orgUnit', this.orgUnits);
     });
-    console.log(this.orgUnits);
   }
   getOneDataSets(id: number) {
      this.aggregationService.getDataSetId(id).subscribe((dataSets: IDataSets) => {
@@ -53,13 +81,14 @@ export class Form311Component implements OnInit {
      });
   }
   saveData(data){
-    this.aggregationService.addData(data.id, data.value, this.selectedOrgUnit, this.dataSet.id, this.selectedPeriod);
     console.log(data);
+    this.aggregationService.addData(data.target.id, data.target.value, this.selectedOrgUnit, this.dataSet.id, this.selectedPeriod);
   }
 
   selectOrgUnit($event) {
-    if ($event.value){
-      this.selectedOrgUnit = $event.value;
+    if ($event.target.value){
+      this.selectedOrgUnit = $event.target.value;
+      console.log('selectedOrgUnitEvent', $event);
     }
   }
 }

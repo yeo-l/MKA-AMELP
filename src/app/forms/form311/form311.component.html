@@ -7,23 +7,25 @@
       <div class="card">
         <div class="form-group row">
           <label  class="col-sm-2 col-form-label col-form-label-sm">Select Reporting Period :</label>
-          <div class="col-sm-8">
-<!--            <input type="date" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">-->
-            <ngx-dhis2-period-filter
-            [periodFilterConfig]="periodFilterConfig"
-            [selectedPeriodType]="'Quarterly'"
-            (update)="onPeriodUpdate($event, 'UPDATE')"
-            (change)="onPeriodUpdate($event, 'CHANGE')"
-            (close)="onPeriodUpdate($event, 'CLOSE')">
-
-            </ngx-dhis2-period-filter>
+          <div class="col-sm-4 input-group">
+            <div class="input-group-prepend">
+              <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()"> << </button>
+            </div>
+            <select name="" class="form-control" (change)="selectPeriod($event)">
+              <option value=""></option>
+              <option *ngFor="let period of periodList" value="{{period.id}}">{{period.value}}</option>
+            </select>
+            <div class="input-group-append">
+              <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()"> >> </button>
+            </div>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label col-form-label-sm">Organisation Unit :</label>
+          <label class="col-sm-2 col-form-label col-form-label-sm">Intermediate Result :</label>
           <div class="col-sm-2">
-            <select type="text" class="form-control form-control-sm" (change)="selectOrgUnit($event)" >
-              <option *ngFor="let orgUnit of orgUnits">{{orgUnit.name}} </option>
+            <select type="text" class="form-control form-control-sm" name="" (change)="selectOrgUnit($event)" >
+              <option value=""></option>
+              <option *ngFor="let orgUnit of orgUnits" value="{{orgUnit.id}}">{{orgUnit.name}} </option>
             </select>
           </div>
         </div>
@@ -40,7 +42,7 @@
           </div>
         </div>
       </div>
-      <table>
+      <table *ngIf="choicePeriod == 1">
         <thead class="text-center">
         <tr class="border">
           <th class="fixed-side"></th>
@@ -49,6 +51,7 @@
           <th colspan="2" class="border">Central Asia</th>
           <th colspan="2" class="border">East Africa</th>
           <th colspan="2" class="border">East Asia</th>
+          <th colspan="2" class="border">Middle East</th>
           <th colspan="2" class="border">North Africa</th>
           <th colspan="2" class="border">South Asia</th>
           <th colspan="2" class="border">South-East Asia</th>
@@ -77,174 +80,190 @@
           <th># of country field awards reporting</th>
           <th class="border-left"># of country field awards active</th>
           <th># of country field awards reporting</th>
+          <th class="border-left"># of country field awards active</th>
+          <th># of country field awards reporting</th>
         </tr>
         </thead>
         <tbody>
         <tr class="border" class="fixed-side">
           <th>1 - MNCH/FP/RH Service Delivery in Fragile Settings </th>
-          <td><input type="text" class="form-control" id="xxx" (change)="saveData($event)"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="text" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-uk9D84v2yDB" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-uk9D84v2yDB" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-HihZXpnZiaz" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-HihZXpnZiaz" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-VtixeXiF4DQ" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-VtixeXiF4DQ" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-hUvkXZeY59b" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-hUvkXZeY59b" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-usMUegoGOun" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-usMUegoGOun" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-jaqzlru1MPH" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-jaqzlru1MPH" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-WNz7hqPgJBH" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-WNz7hqPgJBH" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-cQmnNPnqEL4" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-cQmnNPnqEL4" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-GiHAg6bLLMB" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-GiHAg6bLLMB" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-G6xMCYPRwxU" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-G6xMCYPRwxU" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-Xe1gKUpWG6i" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-Xe1gKUpWG6i" (change)="saveData($event)"></td>
         </tr>
         <tr class="border" class="fixed-side">
           <th>2A - MOMENTUM: Global Technical Leadership and targeted Technical Assistance for MNCH/FP/RH </th>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-RxB9I0JGUrN" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-RxB9I0JGUrN" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-pjuupM7AR4n" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-pjuupM7AR4n" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-ZYImw6XygLe" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-ZYImw6XygLe" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-b1m89VQ4mKF" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-b1m89VQ4mKF" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-QUYkeQqL164" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-QUYkeQqL164" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-Q29iNZOpBP6" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-Q29iNZOpBP6" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-Usu3FSb30FC" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-Usu3FSb30FC" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-C6XIMDoO3fX" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-C6XIMDoO3fX" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-QBtznajsbxB" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-QBtznajsbxB" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-hn8oJWdMvtI" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-hn8oJWdMvtI" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-fTdgJ1BP1rP" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-fTdgJ1BP1rP" (change)="saveData($event)"></td>
         </tr>
         <tr class="border" class="fixed-side">
           <th>2B - Targeted MNCH/FP/RH Technical Assistance for Private Providers </th>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-e4kN8Um0YTn" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-e4kN8Um0YTn" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-sa90rw1NPsS" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-sa90rw1NPsS" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-g6W8Pvx5pH2" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-g6W8Pvx5pH2" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-zOipGEifYw3" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-zOipGEifYw3" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-aq7pChGBbjs" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-aq7pChGBbjs" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-YAlzcGl4a5A" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-YAlzcGl4a5A" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-qhJYPD2GY6q" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-qhJYPD2GY6q" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-aPaUM84dtbv" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-aPaUM84dtbv" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-xuIWywMpXwl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-xuIWywMpXwl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-o1slMa531Hq" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-o1slMa531Hq" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-NCT7K1a8Qel" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-NCT7K1a8Qel" (change)="saveData($event)"></td>
         </tr>
         <tr class="border" class="fixed-side">
           <th>2C - MOMENTUM Knowledge Accelerator</th>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-sRilVMiYVYm" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-sRilVMiYVYm" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-rmAHQuPcODl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-rmAHQuPcODl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-vAlZG7d9kx5" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-vAlZG7d9kx5" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-epZHgc9KmZc" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-epZHgc9KmZc" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-nw3Vt3Vxnzm" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-nw3Vt3Vxnzm" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-KIra0bQNpXt" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-KIra0bQNpXt" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-abFzoKVBbTl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-abFzoKVBbTl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-tQQnmtvaJr9" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-tQQnmtvaJr9" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-wltID9vfFpR" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-wltID9vfFpR" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-zZmqYLyZNdj" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-zZmqYLyZNdj" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-wHz10nIHNFN" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-wHz10nIHNFN" (change)="saveData($event)"></td>
         </tr>
         <tr class="border" class="fixed-side">
           <th>3A - MOMENTUM: Overcoming Entrenched Obstacles </th>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-ZfyJ9ijttVr" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-ZfyJ9ijttVr" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-VsZXLKYafhJ" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-VsZXLKYafhJ" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-eSuF69YN0wu" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-eSuF69YN0wu" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-SDUV64rY2oq" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-SDUV64rY2oq" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-NXljbNdfbrT" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-NXljbNdfbrT" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-Tau6QxtfgBs" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-Tau6QxtfgBs" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-BlXq70ilu7D" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-BlXq70ilu7D" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-OdXm4vIzZAR" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-OdXm4vIzZAR" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-QzyT1uT6Nee" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-QzyT1uT6Nee" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-raMzYrORXEl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-raMzYrORXEl" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-vgLrZRK45Pk" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-vgLrZRK45Pk" (change)="saveData($event)"></td>
         </tr>
         <tr class="border" class="fixed-side">
           <th>3B - MOMENTUM: Round 3B Entrenched Obstacles in Routine Immunization</th>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-goc5GbhbESE" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-goc5GbhbESE" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-jWPiE5BCxhx" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-jWPiE5BCxhx" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-fll3fDjMToz" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-fll3fDjMToz" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-C1facRhQYBT" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-C1facRhQYBT" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-M05saUzrMtN" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-M05saUzrMtN" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-f0BALbp6Qs2" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-f0BALbp6Qs2" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-tTZq8KTMo8j" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-tTZq8KTMo8j" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-WNyfk5RLLCG" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-WNyfk5RLLCG" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-ZQ6ZM8zkXpQ" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-ZQ6ZM8zkXpQ" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-yMQxsa87KuL" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-yMQxsa87KuL" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="gHiXo7SPj8z-NDOlXkXkYjP" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="IimyZoA1r7Q-NDOlXkXkYjP" (change)="saveData($event)"></td>
         </tr>
         <tr class="border" class="fixed-side">
           <th>Total</th>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
-          <td><input type="" class="form-control"></td>
+          <td><input type="text" class="form-control" id="" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
+          <td><input type="text" class="form-control" id="-" (change)="saveData($event)"></td>
         </tr>
         <tr class="text-center">
           <td colspan="21">
             <button class="btn btn-primary mt-3 mr-5">Valided</button>
-            <button class="btn btn-success mt-3">Return</button>
+            <button class="btn btn-success mt-3" routerLink="/home"> << Back</button>
           </td>
         </tr>
         </tbody>

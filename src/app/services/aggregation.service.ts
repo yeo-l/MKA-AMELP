@@ -31,13 +31,14 @@ export class AggregationService {
         'Content-type': 'application/json'
       })
     };
-    return this.httpClient.post(SERVER_API_URL + 'dataValuesSet', dataValueSet, httpOptions);
+    return this.httpClient.post(SERVER_API_URL + '/dataValueSets', dataValueSet, httpOptions);
   }
   addData(fieldName, value, idOu, idDs, period) {
     const dataValue = new DataValue(fieldName.split('-')[0], fieldName.split('-')[1], value);
     const dataValues = [];
     dataValues.push(dataValue);
     const dataValuesSet = new DataValueSet(idDs, period, idOu, dataValues);
+    console.log('datavaluesSet', dataValuesSet);
     this.postDataValue(dataValuesSet).subscribe(result => {
       console.log(result);
     });

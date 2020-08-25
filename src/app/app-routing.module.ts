@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 import {Form311Component} from './forms/form311/form311.component';
 import {HomeComponent} from './forms/home/home.component';
 import {Form321Component} from './forms/form321/form321.component';
@@ -9,6 +9,13 @@ import {Form323Component} from './forms/form323/form323.component';
 const routes: Routes = [
   {
     path: '',
+    component: HomeComponent,
+    data: {
+      title: 'home page'
+    }
+  },
+  {
+    path: 'home',
     component: HomeComponent,
     data: {
       title: 'home page'
@@ -45,7 +52,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true, preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
