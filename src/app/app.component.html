@@ -1,9 +1,10 @@
 <ngx-dhis2-menu class="mb-5"></ngx-dhis2-menu>
 <div class="toolbar mt-5" role="banner">
   <img width="40"/>
-  <a href="#" style="color: white"><i width="40" class="fa fa-home fa-3x mr-5 " routerLink="/home"></i></a>
+  <a href="#" style="color: white" title="Home"><i width="40" class="fa fa-home fa-3x mr-5 " routerLink="/home"></i></a>
   <h1>MOMENTUM  MKA-AMELP </h1>
   <div class="spacer"></div>
+  <a href="#" style="color: white" title="Setting" [routerLink]="'/configuration'"><i class="fa fa-cog fa-3x mr-5"></i></a>
 </div>
 
 <router-outlet>
