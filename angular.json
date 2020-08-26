@@ -127,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "MKA-AMELP"
+    }
+  },
+  "defaultProject": "MKA-AMELP",
+  "cli": {
+    "analytics": false
+  }
 }
