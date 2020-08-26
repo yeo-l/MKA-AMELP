@@ -1,5 +1,15 @@
-<ng-container *ngIf="mode === 'list'">
 
+<h1 class="mt-5" > Tracker {{trackerCode}}</h1>
+<hr>
+<div *ngIf="mode === 'list'">
+  <div class="row">
+    <div class="col-6">
+      <h3>List of Events</h3>
+    </div>
+    <div class="col-6 text-right">
+      <button class="btn btn-primary btn-lg" [routerLink]="['/tracker', currentProgram.code, currentProgram.id, 'add']"> <i class="fa fa-plus"></i> Add New</button>
+    </div>
+  </div>
   <table class="table table-striped table-sm">
     <thead>
     <tr>
@@ -9,15 +19,16 @@
     </tr>
     </thead>
   </table>
-</ng-container>
+</div>
 
-<ng-container *ngIf="mode !== 'list'">
+<div *ngIf="mode !== 'list'">
+  <h3>form entry</h3>
+  <hr>
   <form id="form">
 
     <div #form></div>
-
-    <button class="btn btn-sm">Complete</button>
-    <button class="btn btn-sm">Back</button>
+    <button class="btn btn-primary btn-sm mr-5">Complete</button>
+    <button class="btn btn-success btn-sm"><< Back</button>
   </form>
-</ng-container>
+</div>
 

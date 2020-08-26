@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   // dataSetModel: ;
   dataStore: DataStore;
   areaGroups: AreaGroup[];
+  type: string;
 
   constructor(private aggregationService: AggregationService, private httpClient: HttpClient) { }
 
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){
       if (this.dataStore.areaGroups[i].code === id) {
         // this.dataSets = this.dataStore.areaGroups[i].dataSet;
+        this.type = this.dataStore.areaGroups[i].type;
         const ids = [];
         for (let j = 0; j < this.dataStore.areaGroups[i].dataSets.length; j++) {
           ids.push(this.dataStore.areaGroups[i].dataSets[j].id);
@@ -50,7 +52,7 @@ export class HomeComponent implements OnInit {
         }
         const params = ['fields=id,name,code,description', 'filter=id:in:[' + ids.join(',') + ']'];
         this.aggregationService.loadMetaData(`${type}.json`, params).subscribe((result: any) => {
-          if (type === 'tracker') {
+          if (type === 'programs') {
             this.dataSets = result.programs;
           } else {
             this.dataSets = result.dataSets;

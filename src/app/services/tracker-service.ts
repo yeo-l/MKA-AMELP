@@ -12,7 +12,7 @@ export class TrackerService extends MainService {
   }
 
   loadPrograms(id: string){
-    return this.loadMetaData(`programs/${id}`, ['fields=id,name,code,description']);
+    return this.loadMetaData(`programs/${id}`, ['fields=id,name,code,description,organisationUnits']);
   }
 
 }

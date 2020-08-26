@@ -5,7 +5,7 @@
         <div class="card-title"><h5>Project areas IR (intermediate result)</h5></div>
       </div>
       <div class="card-body" style="background-color: seashell" *ngFor="let area of dataStore.areaGroups">
-        <h6><a href="#" (click)="getAreaDataSets(area.code)">{{area.name}}</a></h6>
+        <h5><a href="#" (click)="getAreaDataSets(area.code)">{{area.name}}</a></h5>
       </div>
     </div>
     <div class="container-fluid col-lg-8">
@@ -23,7 +23,8 @@
             <td>{{dataSet.code}}</td>
             <td>{{dataSet.name}}</td>
             <td>
-              <button class="btn btn-primary mr-2" [routerLink]="['/form'+dataSet.code, dataSet.id]"> Data Entry </button>
+              <button class="btn btn-primary mr-2" [routerLink]="['/form'+dataSet.code, dataSet.id]" *ngIf="type !=='tracker'"> Data Entry </button>
+              <button class="btn btn-primary mr-2" [routerLink]="['/tracker', dataSet.code, dataSet.id, 'list']" *ngIf="type === 'tracker'"> Data Entry </button>
 <!--              <button class="btn btn-warning" [routerLink]="['/form',dataSet.id]"><i class="fa fa-edit"></i> Edit</button>-->
             </td>
           </tr>

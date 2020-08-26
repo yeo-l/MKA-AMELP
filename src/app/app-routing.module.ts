@@ -59,7 +59,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'tracker/:code/:id:/:mode',
+    path: 'tracker/:code/:id/:mode',
     component: TrackerComponent,
     data: {
       title: 'T301'

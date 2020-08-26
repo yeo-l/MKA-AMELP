@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {EventModel} from '../../models/event.model';
 import {DataValue} from '../../models/dataValues.model';
 import {HttpClient} from '@angular/common/http';
+import {Program} from '../../models/program.model';
 
 @Component({
   selector: 'app-tracker',
@@ -13,7 +14,7 @@ import {HttpClient} from '@angular/common/http';
 export class TrackerComponent implements OnInit, AfterViewInit {
   private sub: any;
   eventRegistered: EventModel[];
-  currentProgram: any;
+  currentProgram: Program;
   mode: string;
   trackerCode: string;
   dataValues: DataValue[] = [];
@@ -30,9 +31,11 @@ export class TrackerComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.mode = params['mode'];
+      console.log('param', params['id']);
       this.trackerCode = params['code'];
       this.trackerService.loadPrograms(params['id']).subscribe((programResult: any) => {
         this.currentProgram = programResult;
+        console.log('program result', programResult);
 
         if (this.mode === 'list') {
           this.getRegisteredEvents(this.currentProgram.id, this.currentProgram.organisationUnits[0].id);
@@ -60,19 +63,25 @@ export class TrackerComponent implements OnInit, AfterViewInit {
       this.eventModel = eventResults;
     });
   }
-
   ngAfterViewInit(): void {
-    this.getHtmlFile(`assets/tracker${this.trackerCode}.html`).subscribe(data => {
-      this.form.nativeElement.insertAdjacentHTML('beforeend', data);
-      document.querySelectorAll('.form-control').forEach(el =>{
-        el.addEventListener('change', this.onChange.bind(this));
-      })
-    });
-    if (this.dataValues.length !== 0) {
-      this.dataValues.forEach(dataValue => {
-        let input = document.querySelector(`input[name=${dataValue.dataElement}]`)
-        input.nodeType
-      })
+    console.log('mode :', this.mode);
+    console.log('code :', this.trackerCode);
+    if (this.mode === 'add'){
+      this.getHtmlFile(`assets/tracker3.0.1.html`).subscribe(data => {
+        let html = data.replace('programName', this.currentProgram?.name);
+          html = html.replace('programCode', this.currentProgram?.code);
+        console.log(html);
+        this.form.nativeElement.insertAdjacentHTML('beforeend', html);
+        document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
+          el.addEventListener('change', this.onChange.bind(this));
+        });
+      });
+      // if (this.dataValues.length !== 0) {
+      //   this.dataValues.forEach(dataValue => {
+      //     let input = document.querySelector(`input[name=${dataValue.dataElement}]`)
+      //     // input.nodeType
+      //   })
+      // }
     }
     // this.elementRef.nativeElement.querySelector('input[type=text]').addEventListener('change', this.onChange.bind(this))
   }

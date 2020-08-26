@@ -1,7 +1,7 @@
 import {DataValue} from './dataValues.model';
 
 export interface IEventModel {
-  program:string;
+  program: string;
   orgUnit: string;
   eventDate: Date;
   status: string;
