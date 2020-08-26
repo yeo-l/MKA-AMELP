@@ -35,16 +35,26 @@ export class HomeComponent implements OnInit {
     });
   }
   getAreaDataSets(id){
+    this.dataSets = [];
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){
-      if (this.dataStore.areaGroups[i].code === id){
+      if (this.dataStore.areaGroups[i].code === id) {
         // this.dataSets = this.dataStore.areaGroups[i].dataSet;
         const ids = [];
-        for (let j = 0; j < this.dataStore.areaGroups[i].dataSets.length; j++){
+        for (let j = 0; j < this.dataStore.areaGroups[i].dataSets.length; j++) {
           ids.push(this.dataStore.areaGroups[i].dataSets[j].id);
         }
-        const params = ['fields=id,name,code', 'filter=id:in:[' + ids.join(',') + ']'];
-        this.aggregationService.loadMetaData('dataSets.json', params).subscribe((result: any) => {
-          this.dataSets = result.dataSets;
+        let type = 'dataSets';
+        if (this.dataStore.areaGroups[i].type === 'tracker'){
+          console.log('is tracker');
+          type = 'programs';
+        }
+        const params = ['fields=id,name,code,description', 'filter=id:in:[' + ids.join(',') + ']'];
+        this.aggregationService.loadMetaData(`${type}.json`, params).subscribe((result: any) => {
+          if (type === 'tracker') {
+            this.dataSets = result.programs;
+          } else {
+            this.dataSets = result.dataSets;
+          }
           console.log('dataSets', this.dataSets);
         });
         break;

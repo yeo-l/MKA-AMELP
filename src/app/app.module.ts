@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxDhis2MenuModule} from '@iapps/ngx-dhis2-menu';
 import {NgxDhis2HttpClientModule} from '@iapps/ngx-dhis2-http-client';
 import {NgxDhis2PeriodFilterModule} from '@iapps/ngx-dhis2-period-filter';
-import { ConfigurationComponent } from './configuration/configuration.component';
+import { TrackerComponent } from './forms/trackers/tracker.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
     Form321Component,
     Form322Component,
     Form323Component,
-    ConfigurationComponent,
+    TrackerComponent
   ],
   imports: [
     BrowserModule,

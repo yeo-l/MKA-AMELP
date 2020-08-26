@@ -6,6 +6,7 @@ import {Form321Component} from './forms/form321/form321.component';
 import {Form322Component} from './forms/form322/form322.component';
 import {Form323Component} from './forms/form323/form323.component';
 import {ConfigurationComponent} from './configuration/configuration.component';
+import {TrackerComponent} from './forms/trackers/tracker.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,13 @@ const routes: Routes = [
     component: ConfigurationComponent,
     data: {
       title: 'configuration dataStore'
+    }
+  },
+  {
+    path: 'tracker/:code/:id:/:mode',
+    component: TrackerComponent,
+    data: {
+      title: 'T301'
     }
   }
 ];

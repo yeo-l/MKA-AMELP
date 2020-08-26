@@ -1,0 +1,23 @@
+<ng-container *ngIf="mode === 'list'">
+
+  <table class="table table-striped table-sm">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    </thead>
+  </table>
+</ng-container>
+
+<ng-container *ngIf="mode !== 'list'">
+  <form id="form">
+
+    <div #form></div>
+
+    <button class="btn btn-sm">Complete</button>
+    <button class="btn btn-sm">Back</button>
+  </form>
+</ng-container>
+
