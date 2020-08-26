@@ -37,4 +37,26 @@ export class UsefulFunctions {
     }
     return periods;
   }
+   static formatDateSimple(d1: Date) {
+    let day = d1.getDate();
+    let month = d1.getMonth() + 1;
+    let year = d1.getFullYear();
+    let dateString = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+    return dateString;
+  }
+  static completeDataSet(ou, pe, ds){
+    let completeDataSetRegistration: any;
+    completeDataSetRegistration = {
+      completeDataSetRegistrations: [
+        {
+          organisationUnit: ou,
+          period: pe,
+          dataSet: ds,
+          date: UsefulFunctions.formatDateSimple(new Date())
+        }
+      ]
+    };
+    return completeDataSetRegistration;
+  }
 }

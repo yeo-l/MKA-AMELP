@@ -14,8 +14,8 @@ export class AggregationService {
   resourceUrl = SERVER_API_URL + '/dataSets';
 
   constructor(private httpClient: HttpClient) { }
-  loadDataSets(){
-    return this.httpClient.get(SERVER_API_URL + '/dataSets?fields=id,name,code,organisationUnits[id,name]&paging=false');
+  loadDataSets(id){
+    return this.httpClient.get(SERVER_API_URL + `/dataSets/${id}?fields=id,name,code,organisationUnits[id,name]&paging=false`);
   }
   loadMetaData(metaData: string, params: string[]){
     return this.httpClient.get<[]>(SERVER_API_URL + '/' + metaData + '?paging=false' + (params ? '&' + params.join('&') : ''));
@@ -51,5 +51,9 @@ export class AggregationService {
   }
   getOneDataStore(id){
     return this.httpClient.get<IDataStore>(SERVER_API_URL + '/dataStore/projectAreaDataStore/area', id);
+  }
+  completeRegistration(data: { completeDataSetRegistrations: any[] }) {
+    return this.httpClient.post(
+      SERVER_API_URL + "/completeDataSetRegistrations?skipExistingCheck=true", data);
   }
 }

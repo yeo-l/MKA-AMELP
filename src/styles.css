@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  padding: 0;
+  margin: 0;
+  background: gray;
+  font-family: Roboto, serif;
+}
+
+#header {
+  position: fixed;
+  top: 48px;
+  left: 0px;
+  right: 0px;
+  background-color:darkred;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 6px 3px;
+  transition: all 75ms ease-out 0s;
+  z-index: 10;
+  overflow: hidden;
+  box-sizing: border-box;
+  /*height: 45px;*/
+  padding: 10px;
+  font-size: 20px;
+  text-indent: 6px;
+  vertical-align: center;
+}
+
+#header a {
+  color: white;
+  text-decoration: none;
+}
+
+#main {
+  top: 100px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #ffffff;
+  border: 1px solid #f7f7f7;
+  /*border-top: lightgray 1px solid;*/
+  margin-top: 65px;
+  min-height: 500px;
+  padding: 5px;
+}
+#areaMenu {
+  background-color: black;
+  opacity: 0.5;
+}

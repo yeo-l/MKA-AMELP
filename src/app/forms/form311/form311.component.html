@@ -1,7 +1,4 @@
 <div class="container-fluid mt-5">
-  <div class="card-header shadow ml-3 text-center mt-5">
-    <div class="card-title text-center"> <h4>Form for indicator 311</h4></div>
-  </div>
   <div class="card">
     <form action="">
       <div class="card">
@@ -30,12 +27,12 @@
             <label class="col-sm-8 col-form-label col-form-label-sm">{{dataSet.organisationUnits[0].name}}</label>
           </div>
         </div>
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label col-form-label-sm">Indicator Number:</label>
-          <div class="col-sm-2">
-            <label class="col-sm-8 col-form-label col-form-label-sm">{{dataSet.code}}</label>
-          </div>
-        </div>
+<!--        <div class="form-group row">-->
+<!--          <label class="col-sm-2 col-form-label col-form-label-sm">Indicator Number:</label>-->
+<!--          <div class="col-sm-2">-->
+<!--            <label class="col-sm-8 col-form-label col-form-label-sm">{{dataSet.code}}</label>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="form-group row">
           <label class="col-sm-2 col-form-label col-form-label-sm">Indicator Name:</label>
           <div class="col-sm-10">
@@ -261,9 +258,14 @@
           <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
           <td><input type="text" class="form-control"  (change)="saveData($event)"></td>
         </tr>
+        <tr colspan="21" class="text-center">
+          <div class="alert alert-primary" role="alert" hidden="true">
+            complete successfull
+          </div>
+        </tr>
         <tr class="text-center">
           <td colspan="21">
-            <button class="btn btn-primary mt-3 mr-5">Complete</button>
+            <button class="btn btn-primary mt-3 mr-5" (click)="completeForm()">Complete</button>
             <button class="btn btn-success mt-3" routerLink="/home"> << Back</button>
           </td>
         </tr>

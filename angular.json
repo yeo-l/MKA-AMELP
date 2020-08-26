@@ -25,6 +25,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/msc.png",
               "src/manifest.webapp"
             ],
             "styles": [
@@ -91,7 +92,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "msc.png"
             ],
             "styles": [
               "src/styles.css"

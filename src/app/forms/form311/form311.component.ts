@@ -15,16 +15,7 @@ export class Form311Component implements OnInit {
   dataSet: DataSets;
   areaGroup: AreaGroup;
   selectedOrgUnit: string;
-  organisationUnitName: string;
   selectedPeriod: string;
-  periodFilterConfig: any = {
-    singleSelection: true,
-    emitOnSelection: true,
-    childrenPeriodSortOrder: 'ASC',
-    allowDateRangeSelection: false,
-    allowRelativePeriodSelection: false,
-    allowFixedPeriodSelection: true
-  };
   periodObject: any;
   action: any;
   periodList: any[] = [];
@@ -77,13 +68,10 @@ export class Form311Component implements OnInit {
     });
   }
   getOneDataSets(id: number) {
-     this.aggregationService.getDataSetId(id).subscribe((dataSets: IDataSets) => {
+     this.aggregationService.loadDataSets(id).subscribe((dataSets: IDataSets) => {
        this.dataSet = dataSets;
        this.selectedOrgUnit = dataSets.organisationUnits[0].id;
-       this.organisationUnitName = dataSets.organisationUnits[0].name;
        console.log('one Dataset', this.dataSet);
-       console.log('one selectedOrgUnit', this.selectedOrgUnit);
-       console.log('one organisationUnitName', this.organisationUnitName);
      }, error => {
        console.log(error);
      });
@@ -97,5 +85,11 @@ export class Form311Component implements OnInit {
     if ($event.target.value){
       this.selectedOrgUnit = $event.target.value;
     }
+  }
+  completeForm(){
+    this.aggregationService.completeRegistration(UsefulFunctions.completeDataSet(this.selectedOrgUnit, this.selectedPeriod, this.dataSet.id))
+      .subscribe(response => {
+        console.log(response);
+      });
   }
 }
