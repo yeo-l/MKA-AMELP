@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AggregationService} from '../../services/aggregation.service';
+import {AggregationService} from '../services/aggregation.service';
 import {HttpClient} from '@angular/common/http';
-import {DataStore} from '../../models/dataStore.model';
-import {AreaGroup} from '../../models/areaGroups.model';
+import {DataStore} from '../models/dataStore.model';
+import {AreaGroup} from '../models/areaGroups.model';
 
 @Component({
   selector: 'app-home',

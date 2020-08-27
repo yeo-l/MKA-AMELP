@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 import {Form311Component} from './forms/form311/form311.component';
-import {HomeComponent} from './forms/home/home.component';
+import {HomeComponent} from './home/home.component';
 import {Form321Component} from './forms/form321/form321.component';
 import {Form322Component} from './forms/form322/form322.component';
 import {Form323Component} from './forms/form323/form323.component';
 import {ConfigurationComponent} from './configuration/configuration.component';
 import {TrackerComponent} from './forms/trackers/tracker.component';
+import {TrackerFormComponent} from './forms/trackers/tracker-form.component';
 
 const routes: Routes = [
   {
@@ -59,10 +60,24 @@ const routes: Routes = [
     }
   },
   {
-    path: 'tracker/:code/:id/:mode',
+    path: 'tracker/:code/:id',
     component: TrackerComponent,
     data: {
-      title: 'T301'
+      title: 'Event list'
+    }
+  },
+  {
+    path: 'tracker/:code/:id/form',
+    component: TrackerFormComponent,
+    data: {
+      title: 'Form Event'
+    }
+  },
+  {
+    path: 'tracker/:code/:id/form/:eventId',
+    component: TrackerFormComponent,
+    data: {
+      title: 'Form Event Edit'
     }
   }
 ];

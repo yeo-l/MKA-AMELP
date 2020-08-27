@@ -1,0 +1,19 @@
+<h5 class="text-secondary"> {{currentProgram?.name}}</h5>
+<hr>
+<div class="row m-0 p-0">
+  <div class="col-6 m-0">
+    <h4 class="m-0">Form</h4>
+  </div>
+  <div class="col-6 text-right m-0">
+    <button class="btn btn-secondary" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id]"> <i class="fa fa-caret-left"></i> Back to list</button>
+  </div>
+</div>
+<hr class="m-2">
+<form id="form" class="container border border-light bg-light">
+  <div #form class="mt-2">
+    <div class="text-center p-5" *ngIf="loading">Loading form ...</div>
+  </div>
+  <div class="text-center border-top" *ngIf="!loading">
+    <button class="btn btn-primary mt-2">Complete</button>
+  </div>
+</form>
