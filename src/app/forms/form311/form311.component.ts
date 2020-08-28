@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AggregationService} from '../../services/aggregation.service';
-import {DataSets, IDataSets} from '../../models/dataSets.model';
+import {AggregateService} from '../../services/aggregate.service';
+import {DataSet, IDataSet} from '../../models/dataSets.model';
 import {ActivatedRoute} from '@angular/router';
-import {UsefulFunctions} from '../../../shared/useful-functions';
+import {UsefulFunctions} from '../../shared/useful-functions';
 import {AreaGroup} from '../../models/areaGroups.model';
 
 @Component({
@@ -12,7 +12,7 @@ import {AreaGroup} from '../../models/areaGroups.model';
 })
 export class Form311Component implements OnInit {
   orgUnits: any = [{}];
-  dataSet: DataSets;
+  dataSet: DataSet;
   areaGroup: AreaGroup;
   selectedOrgUnit: string;
   selectedPeriod: string;
@@ -22,7 +22,7 @@ export class Form311Component implements OnInit {
   currentYear: number;
   choicePeriod: number;
 
-  constructor(private aggregationService: AggregationService, private route: ActivatedRoute) {
+  constructor(private aggregationService: AggregateService, private route: ActivatedRoute) {
     if (route.snapshot.params.id) {
       this.getOneDataSets(route.snapshot.params.id);
     }
@@ -62,14 +62,14 @@ export class Form311Component implements OnInit {
   }
   getOrgUnit() {
     const params: string[] = ['fields=id,name,level'];
-    this.aggregationService.loadOrganisationUnits(params).subscribe( (result: any) => {
+    this.aggregationService.loadOrgUnits(params).subscribe( (result: any) => {
       this.orgUnits = result.organisationUnits;
       console.log('orgUnit', this.orgUnits);
     });
   }
-  getOneDataSets(id: number) {
-     this.aggregationService.loadDataSets(id).subscribe((dataSets: IDataSets) => {
-       this.dataSet = dataSets;
+  getOneDataSets(id: string) {
+     this.aggregationService.loadOneDataSet(id).subscribe((dataSets: any) => {
+       this.dataSet = dataSets as IDataSet;
        this.selectedOrgUnit = dataSets.organisationUnits[0].id;
        console.log('one Dataset', this.dataSet);
      }, error => {
@@ -86,6 +86,7 @@ export class Form311Component implements OnInit {
       this.selectedOrgUnit = $event.target.value;
     }
   }
+
   completeForm(){
     this.aggregationService.completeRegistration(UsefulFunctions.completeDataSet(this.selectedOrgUnit, this.selectedPeriod, this.dataSet.id))
       .subscribe(response => {

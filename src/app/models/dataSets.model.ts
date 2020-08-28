@@ -1,13 +1,13 @@
 import {IOrgUnit, OrgUnit} from './orgUnit.model';
 
-export interface IDataSets {
+export interface IDataSet {
   id: string;
   name: string;
   code: string;
   organisationUnits: IOrgUnit[];
 }
 
-export class DataSets implements IDataSets{
+export class DataSet implements IDataSet{
 constructor(
   public id: string,
   public name: string,

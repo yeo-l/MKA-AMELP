@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AggregationService} from '../services/aggregation.service';
+import {AggregateService} from '../services/aggregate.service';
 import {DataStore} from '../models/dataStore.model';
 
 @Component({
@@ -10,7 +10,7 @@ import {DataStore} from '../models/dataStore.model';
 export class ConfigurationComponent implements OnInit {
   dataStore: DataStore;
 
-  constructor(private aggregationService: AggregationService) { }
+  constructor(private aggregationService: AggregateService) { }
 
   ngOnInit(): void {
     this.getAreaDataStore();

@@ -14,6 +14,8 @@ import {NgxDhis2MenuModule} from '@iapps/ngx-dhis2-menu';
 import {NgxDhis2HttpClientModule} from '@iapps/ngx-dhis2-http-client';
 import { TrackerComponent } from './forms/trackers/tracker.component';
 import { TrackerFormComponent } from './forms/trackers/tracker-form.component';
+import { AggregateFormComponent } from './forms/aggregates/aggregate-form.component';
+import { AggregateComponent } from './forms/aggregates/aggregate.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { TrackerFormComponent } from './forms/trackers/tracker-form.component';
     Form322Component,
     Form323Component,
     TrackerComponent,
-    TrackerFormComponent
+    TrackerFormComponent,
+    AggregateFormComponent,
+    AggregateComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DataSets, IDataSets} from '../../models/dataSets.model';
+import {DataSet, IDataSet} from '../../models/dataSets.model';
 import {AreaGroup} from '../../models/areaGroups.model';
-import {AggregationService} from '../../services/aggregation.service';
+import {AggregateService} from '../../services/aggregate.service';
 import {ActivatedRoute} from '@angular/router';
-import {UsefulFunctions} from '../../../shared/useful-functions';
+import {UsefulFunctions} from '../../shared/useful-functions';
 
 @Component({
   selector: 'app-form323',
@@ -16,12 +16,12 @@ export class Form323Component implements OnInit {
   periodList: any[] = [];
   currentYear: number;
   choicePeriod: number;
-  dataSet: DataSets;
+  dataSet: DataSet;
   areaGroup: AreaGroup;
   selectedOrgUnit: string;
   selectedPeriod: string;
 
-  constructor(private aggregationService: AggregationService, private route: ActivatedRoute) {
+  constructor(private aggregationService: AggregateService, private route: ActivatedRoute) {
     if (route.snapshot.params.id) {
       this.getOneDataSets(route.snapshot.params.id);
     }
@@ -54,8 +54,8 @@ export class Form323Component implements OnInit {
       this.choicePeriod = 1;
     }
   }
-  getOneDataSets(id: number) {
-    this.aggregationService.loadDataSets(id).subscribe((dataSets: IDataSets) => {
+  getOneDataSets(id: string) {
+    this.aggregationService.loadOneDataSet(id).subscribe((dataSets: any) => {
       this.dataSet = dataSets;
       this.selectedOrgUnit = dataSets.organisationUnits[0].id;
     }, error => {

@@ -8,6 +8,8 @@ import {Form323Component} from './forms/form323/form323.component';
 import {ConfigurationComponent} from './configuration/configuration.component';
 import {TrackerComponent} from './forms/trackers/tracker.component';
 import {TrackerFormComponent} from './forms/trackers/tracker-form.component';
+import {AggregateComponent} from './forms/aggregates/aggregate.component';
+import {AggregateFormComponent} from './forms/aggregates/aggregate-form.component';
 
 const routes: Routes = [
   {
@@ -78,6 +80,27 @@ const routes: Routes = [
     component: TrackerFormComponent,
     data: {
       title: 'Form Event Edit'
+    }
+  },
+  {
+    path: 'aggregate/:code/:id',
+    component: AggregateComponent,
+    data: {
+      title: 'Form Aggregate'
+    }
+  },
+  {
+    path: 'aggregate/:code/:id/form',
+    component: AggregateFormComponent,
+    data: {
+      title: 'Form Aggregate Edit'
+    }
+  },
+  {
+    path: 'aggregate/:code/:id/form/:period',
+    component: AggregateFormComponent,
+    data: {
+      title: 'Form Aggregate Edit'
     }
   }
 ];

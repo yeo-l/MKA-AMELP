@@ -1,9 +1,6 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {TrackerService} from '../../services/tracker-service';
+import {Component, OnInit} from '@angular/core';
+import {TrackerService} from '../../services/tracker.service';
 import {ActivatedRoute} from '@angular/router';
-import {EventModel} from '../../models/event.model';
-import {DataValue} from '../../models/dataValues.model';
-import {HttpClient} from '@angular/common/http';
 import {Program} from '../../models/program.model';
 
 @Component({
@@ -13,7 +10,7 @@ import {Program} from '../../models/program.model';
 })
 export class TrackerComponent implements OnInit {
   private sub: any;
-  eventRegistered: EventModel[];
+  eventRegistered: any;
   currentProgram: Program;
   trackerCode: string;
 
@@ -33,11 +30,16 @@ export class TrackerComponent implements OnInit {
 
   getRegisteredEvents(programId: string, orgUnitId: string) {
     this.trackerService.loadMetaData('events', [`orgUnit=${orgUnitId}`, `program=${programId}`, '&order=dueDate']).subscribe((eventResults: any) => {
-      this.eventRegistered = eventResults.events as EventModel[];
+      this.eventRegistered = eventResults.events;
+      console.log(eventResults);
     });
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  deleteEvent(eventId: string) {
+
   }
 }

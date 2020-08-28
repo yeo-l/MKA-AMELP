@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AggregationService} from '../services/aggregation.service';
+import {AggregateService} from '../services/aggregate.service';
 import {HttpClient} from '@angular/common/http';
 import {DataStore} from '../models/dataStore.model';
 import {AreaGroup} from '../models/areaGroups.model';
@@ -15,31 +15,37 @@ export class HomeComponent implements OnInit {
   dataStore: DataStore;
   areaGroups: AreaGroup[];
   type: string;
+  loading: boolean;
+  content: string;
+  selectedProject: string;
 
-  constructor(private aggregationService: AggregationService, private httpClient: HttpClient) { }
+  constructor(private aggregationService: AggregateService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.getAreaDataStore();
+    this.content = 'Select a project area on the left side to view indicators';
   }
 
   // getDataSet(){
   //   this.aggregationService.loadDataSets().subscribe((dataSt: any) => {
-  //     this.dataSets = dataSt.dataSets;
-  //     this.dataSetModel = dataSt.dataSets;
-  //     console.log(this.dataSets);
+  //     this.dataValueSets = dataSt.dataValueSets;
+  //     this.dataSetModel = dataSt.dataValueSets;
+  //     console.log(this.dataValueSets);
   //   });
   // }
   getAreaDataStore() {
     this.aggregationService.getDataStore().subscribe(dataStore => {
       this.dataStore = dataStore;
-      console.log('dataStore', this.dataStore);
+      // console.log('dataStore', this.dataStore);
     });
   }
   getAreaDataSets(id){
     this.dataSets = [];
+    this.loading = true;
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){
       if (this.dataStore.areaGroups[i].code === id) {
-        // this.dataSets = this.dataStore.areaGroups[i].dataSet;
+        this.selectedProject = this.dataStore.areaGroups[i].name;
+        // this.dataValueSets = this.dataStore.areaGroups[i].dataSet;
         this.type = this.dataStore.areaGroups[i].type;
         const ids = [];
         for (let j = 0; j < this.dataStore.areaGroups[i].dataSets.length; j++) {
@@ -47,7 +53,7 @@ export class HomeComponent implements OnInit {
         }
         let type = 'dataSets';
         if (this.dataStore.areaGroups[i].type === 'tracker'){
-          console.log('is tracker');
+          // console.log('is tracker');
           type = 'programs';
         }
         const params = ['fields=id,name,code,description', 'filter=id:in:[' + ids.join(',') + ']'];
@@ -57,8 +63,9 @@ export class HomeComponent implements OnInit {
           } else {
             this.dataSets = result.dataSets;
           }
-          console.log('dataSets', this.dataSets);
+          // console.log('dataValueSets', this.dataValueSets);
         });
+        this.loading = false;
         break;
       }
     }
