@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {MainService} from './main.service';
-import {HttpClient} from '@angular/common/http';
 import {EventModel} from '../models/event.model';
 import {NgxDhis2HttpClientService} from '@iapps/ngx-dhis2-http-client';
 

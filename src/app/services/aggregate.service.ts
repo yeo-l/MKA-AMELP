@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import {IDataSet} from '../models/dataSets.model';
 import {DataValueSet} from '../models/dataSetValues.model';
 import {DataValue} from '../models/dataValues.model';
 import {MainService} from './main.service';
 import {NgxDhis2HttpClientService} from '@iapps/ngx-dhis2-http-client';
-import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
