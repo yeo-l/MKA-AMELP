@@ -139,6 +139,7 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
       this.loadForm();
     } else {
       this.currentPeriod = '';
+      this.loading = false;
     }
   }
 
