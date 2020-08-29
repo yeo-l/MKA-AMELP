@@ -40,8 +40,8 @@
 
   <div #form class="mt-2" id="input-form" *ngIf="currentPeriod"></div>
   <div class="text-center p-5" *ngIf="loading">Loading form ... </div>
-  <div class="text-center p-5" *ngIf="!currentPeriod && !loading">Please Select a period to see the form </div>
-  <div class="text-center border-top" *ngIf="currentPeriod">
+  <div class="text-center p-5 alert alert-info" *ngIf="!currentPeriod && !loading">Please Select a period to see the form </div>
+  <div class="text-center border-top" *ngIf="!loading && currentPeriod">
     <button class="btn btn-primary mt-2" (click)="completeForm()">Complete</button>
   </div>
 </form>
