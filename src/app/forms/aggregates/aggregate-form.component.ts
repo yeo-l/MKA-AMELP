@@ -44,7 +44,6 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
         if (this.currentPeriod) {
           this.loadForm();
         }
-
       });
     });
   }
@@ -118,26 +117,18 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
     if (event.target.value){
       if (name.split('-').length > 1)
         this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value, name.split('-')[1])
-          .subscribe(result => {
-            console.log(result);
-          });
+          .subscribe(() => {});
       else  {
         this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value)
-          .subscribe(result => {
-            console.log(result);
-          });
+          .subscribe(() => {});
       }
     } else {
       if (name.split('-').length > 1)
         this.service.remove(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, name.split('-')[1])
-          .subscribe(result => {
-            console.log(result);
-          });
+          .subscribe(() => {});
       else  {
         this.service.remove(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod)
-          .subscribe(result => {
-            console.log(result);
-          });
+          .subscribe(() => {});
       }
     }
   }
