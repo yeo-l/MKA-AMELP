@@ -2,7 +2,7 @@
 <hr>
 <div class="row m-0 p-0">
   <div class="col-6 m-0">
-    <h4 class="m-0">Form</h4>
+    <h4 class="m-0">Data capture Form</h4>
   </div>
   <div class="col-6 text-right m-0">
     <button class="btn btn-secondary" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id]"> <i class="fa fa-caret-left"></i> Back to list</button>
@@ -12,6 +12,21 @@
 <form id="form" class="container border border-light bg-light">
   <div #form class="mt-2">
     <div class="text-center p-5" *ngIf="loading">Loading form ...</div>
+    <div class="form-group row" *ngIf="!loading">
+      <label for="reportingPeriod" class="col-2">Reporting Period</label>
+      <div class="col-3 input-group">
+        <div class="input-group-prepend">
+          <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()"> <i class="fa fa-arrow-left"></i> </button>
+        </div>
+        <select name="s08WlYaNIno" id="reportingPeriod" class="form-control">
+          <option value=""></option>
+          <option *ngFor="let period of periodList" value="{{period.id}}">{{period.value}}</option>
+        </select>
+        <div class="input-group-append">
+          <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()"> <i class="fa fa-arrow-right"></i> </button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="text-center border-top" *ngIf="!loading">
 

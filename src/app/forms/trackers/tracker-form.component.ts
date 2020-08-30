@@ -21,6 +21,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   private sub: any;
   @ViewChild('form') form: ElementRef;
   eventId: string;
+  periodList: any;
+  currentPeriod: any;
+  private currentYear: number;
 
   constructor(private trackerService: TrackerService,
               private route: ActivatedRoute,
@@ -29,6 +32,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.getPeriod();
   }
 
   getOneEvent(eventId: string) {
@@ -140,5 +144,24 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       // console.log(result);
       this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
     })
+  }
+
+  getPeriod(){
+    this.periodList = [];
+    this.currentYear = new Date().getFullYear();
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+  }
+  previewsYearPeriod(){
+    this.periodList = [];
+    this.currentYear -= 1;
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+  }
+  nextYearPeriod(){
+    this.periodList = [];
+    this.currentYear += 1;
+    if (this.currentYear > new Date().getFullYear()){
+      this.currentYear -= 1;
+    }
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
   }
 }
