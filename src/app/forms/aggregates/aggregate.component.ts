@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Program} from '../../models/program.model';
 import {DataSet, IDataSet} from '../../models/dataSets.model';
 import {ActivatedRoute} from '@angular/router';
 import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
-import {DataValue} from '../../models/dataValues.model';
 
 @Component({
   selector: 'app-aggregate',
