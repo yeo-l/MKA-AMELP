@@ -52,3 +52,30 @@ a {
 .box {
   margin: 0 5px 0 5px;
 }
+.positionTable232{
+  margin-left: 600px;
+}
+.headcol {
+  /*position: absolute;*/
+  /*width: 400px;*/
+  /*height: auto;*/
+  font-size: small;
+  /*left: 0;*/
+  /*text-align: center;*/
+  /*top: auto;*/
+  /*margin-left: 5px;*/
+  /*padding: 0;*/
+  /*only relevant for first row*/
+  /*margin-top: 10px;*/
+  /*compensate for top border*/
+}
+.secondPart {
+  width: auto;
+  margin-left: 300px;
+  /*padding: 0;*/
+  /*overflow-x: scroll;*/
+  /*overflow-y: visible;*/
+}
+/*tdBody {*/
+/*  width: 250px;*/
+/*}*/

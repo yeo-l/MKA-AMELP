@@ -68,6 +68,7 @@ export class AggregateComponent implements OnInit {
             result['available'] = data.dataValues.length;
             // console.log(result);
             this.dataValueSets.push(result);
+            console.log(console.log(result));
           });
 
         }

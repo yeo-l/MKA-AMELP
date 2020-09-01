@@ -42,13 +42,34 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
           const id = el.getAttribute('id');
           const name = el.getAttribute('name');
-          if (id !== 'selectedIndicator' && id !== 'indicatorName'){
-            const type = el.getAttribute('type');
-            if (type === 'checkbox') {
-              if (this.getDataValue(name))
-                el.setAttribute('checked', 'checked');
-            } else {
-              el.setAttribute('value', this.getDataValue(name));
+          if (el.nodeName === 'SELECT') {
+            let select = el as HTMLSelectElement;
+            for (let i = 0; i< select.options.length; i++){
+              console.log(select.options[i].value);
+              if (select.options[i].value === this.getDataValue(name)){
+                select.selectedIndex = i;
+              }
+            }
+          }
+          else if (el.nodeName === 'TEXTAREA' && id !== 'indicatorName'){
+            let textarea = el as HTMLTextAreaElement;
+            textarea.textContent = this.getDataValue(name);
+          }
+          else{
+            if (id !== 'selectedIndicator' && id !== 'indicatorName'){
+              const type = el.getAttribute('type');
+              if (type === 'checkbox') {
+                if (this.getDataValue(name))
+                  el.setAttribute('checked', 'checked');
+              }
+              if (type === 'radio'){
+                if (this.getDataValue(name) === el.getAttribute('value')){
+                  el.setAttribute('selected', 'selected');
+                }
+              }
+              else {
+                el.setAttribute('value', this.getDataValue(name));
+              }
             }
           }
         });
@@ -60,6 +81,14 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    // document.querySelectorAll('.form-control').forEach(el => {
+    //   console.log(el.nodeName);
+    //   if (el.nodeName === 'SELECT') {
+    //     let select = el as HTMLSelectElement;
+    //     console.log(select.options);
+    //     select.selectedIndex = 2;
+    //   }
+    // });
     this.loading = true;
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params['code'];
@@ -86,7 +115,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   getDataValue(id: string):string {
     let result: any;
     if (this.eventModel.dataValues) {
-       result = this.eventModel.dataValues.filter(dv => dv.dataElement === id);
+      result = this.eventModel.dataValues.filter(dv => dv.dataElement === id);
       // console.log(result);
       return result.length ? result[0].value : null;
     }
@@ -110,6 +139,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   }
 
   onChange(event) {
+    console.log(event.target.name);
     if (event.target){
       this.removeDataValue(event.target.name);
       if (event.target.type === 'checkbox') {
@@ -163,5 +193,20 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.currentYear -= 1;
     }
     this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+  }
+  selectPeriod(data){
+    if (data.target.value){
+      // this.currentPeriod = data.target.value;
+      this.eventModel.dataValues.push(this.createDataValue(data.target.name, data.target.value));
+      console.log(this.eventModel);
+      console.log('data target',data.target.options);
+      for (let i = 0; i< data.target.options.length; i++){
+        console.log(data.target.options[i].value);
+      }
+    }
+    // else {
+    //   this.currentPeriod = '';
+    //   this.loading = false;
+    // }
   }
 }

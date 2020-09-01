@@ -18,7 +18,7 @@
         <div class="input-group-prepend">
           <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()"> <i class="fa fa-arrow-left"></i> </button>
         </div>
-        <select name="s08WlYaNIno" id="reportingPeriod" class="form-control">
+        <select name="s08WlYaNIno" id="reportingPeriod" class="form-control" (change)="selectPeriod($event)" >
           <option value=""></option>
           <option *ngFor="let period of periodList" value="{{period.id}}">{{period.value}}</option>
         </select>

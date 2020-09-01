@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TrackerService} from '../../services/tracker.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Program} from '../../models/program.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class TrackerComponent implements OnInit {
   trackerCode: string;
 
   constructor(private trackerService: TrackerService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,  private router: Router) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
@@ -40,6 +40,9 @@ export class TrackerComponent implements OnInit {
   }
 
   deleteEvent(eventId: string) {
-
+    this.trackerService.remove(eventId).subscribe( data => {
+      // this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+      location.reload();
+    })
   }
 }
