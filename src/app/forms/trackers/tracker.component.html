@@ -18,12 +18,13 @@
     <th>Status</th>
     <th>Stored by</th>
     <th>Complete Date</th>
+
     <th></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let e of eventRegistered">
-    <td>{{ e?.eventDate | date : 'yyyy-MM-dd' }}</td>
+    <td>{{ e?.dueDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
     <td>{{e?.orgUnitName}}</td>
     <td>{{e.storedBy}}</td>
     <td>{{e?.completedDate | date: 'yyy-MM-dd'}}</td>

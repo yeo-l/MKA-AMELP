@@ -39,6 +39,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
       .subscribe((eventResults: any) => {
         this.eventModel = eventResults;
+        this.dataValues = this.eventModel.dataValues;
         document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
           const id = el.getAttribute('id');
           const name = el.getAttribute('name');
@@ -81,21 +82,12 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // document.querySelectorAll('.form-control').forEach(el => {
-    //   console.log(el.nodeName);
-    //   if (el.nodeName === 'SELECT') {
-    //     let select = el as HTMLSelectElement;
-    //     console.log(select.options);
-    //     select.selectedIndex = 2;
-    //   }
-    // });
     this.loading = true;
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params['code'];
       this.eventId = params['eventId'];
       this.trackerService.loadPrograms(params['id']).subscribe((programResult: any) => {
         this.currentProgram = programResult;
-        this.eventModel= new EventModel(this.currentProgram.id, this.currentProgram.organisationUnits[0].id, '', 'ACTIVE', []);
 
         this.getHtmlFile(`assets/trackers/tracker${this.trackerCode}.html`).subscribe(data => {
           let html = data.replace('programName', this.currentProgram?.name).replace('programCode', this.currentProgram?.code);
@@ -105,6 +97,8 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           });
           if (params['eventId']){
             this.getOneEvent(params['eventId']);
+          }else{
+            this.eventModel= new EventModel(this.currentProgram.id, this.currentProgram.organisationUnits[0].id, '', 'ACTIVE', []);
           }
           this.loading = false;
         });
@@ -121,37 +115,39 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createDataValue(dateElement: string, value: string): DataValue {
-    return new DataValue(dateElement, value);
+  createDataValue(dateElement: string, value: string): any {
+    // return new DataValue(dateElement, value);
+    return {dataElement:dateElement, value:value};
   }
 
   removeDataValue(name) {
-    if (this.eventModel.dataValues) {
-      const result = this.eventModel.dataValues.filter(dv => dv.dataElement === name);
+    if (this.dataValues) {
+      const result = this.dataValues.filter(dv => dv.dataElement === name);
       // console.log(result);
       if (result.length) {
-        const index: number = this.eventModel.dataValues.indexOf(result[0]);
+        const index: number = this.dataValues.indexOf(result[0]);
         if (index !== -1) {
-          this.eventModel.dataValues.splice(index);
+          this.dataValues.splice(index);
         }
       }
     }
   }
 
   onChange(event) {
-    console.log(event.target.name);
+    console.log(event.target.value);
     if (event.target){
       this.removeDataValue(event.target.name);
       if (event.target.type === 'checkbox') {
         if (event.target.checked === true) {
-          this.eventModel.dataValues.push(this.createDataValue(event.target.name, event.target.value));
+          this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       } else {
         if (event.target.value){
-          this.eventModel.dataValues.push(this.createDataValue(event.target.name, event.target.value));
+          this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       }
     }
+    console.log('eventModel.dataValues', this.dataValues);
   }
 
   completeData() {
@@ -165,15 +161,18 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
 
   saveData() {
     this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
+    this.eventModel.dataValues = this.dataValues;
     if (this.eventId) {
       this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
         this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
       });
+    }else {
+      this.trackerService.save(this.eventModel).subscribe(result => {
+        // console.log(result);
+        this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+      })
     }
-    this.trackerService.save(this.eventModel).subscribe(result => {
-      // console.log(result);
-      this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
-    })
+
   }
 
   getPeriod(){
