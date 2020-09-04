@@ -38,8 +38,18 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   getOneEvent(eventId: string) {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
       .subscribe((eventResults: any) => {
-        this.eventModel = eventResults;
-        this.dataValues = this.eventModel.dataValues;
+        // this.eventModel = eventResults;
+        eventResults.dataValues.forEach(dataV => {
+          this.dataValues.push(this.createDataValue(dataV.dataElement, dataV.value));
+        });
+        this.eventModel = new EventModel(eventResults.program, eventResults.orgUnit);
+        // this.eventModel.program = eventResults.program;
+        // this.eventModel.orgUnit = eventResults.orgUnit;
+        this.eventModel.eventDate = eventResults.eventDate;
+        this.eventModel.status = eventResults.status;
+        // this.eventModel.dataValues = this.dataValues;
+        console.log('eventModel', this.eventModel);
+        console.log('dataValues', this.dataValues);
         document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
           const id = el.getAttribute('id');
           const name = el.getAttribute('name');
@@ -56,23 +66,37 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
             let textarea = el as HTMLTextAreaElement;
             textarea.textContent = this.getDataValue(name);
           }
-          else{
-            if (id !== 'selectedIndicator' && id !== 'indicatorName'){
-              const type = el.getAttribute('type');
-              if (type === 'checkbox') {
-                if (this.getDataValue(name))
-                  el.setAttribute('checked', 'checked');
-              }
-              if (type === 'radio'){
-                if (this.getDataValue(name) === el.getAttribute('value')){
-                  el.setAttribute('selected', 'selected');
-                }
-              }
-              else {
-                el.setAttribute('value', this.getDataValue(name));
-              }
+          else if (el.nodeName === 'INPUT' && id !== 'selectedIndicator' && id !== 'indicatorName'){
+            let input = el as HTMLInputElement;
+            if (input.type === 'checkbox') {
+              if (this.getDataValue(name))
+                input.checked = true;
+            }
+            else if (input.type === 'radio') {
+              if (this.getDataValue(name))
+                 input.checked = true;
+            }
+            else {
+              input.value = this.getDataValue(name);
             }
           }
+          // else{
+          //   if (id !== 'selectedIndicator' && id !== 'indicatorName'){
+          //     const type = el.getAttribute('type');
+          //     if (type === 'checkbox') {
+          //       if (this.getDataValue(name))
+          //         el.setAttribute('checked', 'checked');
+          //     }
+          //     if (type === 'radio'){
+          //       if (this.getDataValue(name) === el.getAttribute('value')){
+          //         el.setAttribute('selected', 'selected');
+          //       }
+          //     }
+          //     else {
+          //       el.setAttribute('value', this.getDataValue(name));
+          //     }
+          //   }
+          // }
         });
       });
   }
@@ -108,22 +132,23 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
 
   getDataValue(id: string):string {
     let result: any;
-    if (this.eventModel.dataValues) {
-      result = this.eventModel.dataValues.filter(dv => dv.dataElement === id);
+    if (this.dataValues) {
+      result = this.dataValues.filter(dv => dv.dataElement === id);
       // console.log(result);
-      return result.length ? result[0].value : null;
+      return result.length > 0 ? result[0].value : null;
     }
   }
 
   createDataValue(dateElement: string, value: string): any {
-    // return new DataValue(dateElement, value);
-    return {dataElement:dateElement, value:value};
+     return new DataValue(dateElement, value);
+   // return {dataElement:dateElement, value:value};
   }
 
   removeDataValue(name) {
+    console.log('name to remove', name);
     if (this.dataValues) {
       const result = this.dataValues.filter(dv => dv.dataElement === name);
-      // console.log(result);
+       console.log('dataValue to remove',result);
       if (result.length) {
         const index: number = this.dataValues.indexOf(result[0]);
         if (index !== -1) {
@@ -137,8 +162,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     console.log(event.target.value);
     if (event.target){
       this.removeDataValue(event.target.name);
-      if (event.target.type === 'checkbox') {
+      if (event.target.type === 'checkbox' || event.target.type === 'radio') {
         if (event.target.checked === true) {
+          console.log('checkbox value',event.target.value);
           this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       } else {
@@ -147,7 +173,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    console.log('eventModel.dataValues', this.dataValues);
+    console.log('dataValues', this.dataValues);
   }
 
   completeData() {
@@ -164,6 +190,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.eventModel.dataValues = this.dataValues;
     if (this.eventId) {
       this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
+        console.log(result);
         this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
       });
     }else {
@@ -196,7 +223,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   selectPeriod(data){
     if (data.target.value){
       // this.currentPeriod = data.target.value;
-      this.eventModel.dataValues.push(this.createDataValue(data.target.name, data.target.value));
+      this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
       console.log(this.eventModel);
       console.log('data target',data.target.options);
       for (let i = 0; i< data.target.options.length; i++){
