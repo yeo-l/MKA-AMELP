@@ -23,7 +23,13 @@ export class UsefulFunctions {
     }
     return periods;
   }
-
+   static getQuarter(d) {
+    d = d || new Date();
+    let m = Math.floor(d.getMonth() / 3) + 1;
+    m -= m > 4 ? 4 : 0;
+    let y = d.getFullYear() + (m == 1? 1 : 0);
+    return [y,m].join('Q');
+  }
   static getQuarterlyPeriod(year: number) {
     let periods: any[] = [];
     let months = [
@@ -33,6 +39,11 @@ export class UsefulFunctions {
       {id: 'Q4', name: 'October - December'}
     ];
     for (let i = 0; i < months.length; i++) {
+      let currentQuarter = this.getQuarter(null);
+      let quarter = year + months[i].id;
+      if (currentQuarter === quarter){
+        break
+      }
       periods.push({id: year + months[i].id, value: months[i].name + ' ' + year});
     }
     return periods;

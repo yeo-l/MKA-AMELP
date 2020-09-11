@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
+import Inputmask from 'inputmask';
 
 @Component({
   selector: 'app-aggregate-form',
@@ -19,23 +20,23 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
   currentPeriod: string;
   private sub: any;
   currentYear: number;
-
   period: string;
   periodList: any;
 
   @ViewChild('form') form: ElementRef;
 
-  constructor(private service: AggregateService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private http: HttpClient) { }
+  constructor(private service: AggregateService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loading = false;
     this.getPeriod();
     this.sub = this.route.params.subscribe(params => {
       this.dataSetCode = params['code'];
-      this.currentPeriod = params['period'];
+      if (params['period']){
+        this.currentPeriod = params['period'];
+        this.currentYear = parseInt(this.currentPeriod.split('Q')[0]);
+        this.getPeriod();
+      }
 
       this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]']).subscribe((result: any) => {
         console.log(result);
@@ -78,6 +79,8 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
       this.form.nativeElement.insertAdjacentHTML('beforeend', data);
       if (this.currentPeriod){
         document.querySelectorAll('.form-control').forEach(el => {
+          let im = new Inputmask('9{1,*}');
+          im.mask(el);
           if(el.getAttribute('name') !== 'reportingPeriod')
             el.addEventListener('change', this.onChange.bind(this));
         });
@@ -99,7 +102,7 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
         document.querySelectorAll('.form-control').forEach(el => {
           const name = el.getAttribute('name');
           if (this.getDataValue(name))
-          el.setAttribute('value', this.getDataValue(name));
+            el.setAttribute('value', this.getDataValue(name));
         });
       });
   }
@@ -107,7 +110,11 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
   getDataValue(name: string): string {
     let result: any;
     if (this.dataValueSet.dataValues) {
-      result = this.dataValueSet.dataValues.filter(dv => dv.dataElement === name.split('-')[0] && dv.categoryOptionCombo === name.split('-')[1]);
+      if (name.split('-').length > 1)
+        result = this.dataValueSet.dataValues.filter(dv => dv.dataElement === name.split('-')[0] && dv.categoryOptionCombo === name.split('-')[1]);
+      if (name.split('-').length === 1)
+        result = this.dataValueSet.dataValues.filter(dv => dv.dataElement === name);
+
       return result.length ? result[0].value : '';
     }
   }

@@ -15,6 +15,7 @@ export class AggregateComponent implements OnInit {
   dataValueSets: any;
   currentDataSet: IDataSet;
   dataSetCode: string;
+  // organisationUnits: any[] = [];
 
   constructor(private service: AggregateService,
               private route: ActivatedRoute) { }
@@ -25,6 +26,8 @@ export class AggregateComponent implements OnInit {
       this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]']).subscribe((result: any) => {
         this.currentDataSet = result as DataSet;
         this.getDataValueSets(this.currentDataSet.id, this.currentDataSet.organisationUnits[0].id);
+        console.log('code', this.currentDataSet.code);
+        console.log('id', this.currentDataSet.id);
       });
     });
   }
@@ -68,7 +71,7 @@ export class AggregateComponent implements OnInit {
             result['available'] = data.dataValues.length;
             // console.log(result);
             this.dataValueSets.push(result);
-            console.log(console.log(result));
+            console.log(console.log(result['available']));
           });
 
         }

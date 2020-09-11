@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxDhis2MenuModule} from '@iapps/ngx-dhis2-menu';
 import {NgxDhis2HttpClientModule} from '@iapps/ngx-dhis2-http-client';
@@ -25,6 +25,7 @@ import { AggregateComponent } from './forms/aggregates/aggregate.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     NgxDhis2MenuModule,
     NgxDhis2HttpClientModule.forRoot({

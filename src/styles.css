@@ -79,3 +79,12 @@ a {
 /*tdBody {*/
 /*  width: 250px;*/
 /*}*/
+select.ng-invalid{
+  bolder-left: 5px solid red
+}
+select.ng-valid{
+  bolder-left: 5px solid green
+}
+.error {
+  color: red;
+}

@@ -23,6 +23,13 @@ const routes: Routes = [
     }
   },
   {
+    path: 'home/:id',
+    component: HomeComponent,
+    data: {
+      title: 'Indicators list'
+    }
+  },
+  {
     path: 'configuration',
     component: ConfigurationComponent,
     data: {

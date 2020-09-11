@@ -5,7 +5,7 @@
     <h4>list of records</h4>
   </div>
   <div class="col-6 text-right m-0">
-    <button class="btn btn-secondary mr-2" [routerLink]="['/home']"> <i class="fa fa-home"></i> Back to project list</button>
+    <button class="btn btn-secondary mr-2" [routerLink]="['/home',currentDataSet?.organisationUnits[0].id]"> <i class="fa fa-home"></i> Back to project list</button>
     <button class="btn btn-primary" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id, 'form']"> <i class="fa fa-plus"></i> Add New</button>
   </div>
 </div>

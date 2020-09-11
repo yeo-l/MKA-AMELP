@@ -6,6 +6,8 @@ import {TrackerService} from '../../services/tracker.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {UsefulFunctions} from '../../shared/useful-functions';
+import {FormControl, FormControlName, FormGroup, Validators} from "@angular/forms";
+import {element} from "protractor";
 
 @Component({
   selector: 'app-tracker-form',
@@ -18,23 +20,25 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   loading: boolean;
   eventModel: EventModel;
   currentProgram: Program;
+  message: string;
   private sub: any;
   @ViewChild('form') form: ElementRef;
   eventId: string;
   periodList: any;
-  currentPeriod: any;
   private currentYear: number;
 
-  constructor(private trackerService: TrackerService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private http: HttpClient) { }
+  trackerForm = new FormGroup({
+    period: new FormControl('', Validators.required)
+  });
+  currentPeriod: any;
+  get period(){return this.trackerForm.get('period')}
+
+  constructor(private trackerService: TrackerService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.getPeriod();
   }
-
   getOneEvent(eventId: string) {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
       .subscribe((eventResults: any) => {
@@ -54,6 +58,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           const id = el.getAttribute('id');
           const name = el.getAttribute('name');
           if (el.nodeName === 'SELECT') {
+            if (id === 'reportingPeriod'){
+              this.currentYear = parseInt(this.getDataValue(name).split('Q')[0]);
+              this.getPeriod();
+              console.log(this.currentYear);
+            }
             let select = el as HTMLSelectElement;
             for (let i = 0; i< select.options.length; i++){
               console.log(select.options[i].value);
@@ -186,20 +195,23 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   }
 
   saveData() {
-    this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
-    this.eventModel.dataValues = this.dataValues;
-    if (this.eventId) {
-      this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
-        console.log(result);
-        this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
-      });
+    if (this.trackerForm.valid) {
+      this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
+      this.eventModel.dataValues = this.dataValues;
+      if (this.eventId) {
+        this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
+          console.log(result);
+          this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+        });
+      }else {
+        this.trackerService.save(this.eventModel).subscribe(result => {
+          // console.log(result);
+          this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+        })
+      }
     }else {
-      this.trackerService.save(this.eventModel).subscribe(result => {
-        // console.log(result);
-        this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
-      })
+      this.message = "Period is required please";
     }
-
   }
 
   getPeriod(){
@@ -222,13 +234,14 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   }
   selectPeriod(data){
     if (data.target.value){
-      // this.currentPeriod = data.target.value;
+       this.currentPeriod = data.target.value;
       this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
       console.log(this.eventModel);
       console.log('data target',data.target.options);
       for (let i = 0; i< data.target.options.length; i++){
-        console.log(data.target.options[i].value);
+        console.log('select Period data',data.target.options[i].value);
       }
+      console.log('curentyeao select', this.currentYear);
     }
     // else {
     //   this.currentPeriod = '';

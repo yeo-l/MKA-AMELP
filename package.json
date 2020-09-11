@@ -25,6 +25,7 @@
     "bootstrap": "^4.5.2",
     "dexie": "^3.0.2",
     "font-awesome": "^4.7.0",
+    "inputmask": "^5.0.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

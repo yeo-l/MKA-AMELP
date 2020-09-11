@@ -29,7 +29,8 @@ export class TrackerComponent implements OnInit {
   }
 
   getRegisteredEvents(programId: string, orgUnitId: string) {
-    this.trackerService.loadMetaData('events', [`orgUnit=${orgUnitId}`, `program=${programId}`, '&order=dueDate']).subscribe((eventResults: any) => {
+    this.trackerService.loadMetaData('events', [`orgUnit=${orgUnitId}`, `program=${programId}`, '&order=dueDate'])
+      .subscribe((eventResults: any) => {
       this.eventRegistered = eventResults.events;
       console.log(eventResults);
     });

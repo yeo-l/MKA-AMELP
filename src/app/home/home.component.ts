@@ -3,6 +3,7 @@ import {AggregateService} from '../services/aggregate.service';
 import {HttpClient} from '@angular/common/http';
 import {DataStore} from '../models/dataStore.model';
 import {AreaGroup} from '../models/areaGroups.model';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -18,12 +19,21 @@ export class HomeComponent implements OnInit {
   loading: boolean;
   content: string;
   selectedProject: string;
+  organisationUnits: any[] = [];
 
-  constructor(private aggregationService: AggregateService, private httpClient: HttpClient) { }
+  constructor(private aggregationService: AggregateService, private route: ActivatedRoute, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.getAreaDataStore();
+    this.getAreaOrgUnit();
     this.content = 'Select a project area on the left side to view indicators';
+    this.route.params.subscribe(params => {
+      this.getAreaDataStore(params['id']);
+      // if (params['id']){
+      //   console.log(params['id']);
+      //   this.getAreaDataSets(params['id']);
+      // }
+
+    });
   }
 
   // getDataSet(){
@@ -33,17 +43,25 @@ export class HomeComponent implements OnInit {
   //     console.log(this.dataValueSets);
   //   });
   // }
-  getAreaDataStore() {
+  getAreaDataStore(id?) {
     this.aggregationService.getDataStore().subscribe(dataStore => {
       this.dataStore = dataStore;
-      // console.log('dataStore', this.dataStore);
+      if (id)
+      this.getAreaDataSets(id);
     });
+  }
+  getAreaOrgUnit(){
+    const params: string[] = ['fields=id,name&userDataViewOnly=true&filter=level:eq:' + 3];
+    this.aggregationService.loadOrgUnits(params).subscribe((data: any) =>{
+      this.organisationUnits = data.organisationUnits;
+      console.log(this.organisationUnits)
+    })
   }
   getAreaDataSets(id){
     this.dataSets = [];
     this.loading = true;
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){
-      if (this.dataStore.areaGroups[i].code === id) {
+      if (this.dataStore.areaGroups[i].idOU === id) {
         this.selectedProject = this.dataStore.areaGroups[i].name;
         // this.dataValueSets = this.dataStore.areaGroups[i].dataSet;
         this.type = this.dataStore.areaGroups[i].type;
@@ -53,7 +71,6 @@ export class HomeComponent implements OnInit {
         }
         let type = 'dataSets';
         if (this.dataStore.areaGroups[i].type === 'tracker'){
-          // console.log('is tracker');
           type = 'programs';
         }
         const params = ['fields=id,name,code,description', 'filter=id:in:[' + ids.join(',') + ']'];
