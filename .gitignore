@@ -23,6 +23,7 @@ speed-measure-plugin*.json
 .settings/
 *.sublime-workspace
 *.iml
+proxy.conf.json
 
 # IDE - VSCode
 .vscode/*
