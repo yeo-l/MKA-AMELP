@@ -11,6 +11,7 @@ import { TrackerComponent } from './forms/trackers/tracker.component';
 import { TrackerFormComponent } from './forms/trackers/tracker-form.component';
 import { AggregateFormComponent } from './forms/aggregates/aggregate-form.component';
 import { AggregateComponent } from './forms/aggregates/aggregate.component';
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AggregateComponent } from './forms/aggregates/aggregate.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SweetAlert2Module.forRoot(),
     BrowserAnimationsModule,
     NgxDhis2MenuModule,
     NgxDhis2HttpClientModule.forRoot({

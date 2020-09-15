@@ -14,19 +14,19 @@
     <div class="text-center p-5" *ngIf="loading">Loading form ...</div>
     <div class="form-group row" *ngIf="!loading">
       <label for="reportingPeriod" class="col-2">Reporting Period</label>
-      <div class="col-3 input-group">
+      <div class="col-4 input-group">
         <div class="input-group-prepend">
-          <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()"> <i class="fa fa-arrow-left"></i> </button>
+          <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()" title="Previous year"> <i class="fa fa-arrow-left"></i> </button>
         </div>
-        <select name="s08WlYaNIno" id="reportingPeriod" class="form-control" (change)="selectPeriod($event)" formControlName="period">
+        <select name="s08WlYaNIno" id="reportingPeriod" class="form-control"(change)="selectPeriod($event)" formControlName="period">
           <option value=""></option>
           <option *ngFor="let period of periodList" value="{{period.id}}">{{period.value}}</option>
         </select>
         <div class="input-group-append">
-          <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()"> <i class="fa fa-arrow-right"></i> </button>
+          <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()" title="Next year"> <i class="fa fa-arrow-right"></i> </button>
         </div>
       </div>
-      <span class="error alert-info" *ngIf="period.invalid && period.touched">{{message}}</span>
+<!--      <span class="error alert-info" *ngIf="period.invalid && period.touched">{{message}}</span>-->
     </div>
   </div>
   <div class="text-center border-top" *ngIf="!loading">

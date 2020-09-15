@@ -29,13 +29,21 @@ export class TrackerComponent implements OnInit {
   }
 
   getRegisteredEvents(programId: string, orgUnitId: string) {
+    this.eventRegistered = [];
     this.trackerService.loadMetaData('events', [`orgUnit=${orgUnitId}`, `program=${programId}`, '&order=dueDate'])
       .subscribe((eventResults: any) => {
-      this.eventRegistered = eventResults.events;
-      console.log(eventResults);
+        eventResults.events.forEach(e => {
+          e['period'] = this.getEventPeriod(e.dataValues);
+          this.eventRegistered.push(e);
+        })
+      //this.eventRegistered = eventResults.events;
+      console.log(this.eventRegistered);
     });
   }
-
+  getEventPeriod(dataValues){
+    let result = dataValues.filter(dv => dv.dataElement === 's08WlYaNIno');
+    return result.length > 0 ? result[0].value : null;
+  }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

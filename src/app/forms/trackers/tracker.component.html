@@ -13,8 +13,7 @@
 <table class="table table-striped table-bordered table-sm">
   <thead>
   <tr>
-<!--    <th>Reporting Period</th>-->
-    <th>Date</th>
+    <th>Reporting Period</th>
     <th>Project area</th>
     <th>Stored by</th>
     <th>Status</th>
@@ -26,7 +25,7 @@
   <tbody>
   <tr *ngFor="let e of eventRegistered">
 <!--    <td>{{ e?.dueDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>-->
-    <td>{{ e?.dueDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+    <td>{{ e?.period}}</td>
     <td>{{e?.orgUnitName}}</td>
     <td>{{e.storedBy}}</td>
     <td>{{e.status}}</td>

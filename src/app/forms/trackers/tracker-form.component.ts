@@ -6,8 +6,9 @@ import {TrackerService} from '../../services/tracker.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {UsefulFunctions} from '../../shared/useful-functions';
-import {FormControl, FormControlName, FormGroup, Validators} from "@angular/forms";
-import {element} from "protractor";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import Swal from "sweetalert2";
+import {MainService} from "../../services/main.service";
 
 @Component({
   selector: 'app-tracker-form',
@@ -26,48 +27,59 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   eventId: string;
   periodList: any;
   private currentYear: number;
+  currentPeriod: any;
 
   trackerForm = new FormGroup({
     period: new FormControl('', Validators.required)
   });
-  currentPeriod: any;
   get period(){return this.trackerForm.get('period')}
 
-  constructor(private trackerService: TrackerService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
+  constructor(private trackerService: TrackerService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
+              private mainService: MainService) { }
 
   ngOnInit(): void {
+    this.periodList = [];
     this.loading = true;
-    this.getPeriod();
+    this.sub = this.route.params.subscribe(params => {
+      this.trackerCode = params['code'];
+      this.eventId = params['eventId'];
+      if (this.eventId){
+        this.trackerService.loadMetaData(`events/${this.eventId}`, [`fields=`])
+          .subscribe(eventResults => {
+            eventResults.dataValues.forEach(dataV => {
+              if (dataV.dataElement === 's08WlYaNIno'){
+                if (dataV.value){
+                  this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0]))
+                }
+              }
+            });
+          })
+      }
+      if (this.periodList.length === 0){
+        this.getPeriod(null);
+      }
+    });
   }
   getOneEvent(eventId: string) {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
       .subscribe((eventResults: any) => {
-        // this.eventModel = eventResults;
         eventResults.dataValues.forEach(dataV => {
           this.dataValues.push(this.createDataValue(dataV.dataElement, dataV.value));
         });
         this.eventModel = new EventModel(eventResults.program, eventResults.orgUnit);
-        // this.eventModel.program = eventResults.program;
-        // this.eventModel.orgUnit = eventResults.orgUnit;
         this.eventModel.eventDate = eventResults.eventDate;
         this.eventModel.status = eventResults.status;
-        // this.eventModel.dataValues = this.dataValues;
-        console.log('eventModel', this.eventModel);
-        console.log('dataValues', this.dataValues);
         document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
           const id = el.getAttribute('id');
           const name = el.getAttribute('name');
           if (el.nodeName === 'SELECT') {
-            if (id === 'reportingPeriod'){
-              this.currentYear = parseInt(this.getDataValue(name).split('Q')[0]);
-              this.getPeriod();
-              console.log(this.currentYear);
-            }
             let select = el as HTMLSelectElement;
             for (let i = 0; i< select.options.length; i++){
-              console.log(select.options[i].value);
               if (select.options[i].value === this.getDataValue(name)){
                 select.selectedIndex = i;
+                if (id === 'reportingPeriod'){
+                  this.trackerForm.patchValue({period: select.options[i].value});
+                }
               }
             }
           }
@@ -89,31 +101,12 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
               input.value = this.getDataValue(name);
             }
           }
-          // else{
-          //   if (id !== 'selectedIndicator' && id !== 'indicatorName'){
-          //     const type = el.getAttribute('type');
-          //     if (type === 'checkbox') {
-          //       if (this.getDataValue(name))
-          //         el.setAttribute('checked', 'checked');
-          //     }
-          //     if (type === 'radio'){
-          //       if (this.getDataValue(name) === el.getAttribute('value')){
-          //         el.setAttribute('selected', 'selected');
-          //       }
-          //     }
-          //     else {
-          //       el.setAttribute('value', this.getDataValue(name));
-          //     }
-          //   }
-          // }
         });
       });
   }
-
   getHtmlFile(filePath: string) {
     return this.http.get(filePath, {responseType: 'text'});
   }
-
   ngAfterViewInit(): void {
     this.loading = true;
     this.sub = this.route.params.subscribe(params => {
@@ -121,7 +114,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.eventId = params['eventId'];
       this.trackerService.loadPrograms(params['id']).subscribe((programResult: any) => {
         this.currentProgram = programResult;
-
         this.getHtmlFile(`assets/trackers/tracker${this.trackerCode}.html`).subscribe(data => {
           let html = data.replace('programName', this.currentProgram?.name).replace('programCode', this.currentProgram?.code);
           this.form.nativeElement.insertAdjacentHTML('beforeend', html);
@@ -132,6 +124,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
             this.getOneEvent(params['eventId']);
           }else{
             this.eventModel= new EventModel(this.currentProgram.id, this.currentProgram.organisationUnits[0].id, '', 'ACTIVE', []);
+            this.getPeriod(null);
           }
           this.loading = false;
         });
@@ -143,21 +136,17 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     let result: any;
     if (this.dataValues) {
       result = this.dataValues.filter(dv => dv.dataElement === id);
-      // console.log(result);
       return result.length > 0 ? result[0].value : null;
     }
   }
 
   createDataValue(dateElement: string, value: string): any {
      return new DataValue(dateElement, value);
-   // return {dataElement:dateElement, value:value};
   }
 
   removeDataValue(name) {
-    console.log('name to remove', name);
     if (this.dataValues) {
       const result = this.dataValues.filter(dv => dv.dataElement === name);
-       console.log('dataValue to remove',result);
       if (result.length) {
         const index: number = this.dataValues.indexOf(result[0]);
         if (index !== -1) {
@@ -166,14 +155,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
   onChange(event) {
-    console.log(event.target.value);
     if (event.target){
       this.removeDataValue(event.target.name);
       if (event.target.type === 'checkbox' || event.target.type === 'radio') {
         if (event.target.checked === true) {
-          console.log('checkbox value',event.target.value);
           this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       } else {
@@ -182,42 +168,57 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    console.log('dataValues', this.dataValues);
   }
-
   completeData() {
+    let title = "completed successfully";
     this.eventModel.status = 'COMPLETED';
-    this.saveData();
-  }
+    if (this.trackerForm.valid){
+      this.saveData();
+      this.mainService.alertSave(title);
+    }
+    if (this.trackerForm.invalid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Period is required please!',
+      })
+    }
 
+  }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
   saveData() {
+    let title = "Save successfully";
     if (this.trackerForm.valid) {
       this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
       this.eventModel.dataValues = this.dataValues;
       if (this.eventId) {
         this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
-          console.log(result);
           this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+          this.mainService.alertSave(title);
         });
+        this.mainService.alertSave(title);
       }else {
         this.trackerService.save(this.eventModel).subscribe(result => {
-          // console.log(result);
           this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+          this.mainService.alertSave(title);
         })
       }
-    }else {
-      this.message = "Period is required please";
+    }
+    if (this.trackerForm.invalid)  {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Reporting Period is required please!',
+      })
     }
   }
 
-  getPeriod(){
+  getPeriod(year: number){
     this.periodList = [];
     this.currentYear = new Date().getFullYear();
-    this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
+    this.periodList = UsefulFunctions.getQuarterlyPeriod(year? year : this.currentYear);
   }
   previewsYearPeriod(){
     this.periodList = [];
@@ -235,17 +236,17 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   selectPeriod(data){
     if (data.target.value){
        this.currentPeriod = data.target.value;
-      this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
-      console.log(this.eventModel);
-      console.log('data target',data.target.options);
-      for (let i = 0; i< data.target.options.length; i++){
-        console.log('select Period data',data.target.options[i].value);
-      }
-      console.log('curentyeao select', this.currentYear);
+       this.removeDataValue(data.target.name);
+       this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
     }
-    // else {
-    //   this.currentPeriod = '';
-    //   this.loading = false;
-    // }
   }
+  // alertError(){
+  //   if (this.trackerForm.invalid) {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Oops...',
+  //       text: 'Reporting Period is required please!',
+  //     })
+  //   }
+  // }
 }

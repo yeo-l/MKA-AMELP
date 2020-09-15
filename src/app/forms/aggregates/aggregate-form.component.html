@@ -14,14 +14,14 @@
     <label for="reportingPeriod" class="col-2">Reporting Period</label>
     <div class="col-4 input-group">
       <div class="input-group-prepend">
-        <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()"> <i class="fa fa-arrow-left"></i> </button>
+        <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()" title="Previews year"> <i class="fa fa-arrow-left"></i> </button>
       </div>
-      <select name="reportingPeriod" id="reportingPeriod" class="form-control" (change)="selectPeriod($event)" [(ngModel)]="currentPeriod">
+      <select name="reportingPeriod" id="reportingPeriod" class="form-control" (change)="selectPeriod()" [(ngModel)]="currentPeriod">
         <option value=""></option>
         <option *ngFor="let period of periodList" [selected]="currentPeriod === period.id" value="{{period.id}}">{{period.value}}</option>
       </select>
       <div class="input-group-append">
-        <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()"> <i class="fa fa-arrow-right"></i> </button>
+        <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()" title="Next year"> <i class="fa fa-arrow-right"></i> </button>
       </div>
     </div>
   </div>

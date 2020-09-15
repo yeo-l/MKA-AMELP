@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
 import Inputmask from 'inputmask';
+import {MainService} from "../../services/main.service";
 
 @Component({
   selector: 'app-aggregate-form',
@@ -25,7 +26,8 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
 
   @ViewChild('form') form: ElementRef;
 
-  constructor(private service: AggregateService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
+  constructor(private service: AggregateService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
+              private mainService: MainService) { }
 
   ngOnInit(): void {
     this.loading = false;
@@ -37,24 +39,20 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
         this.currentYear = parseInt(this.currentPeriod.split('Q')[0]);
         this.getPeriod();
       }
-
-      this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]']).subscribe((result: any) => {
-        console.log(result);
-        this.currentDataSet = result;
-
-        if (this.currentPeriod) {
-          this.loadForm();
-        }
-      });
+      this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]'])
+        .subscribe((result: any) => {
+          this.currentDataSet = result;
+          if (this.currentPeriod) {
+            this.loadForm();
+          }
+        });
     });
   }
-
   ngAfterViewInit(): void {
   }
-
   getPeriod(){
     this.periodList = [];
-    this.currentYear = new Date().getFullYear();
+    this.currentYear = this.currentYear ? this.currentYear : new Date().getFullYear();
     this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
   }
   previewsYearPeriod(){
@@ -70,15 +68,13 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
     }
     this.periodList = UsefulFunctions.getQuarterlyPeriod(this.currentYear);
   }
-
   loadForm() {
     this.loading = true;
     this.getHtmlFile(`assets/aggregates/aggregate${this.dataSetCode}.html`).subscribe(data => {
-
       document.querySelector('#input-form').innerHTML = '';
       this.form.nativeElement.insertAdjacentHTML('beforeend', data);
       if (this.currentPeriod){
-        document.querySelectorAll('.form-control').forEach(el => {
+        document.querySelectorAll('#input-form.form-control').forEach(el => {
           let im = new Inputmask('9{1,*}');
           im.mask(el);
           if(el.getAttribute('name') !== 'reportingPeriod')
@@ -89,24 +85,22 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
       this.loading = false;
     });
   }
-
   getHtmlFile(filePath: string) {
     return this.http.get(filePath, {responseType: 'text'});
   }
-
   getOneAggregateValues(period: string, dataSetId: string, orgUnit: string) {
     this.service.loadOneDataSetValues(`dataValueSets?period=${period}&dataSet=${dataSetId}&orgUnit=${orgUnit}`)
       .subscribe((result: any) => {
         this.dataValueSet = result;
-        // console.log(result);
         document.querySelectorAll('.form-control').forEach(el => {
-          const name = el.getAttribute('name');
-          if (this.getDataValue(name))
-            el.setAttribute('value', this.getDataValue(name));
+          if (el.getAttribute('id') !== 'reportingPeriod'){
+            const name = el.getAttribute('name');
+            if (this.getDataValue(name))
+              el.setAttribute('value', this.getDataValue(name));
+          }
         });
       });
   }
-
   getDataValue(name: string): string {
     let result: any;
     if (this.dataValueSet.dataValues) {
@@ -114,20 +108,23 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
         result = this.dataValueSet.dataValues.filter(dv => dv.dataElement === name.split('-')[0] && dv.categoryOptionCombo === name.split('-')[1]);
       if (name.split('-').length === 1)
         result = this.dataValueSet.dataValues.filter(dv => dv.dataElement === name);
-
       return result.length ? result[0].value : '';
     }
   }
-
   onChange(event) {
     let name: string = event.target.name;
+    let title = "Save with successfully";
     if (event.target.value){
-      if (name.split('-').length > 1)
+      if (name.split('-').length > 1){
         this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value, name.split('-')[1])
-          .subscribe(() => {});
-      else  {
+          .subscribe(() => {
+            this.mainService.alertSave(title);
+          });
+      } else {
         this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value)
-          .subscribe(() => {});
+          .subscribe(() => {
+            this.mainService.alertSave(title);
+          });
       }
     } else {
       if (name.split('-').length > 1)
@@ -139,21 +136,18 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
-  selectPeriod(data){
-    if (data.target.value){
-      this.currentPeriod = data.target.value;
+  selectPeriod(){
+    if (this.currentPeriod){
       this.loadForm();
     } else {
-      this.currentPeriod = '';
       this.loading = false;
     }
   }
-
   completeForm() {
+    let title = "completed with successfully";
     this.service.completeRegistration(UsefulFunctions.completeDataSet(this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, this.currentDataSet?.id))
       .subscribe(response => {
-        console.log(response);
+        this.mainService.alertSave(title);
         this.router.navigate(['aggregate',this.currentDataSet?.code, this.currentDataSet?.id]);
       });
   }

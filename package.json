@@ -22,11 +22,13 @@
     "@angular/router": "~10.0.9",
     "@iapps/ngx-dhis2-http-client": "^2.0.8-rc.4",
     "@iapps/ngx-dhis2-menu": "^1.0.11-beta.8",
+    "@sweetalert2/ngx-sweetalert2": "^8.1.1",
     "bootstrap": "^4.5.2",
     "dexie": "^3.0.2",
     "font-awesome": "^4.7.0",
     "inputmask": "^5.0.5",
     "rxjs": "~6.5.5",
+    "sweetalert2": "^10.0.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },

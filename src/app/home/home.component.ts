@@ -12,7 +12,6 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   dataSets: any[] = [];
-  // dataSetModel: ;
   dataStore: DataStore;
   areaGroups: AreaGroup[];
   type: string;
@@ -28,21 +27,9 @@ export class HomeComponent implements OnInit {
     this.content = 'Select a project area on the left side to view indicators';
     this.route.params.subscribe(params => {
       this.getAreaDataStore(params['id']);
-      // if (params['id']){
-      //   console.log(params['id']);
-      //   this.getAreaDataSets(params['id']);
-      // }
 
     });
   }
-
-  // getDataSet(){
-  //   this.aggregationService.loadDataSets().subscribe((dataSt: any) => {
-  //     this.dataValueSets = dataSt.dataValueSets;
-  //     this.dataSetModel = dataSt.dataValueSets;
-  //     console.log(this.dataValueSets);
-  //   });
-  // }
   getAreaDataStore(id?) {
     this.aggregationService.getDataStore().subscribe(dataStore => {
       this.dataStore = dataStore;
@@ -54,7 +41,6 @@ export class HomeComponent implements OnInit {
     const params: string[] = ['fields=id,name&userDataViewOnly=true&filter=level:eq:' + 3];
     this.aggregationService.loadOrgUnits(params).subscribe((data: any) =>{
       this.organisationUnits = data.organisationUnits;
-      console.log(this.organisationUnits)
     })
   }
   getAreaDataSets(id){
@@ -63,7 +49,6 @@ export class HomeComponent implements OnInit {
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){
       if (this.dataStore.areaGroups[i].idOU === id) {
         this.selectedProject = this.dataStore.areaGroups[i].name;
-        // this.dataValueSets = this.dataStore.areaGroups[i].dataSet;
         this.type = this.dataStore.areaGroups[i].type;
         const ids = [];
         for (let j = 0; j < this.dataStore.areaGroups[i].dataSets.length; j++) {
@@ -80,7 +65,6 @@ export class HomeComponent implements OnInit {
           } else {
             this.dataSets = result.dataSets;
           }
-          // console.log('dataValueSets', this.dataValueSets);
         });
         this.loading = false;
         break;
