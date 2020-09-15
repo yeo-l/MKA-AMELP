@@ -1,14 +1,14 @@
 {
   "/api": {
-    "target": "https://integration.usaidmomentum.org",
+    "target": "https://dhis2.play",
     "secure": "false",
-    "auth": "admin:District@1",
+    "auth": "",
     "changeOrigin": "true"
   },
   "/": {
-    "target": "https://integration.usaidmomentum.org",
+    "target": "https://dhis2.play",
     "secure": "false",
-    "auth": "admin:District@1",
+    "auth": "",
     "changeOrigin": "true"
   }
 }
