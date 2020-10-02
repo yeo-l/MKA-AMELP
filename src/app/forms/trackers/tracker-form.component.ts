@@ -28,18 +28,23 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   periodList: any;
   private currentYear: number;
   currentPeriod: any;
-
+  disabled: boolean;
+  selectValue: string;
+  description: string;
   trackerForm = new FormGroup({
-    period: new FormControl('', Validators.required)
+    period: new FormControl('', Validators.required),
   });
+  workStreams: any = [{}];
   get period(){return this.trackerForm.get('period')}
 
   constructor(private trackerService: TrackerService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
               private mainService: MainService) { }
 
   ngOnInit(): void {
+    this.getDescription();
     this.periodList = [];
     this.loading = true;
+    this.disabled = true;
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params['code'];
       this.eventId = params['eventId'];
@@ -59,6 +64,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         this.getPeriod(null);
       }
     });
+  }
+  editeForm(){
+    this.disabled = false;
   }
   getOneEvent(eventId: string) {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
@@ -131,7 +139,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       });
     });
   }
-
   getDataValue(id: string):string {
     let result: any;
     if (this.dataValues) {
@@ -139,11 +146,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       return result.length > 0 ? result[0].value : null;
     }
   }
-
   createDataValue(dateElement: string, value: string): any {
      return new DataValue(dateElement, value);
   }
-
   removeDataValue(name) {
     if (this.dataValues) {
       const result = this.dataValues.filter(dv => dv.dataElement === name);
@@ -167,7 +172,19 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       }
+      if (event.target.id === 'workStream') {
+        let name = event.target.value;
+        let description = this.workStreams[name].description;
+        let el = document.querySelector('#wSDesc');
+        // el.innerHTML = description;
+        el.setAttribute('title', description);
+      }
     }
+  }
+  getDescription(){
+    this.mainService.getDataStore().subscribe(data => {
+      this.workStreams = data.workstreams;
+    })
   }
   completeData() {
     let title = "completed successfully";
@@ -183,7 +200,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         text: 'Period is required please!',
       })
     }
-
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -214,7 +230,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       })
     }
   }
-
   getPeriod(year: number){
     this.periodList = [];
     this.currentYear = new Date().getFullYear();
@@ -240,13 +255,4 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
        this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
     }
   }
-  // alertError(){
-  //   if (this.trackerForm.invalid) {
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Oops...',
-  //       text: 'Reporting Period is required please!',
-  //     })
-  //   }
-  // }
 }

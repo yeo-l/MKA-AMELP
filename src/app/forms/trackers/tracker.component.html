@@ -2,7 +2,7 @@
 <hr>
 <div class="row m-0 p-0">
   <div class="col-6 m-0">
-    <h4>List of records</h4>
+    <h4>List of Records</h4>
   </div>
   <div class="col-6 text-right m-0">
     <button class="btn btn-secondary mr-2"[routerLink]="['/home',currentProgram?.organisationUnits[0].id]"> <i class="fa fa-home"></i> Back to project list</button>
@@ -14,7 +14,9 @@
   <thead>
   <tr>
     <th>Reporting Period</th>
-    <th>Project area</th>
+    <th>Record Date</th>
+    <th>Project Area</th>
+    <th>Product Name</th>
     <th>Stored by</th>
     <th>Status</th>
     <th>Complete Date</th>
@@ -24,9 +26,10 @@
   </thead>
   <tbody>
   <tr *ngFor="let e of eventRegistered">
-<!--    <td>{{ e?.dueDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>-->
     <td>{{ e?.period}}</td>
+    <td>{{ e?.eventDate | date: 'yyy-MM-dd'}}</td>
     <td>{{e?.orgUnitName}}</td>
+    <td>{{ e?.productName}}</td>
     <td>{{e.storedBy}}</td>
     <td>{{e.status}}</td>
     <td>{{e?.completedDate | date: 'yyy-MM-dd'}}</td>
@@ -34,6 +37,9 @@
       <button class="btn btn-primary" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id, 'form', e?.event]">
         <i class="fa fa-edit"></i>
       </button>
+<!--      <button class="btn btn-dark" (click)="edited()" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id, 'form', e?.event]">-->
+<!--        <i class="fa fa-eye"></i>-->
+<!--      </button>-->
       <button class="btn btn-danger" (click)="deleteEvent(e?.event)">
         <i class="fa fa-trash"></i>
       </button>

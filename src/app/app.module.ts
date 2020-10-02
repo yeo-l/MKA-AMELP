@@ -12,6 +12,8 @@ import { TrackerFormComponent } from './forms/trackers/tracker-form.component';
 import { AggregateFormComponent } from './forms/aggregates/aggregate-form.component';
 import { AggregateComponent } from './forms/aggregates/aggregate.component';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {StrictNumberOnlyDirective} from "../utils/strictNumberOnlyDirective";
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     TrackerComponent,
     TrackerFormComponent,
     AggregateFormComponent,
-    AggregateComponent
+    AggregateComponent,
+    StrictNumberOnlyDirective
   ],
   imports: [
     BrowserModule,

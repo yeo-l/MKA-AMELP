@@ -63,16 +63,13 @@ export class AggregateComponent implements OnInit {
     this.dataValueSets = [];
     this.getLastQuarters(new Date(), 20).forEach(period => {
       console.log(' last Quaters period',period);
-      this.service.loadMetaData('dataValueSets',
-        [`orgUnit=${orgUnitId}`, `dataSet=${dataSetId}`, `period=${period}`]
-      ).subscribe(result => {
-         console.log(' last Quaters',result);
+      this.service.loadMetaData('dataValueSets', [`orgUnit=${orgUnitId}`, `dataSet=${dataSetId}`, `period=${period}`])
+        .subscribe(result => {
+         console.log('Quaters results: ',result);
         if (result.dataValues){
           this.service.loadAvailableDataValues(result.dataSet).subscribe((data: any) => {
             result['available'] = data.dataValues.length;
-             // console.log(data);
             this.dataValueSets.push(result);
-            console.log(console.log(result['available']));
           });
         }
       })

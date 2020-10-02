@@ -2,7 +2,7 @@
 <hr>
 <div class="row m-0 p-0">
   <div class="col-6 m-0">
-    <h4>List of records</h4>
+    <h4>List of Records</h4>
   </div>
   <div class="col-6 text-right m-0">
     <button class="btn btn-secondary mr-2" [routerLink]="['/home',currentDataSet?.organisationUnits[0].id]"> <i class="fa fa-home"></i> Back to project list</button>
@@ -16,7 +16,7 @@
     <th>Period (Quarterly)</th>
     <th>Status</th>
     <th>Complete Date</th>
-    <th># data saved</th>
+    <th>Dataset Completeness</th>
     <th></th>
   </tr>
   </thead>
@@ -30,6 +30,9 @@
       <button class="btn btn-primary" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id, 'form', ds?.period]">
         <i class="fa fa-edit"></i>
       </button>
+<!--      <button class="btn btn-dark" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id, 'form', ds?.period]">-->
+<!--        <i class="fa fa-eye"></i>-->
+<!--      </button>-->
     </td>
   </tr>
   </tbody>

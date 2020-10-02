@@ -13,7 +13,7 @@ import {MainService} from "../../services/main.service";
   templateUrl: './aggregate-form.component.html',
   styleUrls: ['./aggregate-form.component.css']
 })
-export class AggregateFormComponent implements OnInit, AfterViewInit {
+export class AggregateFormComponent implements OnInit {
   dataSetCode: string;
   loading: boolean;
   dataValueSet: DataValueSet;
@@ -23,7 +23,6 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
   currentYear: number;
   period: string;
   periodList: any;
-
   @ViewChild('form') form: ElementRef;
 
   constructor(private service: AggregateService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
@@ -48,8 +47,6 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
         });
     });
   }
-  ngAfterViewInit(): void {
-  }
   getPeriod(){
     this.periodList = [];
     this.currentYear = this.currentYear ? this.currentYear : new Date().getFullYear();
@@ -73,12 +70,13 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
     this.getHtmlFile(`assets/aggregates/aggregate${this.dataSetCode}.html`).subscribe(data => {
       document.querySelector('#input-form').innerHTML = '';
       this.form.nativeElement.insertAdjacentHTML('beforeend', data);
+      Inputmask('9{1,*}').mask(document.querySelectorAll('input.form-control'));
+      // numericInput:true
       if (this.currentPeriod){
-        document.querySelectorAll('#input-form.form-control').forEach(el => {
-          let im = new Inputmask('9{1,*}');
-          im.mask(el);
-          if(el.getAttribute('name') !== 'reportingPeriod')
+        document.querySelectorAll('input.form-control').forEach(el => {
+          if(el.getAttribute('name') !== 'reportingPeriod'){
             el.addEventListener('change', this.onChange.bind(this));
+          }
         });
         this.getOneAggregateValues(this.currentPeriod, this.currentDataSet?.id, this.currentDataSet?.organisationUnits[0]?.id);
       }
@@ -113,15 +111,15 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
   }
   onChange(event) {
     let name: string = event.target.name;
-    let title = "Save with successfully";
+    let title = "Save successfully";
     if (event.target.value){
       if (name.split('-').length > 1){
         this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value, name.split('-')[1])
           .subscribe(() => {
             this.mainService.alertSave(title);
           });
-      } else {
-        this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value)
+      }else {
+        this.service.save(name, this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value)
           .subscribe(() => {
             this.mainService.alertSave(title);
           });
@@ -131,7 +129,7 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
         this.service.remove(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, name.split('-')[1])
           .subscribe(() => {});
       else  {
-        this.service.remove(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod)
+        this.service.remove(name, this.currentDataSet?.organisationUnits[0].id, this.currentPeriod)
           .subscribe(() => {});
       }
     }
@@ -144,7 +142,7 @@ export class AggregateFormComponent implements OnInit, AfterViewInit {
     }
   }
   completeForm() {
-    let title = "completed with successfully";
+    let title = "completed successfully";
     this.service.completeRegistration(UsefulFunctions.completeDataSet(this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, this.currentDataSet?.id))
       .subscribe(response => {
         this.mainService.alertSave(title);

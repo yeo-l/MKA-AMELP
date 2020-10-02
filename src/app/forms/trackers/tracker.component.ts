@@ -13,11 +13,13 @@ export class TrackerComponent implements OnInit {
   eventRegistered: any;
   currentProgram: Program;
   trackerCode: string;
+  editable: boolean;
 
   constructor(private trackerService: TrackerService,
               private route: ActivatedRoute,  private router: Router) { }
 
   ngOnInit(): void {
+    this.editable = true;
     this.sub = this.route.params.subscribe(params => {
       console.log('param', params['id']);
       this.trackerCode = params['code'];
@@ -34,6 +36,7 @@ export class TrackerComponent implements OnInit {
       .subscribe((eventResults: any) => {
         eventResults.events.forEach(e => {
           e['period'] = this.getEventPeriod(e.dataValues);
+          e['productName'] = this.getEventProductName(e.dataValues);
           this.eventRegistered.push(e);
         })
       //this.eventRegistered = eventResults.events;
@@ -42,6 +45,10 @@ export class TrackerComponent implements OnInit {
   }
   getEventPeriod(dataValues){
     let result = dataValues.filter(dv => dv.dataElement === 's08WlYaNIno');
+    return result.length > 0 ? result[0].value : null;
+  }
+  getEventProductName(dataValues){
+    let result = dataValues.filter(dv => dv.dataElement === 'wyGgGonH2he');
     return result.length > 0 ? result[0].value : null;
   }
   ngOnDestroy() {
@@ -53,5 +60,10 @@ export class TrackerComponent implements OnInit {
       // this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
       location.reload();
     })
+  }
+
+  edited() {
+    this.editable = false
+    console.log('Editable', this.editable);
   }
 }
