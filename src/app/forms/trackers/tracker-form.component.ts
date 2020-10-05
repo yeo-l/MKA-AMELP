@@ -155,7 +155,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       if (result.length) {
         const index: number = this.dataValues.indexOf(result[0]);
         if (index !== -1) {
-          this.dataValues.splice(index);
+          this.dataValues.splice(index, 1);
         }
       }
     }
@@ -211,13 +211,13 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.eventModel.dataValues = this.dataValues;
       if (this.eventId) {
         this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
-          this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+         // this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
           this.mainService.alertSave(title);
         });
         this.mainService.alertSave(title);
       }else {
         this.trackerService.save(this.eventModel).subscribe(result => {
-          this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+        //  this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
           this.mainService.alertSave(title);
         })
       }

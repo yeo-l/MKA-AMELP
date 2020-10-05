@@ -26,6 +26,7 @@
     "bootstrap": "^4.5.2",
     "dexie": "^3.0.2",
     "font-awesome": "^4.7.0",
+    "imask": "^6.0.5",
     "inputmask": "^5.0.5",
     "rxjs": "~6.5.5",
     "sweetalert2": "^10.0.2",
