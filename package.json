@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json --open",
-    "build": "ng build --prod --aot && cd dist/mka-amelp && 7z a -tzip mka-amelp.zip .",
+    "start": "ng serve --proxy-config proxy.conf.json --port=4201 --open",
+    "build": "ng build --prod --aot && cd dist/mka-amelp && zip a -tzip mka-amelp.zip .",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
