@@ -66,7 +66,7 @@ a {
   /*position: absolute;*/
   width: auto;
   /*height: auto;*/
-  font-size: x-small;
+  /*font-size: x-small;*/
   /*left: 0;*/
   /*text-align: center;*/
   /*top: auto;*/
@@ -102,26 +102,26 @@ input[type=text]{
   min-width: 60px;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
+#tooltip {
+  /*position: relative;*/
+  /*display: inline-block;*/
+  /*border-bottom: 1px dotted black;*/
 }
 
-.tooltip #tooltip-text {
-  /*visibility: hidden;*/
-  width: 300px;
+#tooltip #tooltip-text {
+  visibility: hidden;
+  width: 450px;
   background-color: black;
   color: #fff;
-  text-align: center;
+  text-align: left;
   border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
+  margin-top: -170px;
+  margin-left: 50px;
+  padding: 5px 5px;
   position: absolute;
   z-index: 1;
 }
 
-.tooltip:hover #tooltip-text {
+#tooltip:hover #tooltip-text {
   visibility: visible;
 }

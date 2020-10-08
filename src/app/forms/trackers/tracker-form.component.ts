@@ -50,9 +50,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.disabled = true;
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params.code;
-      if (this.trackerCode === '3.0.1' || this.trackerCode === '3.0.3') {
-        this.getDescription();
-      }
       this.eventId = params.eventId;
       if (this.eventId){
         this.trackerService.loadMetaData(`events/${this.eventId}`, [`fields=`])
@@ -138,6 +135,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
             el.addEventListener('change', this.onChange.bind(this));
           });
+          if (this.trackerCode === '3.0.1' || this.trackerCode === '3.0.3') {
+            this.getDescription();
+          }
           if (params.eventId){
             this.getOneEvent(params.eventId);
           }else{
@@ -200,12 +200,12 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         // console.log(`${key}: ${value}`);
         const desc = value as any;
         this.description += '<span class="font-weight-bold">' + desc.name + '</span> : ';
-        this.description += '<span class="text-justify">' + desc.description + '</span> <br>';
+        this.description += '<span class="text-justify">' + desc.description + '</span> <hr>';
       }
       // console.log('description : ', this.description);
       const el = document.querySelector('#tooltip-text');
       console.log(el);
-      // el.innerHTML = this.description;
+      el.innerHTML = this.description;
     });
   }
   completeData(): void {

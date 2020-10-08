@@ -44,9 +44,11 @@
     <h4>Please Select a period to see the form</h4>
   </div>
   <div class="text-center border-top" *ngIf="!loading && currentPeriod && dataValueSet?.completeDate">
+    <button class="btn btn-dark mt-2 mr-2" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id]">Back to list</button>
     <button class="btn btn-warning mt-2 mr-2" (click)="unCompleteForm()">Mark as uncompleted</button>
   </div>
   <div class="text-center border-top" *ngIf="!loading && currentPeriod && !dataValueSet?.completeDate">
+    <button class="btn btn-dark mt-2 mr-2" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id]">Back to list</button>
     <button class="btn btn-primary mt-2" (click)="completeForm()">Mark as completed</button>
   </div>
 </form>
