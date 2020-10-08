@@ -34,10 +34,10 @@ export class UsefulFunctions {
   static getQuarterlyPeriod(year: number): any {
     const periods: any[] = [];
     const months = [
-      {id: 'Q1', name: 'January - March'},
-      {id: 'Q2', name: 'April - June'},
-      {id: 'Q3', name: 'July - September'},
-      {id: 'Q4', name: 'October - December'}
+      {id: 'Q1', name: 'October - December'},
+      {id: 'Q2', name: 'January - March'},
+      {id: 'Q3', name: 'April - June'},
+      {id: 'Q4', name: 'July - September'}
     ];
     for (let i = 0; i < months.length; i++) {
       const currentQuarter = this.getQuarter(null);

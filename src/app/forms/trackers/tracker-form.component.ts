@@ -72,6 +72,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   editForm(): void{
     this.disabled = false;
   }
+
   getOneEvent(eventId: string): void {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
       .subscribe((eventResults: any) => {
