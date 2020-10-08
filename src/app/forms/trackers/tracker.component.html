@@ -35,8 +35,8 @@
         <td>{{e.status}}</td>
         <td>{{e?.completedDate | date: 'yyy-MM-dd'}}</td>
         <td>
-          <button class="btn btn-primary" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id, 'form', e?.event]">
-            <i class="fa fa-edit"></i>
+          <button class="btn {{e.status === 'COMPLETED' ? 'btn-success' : 'btn-primary' }}" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id, 'form', e?.event]">
+            <i class="fa {{e.status === 'COMPLETED' ?'fa-eye' : 'fa-edit'}}"></i>
           </button>
           <!--      <button class="btn btn-dark" (click)="edited()" [routerLink]="['/tracker', currentProgram?.code, currentProgram?.id, 'form', e?.event]">-->
           <!--        <i class="fa fa-eye"></i>-->

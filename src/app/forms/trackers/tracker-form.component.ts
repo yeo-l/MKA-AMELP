@@ -280,7 +280,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.toggleReadOnly(this.eventModel);
       this.trackerService.save(result).subscribe(res => {
         console.log(res);
-        this.getOneEvent(this.eventId);
+        // this.getOneEvent(this.eventId);
       });
     });
   }
