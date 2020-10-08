@@ -45,12 +45,14 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
               private mainService: MainService) { }
 
   ngOnInit(): void {
-    this.getDescription();
     this.periodList = [];
     this.loading = true;
     this.disabled = true;
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params.code;
+      if (this.trackerCode === '3.0.1' || this.trackerCode === '3.0.3') {
+        this.getDescription();
+      }
       this.eventId = params.eventId;
       if (this.eventId){
         this.trackerService.loadMetaData(`events/${this.eventId}`, [`fields=`])
@@ -180,19 +182,30 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       }
-      if (event.target.id === 'workStream') {
-        const name = event.target.value;
-        const description = this.workStreams[name].description;
-        const el = document.querySelector('#wSDesc');
-        // el.innerHTML = description;
-        el.setAttribute('title', description);
-      }
+      // if (event.target.id === 'workStream') {
+      //   const name = event.target.value;
+      //   const description = this.workStreams[name].description;
+      //   const el = document.querySelector('.tooltip-text');
+      //   // el.innerHTML = description;
+      //   el.setAttribute('title', description);
+      // }
     }
     // console.log(this.dataValues);
   }
   getDescription(): void{
-    this.mainService.getDataStore().subscribe(data => {
+    this.description = '';
+    this.mainService.getDataStore().subscribe((data: any) => {
       this.workStreams = data.workstreams;
+      for (const [key, value] of Object.entries(this.workStreams)) {
+        // console.log(`${key}: ${value}`);
+        const desc = value as any;
+        this.description += '<span class="font-weight-bold">' + desc.name + '</span> : ';
+        this.description += '<span class="text-justify">' + desc.description + '</span> <br>';
+      }
+      // console.log('description : ', this.description);
+      const el = document.querySelector('#tooltip-text');
+      console.log(el);
+      // el.innerHTML = this.description;
     });
   }
   completeData(): void {

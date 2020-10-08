@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
 import IMask from 'imask';
-import {MainService} from "../../services/main.service";
+import {MainService} from '../../services/main.service';
 
 @Component({
   selector: 'app-aggregate-form',

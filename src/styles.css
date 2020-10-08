@@ -101,3 +101,27 @@ select.ng-valid{
 input[type=text]{
   min-width: 60px;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip #tooltip-text {
+  /*visibility: hidden;*/
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover #tooltip-text {
+  visibility: visible;
+}
