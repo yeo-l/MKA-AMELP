@@ -10,7 +10,10 @@ body {
 a {
   text-decoration: none;
 }
-
+.logo {
+  height: 50px;
+  width: 120px;
+}
 #header {
   position: fixed;
   top: 48px;
@@ -22,7 +25,8 @@ a {
   z-index: 10;
   overflow: hidden;
   box-sizing: border-box;
-  /*height: 45px;*/
+  height: 65px;
+  max-height: 70px;
   padding: 10px;
   font-size: 20px;
   text-indent: 6px;
@@ -90,4 +94,10 @@ select.ng-valid{
 }
 .error {
   color: red;
+}
+.bg-lightgray{
+  background-color: #e6e6e6;
+}
+input[type=text]{
+  min-width: 60px;
 }

@@ -40,9 +40,9 @@ export class AggregateService extends MainService{
 
   remove(dataElementId: string, orgUnitId: string, period: string, categoryOption?: string){
     if (categoryOption)
-      return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}&co=${categoryOption}`, null);
+      return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}&co=${categoryOption}&value=`, null);
     else
-      return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}`, null);
+      return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}&value=`, null);
   }
   // addData(fieldName, value, idOu, idDs, period) {
   //   const dataValue = new DataValue(fieldName.split('-')[0], fieldName.split('-')[1], value);
@@ -56,6 +56,9 @@ export class AggregateService extends MainService{
   // }
   completeRegistration(data: { completeDataSetRegistrations: any[] }) {
     return this.service.post('completeDataSetRegistrations?skipExistingCheck=true', data);
+  }
+  unCompleteRegistration( ds: string, ou: string, pe: string) {
+    return this.service.delete(`completeDataSetRegistrations?ds=${ds}&ou=${ou}&pe=${pe}`);
   }
   loadAvailableDataValues(dataSetId: string) {
     return this.loadMetaData(`dataSets/${dataSetId}/dataValueSet.json`);

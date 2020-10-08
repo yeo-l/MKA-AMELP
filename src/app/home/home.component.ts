@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
       this.organisationUnits = data.organisationUnits;
     })
   }
-  getAreaDataSets(id){
+  getAreaDataSets (id){
     this.dataSets = [];
     this.loading = true;
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){

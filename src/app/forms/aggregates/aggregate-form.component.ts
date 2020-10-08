@@ -90,6 +90,18 @@ export class AggregateFormComponent implements OnInit {
       this.loading = false;
     });
   }
+  toggleReadOnly(dataSet: DataValueSet){
+      document.querySelectorAll('input.form-control').forEach(el => {
+        if (dataSet.completeDate){
+          el.setAttribute('disabled', 'true');
+        }
+        else{
+          // el.setAttribute('enabled', 'true');
+          el.removeAttribute('disabled');
+        }
+
+      });
+  }
   getHtmlFile(filePath: string) {
     return this.http.get(filePath, {responseType: 'text'});
   }
@@ -97,6 +109,7 @@ export class AggregateFormComponent implements OnInit {
     this.service.loadOneDataSetValues(`dataValueSets?period=${period}&dataSet=${dataSetId}&orgUnit=${orgUnit}`)
       .subscribe((result: any) => {
         this.dataValueSet = result;
+        this.toggleReadOnly(this.dataValueSet);
         document.querySelectorAll('.form-control').forEach(el => {
           if (el.getAttribute('id') !== 'reportingPeriod'){
             const name = el.getAttribute('name');
@@ -118,7 +131,8 @@ export class AggregateFormComponent implements OnInit {
   }
   onChange(event) {
     let name: string = event.target.name;
-    let title = "Save successfully";
+    console.log(event.target.value);
+    let title = "Saved successfully";
     if (event.target.value){
       if (name.split('-').length > 1){
         this.service.save(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, event.target.value, name.split('-')[1])
@@ -132,12 +146,17 @@ export class AggregateFormComponent implements OnInit {
           });
       }
     } else {
+      let title = "Removed successfully";
       if (name.split('-').length > 1)
         this.service.remove(name.split('-')[0], this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, name.split('-')[1])
-          .subscribe(() => {});
+          .subscribe(() => {
+            this.mainService.alertSave(title);
+          });
       else  {
         this.service.remove(name, this.currentDataSet?.organisationUnits[0].id, this.currentPeriod)
-          .subscribe(() => {});
+          .subscribe(() => {
+            this.mainService.alertSave(title);
+          });
       }
     }
   }
@@ -154,6 +173,18 @@ export class AggregateFormComponent implements OnInit {
       .subscribe(response => {
         this.mainService.alertSave(title);
         this.router.navigate(['aggregate',this.currentDataSet?.code, this.currentDataSet?.id]);
+      });
+  }
+  unCompleteForm() {
+    let title = "Data uncompleted successfully, your can edit the form";
+    this.service.unCompleteRegistration(this.currentDataSet?.id, this.currentDataSet?.organisationUnits[0].id, this.currentPeriod)
+      .subscribe(response => {
+        this.mainService.alertSave(title);
+        this.dataValueSet.completeDate = null;
+        this.toggleReadOnly(this.dataValueSet);
+        // this.router.navigate(['aggregate',this.currentDataSet?.code, this.currentDataSet?.id]);
+      }, error => {
+        console.log(error);
       });
   }
 }

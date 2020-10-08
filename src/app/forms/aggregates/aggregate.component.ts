@@ -15,7 +15,6 @@ export class AggregateComponent implements OnInit {
   dataValueSets: any;
   currentDataSet: IDataSet;
   dataSetCode: string;
-  // organisationUnits: any[] = [];
 
   constructor(private service: AggregateService,
               private route: ActivatedRoute) { }
@@ -31,7 +30,6 @@ export class AggregateComponent implements OnInit {
       });
     });
   }
-
   getEndDate(date: Date) {
     return UsefulFunctions.formatDateSimple(this.add_months(date, 12));
   }
@@ -70,6 +68,7 @@ export class AggregateComponent implements OnInit {
           this.service.loadAvailableDataValues(result.dataSet).subscribe((data: any) => {
             result['available'] = data.dataValues.length;
             this.dataValueSets.push(result);
+            console.log(this.dataValueSets);
           });
         }
       })

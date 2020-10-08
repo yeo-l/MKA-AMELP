@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TrackerService} from '../../services/tracker.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Program} from '../../models/program.model';
+import {AggregateService} from "../../services/aggregate.service";
 
 @Component({
   selector: 'app-tracker',
@@ -15,8 +16,7 @@ export class TrackerComponent implements OnInit {
   trackerCode: string;
   editable: boolean;
 
-  constructor(private trackerService: TrackerService,
-              private route: ActivatedRoute,  private router: Router) { }
+  constructor(private trackerService: TrackerService, private route: ActivatedRoute,  private router: Router) { }
 
   ngOnInit(): void {
     this.editable = true;
@@ -29,7 +29,6 @@ export class TrackerComponent implements OnInit {
       });
     });
   }
-
   getRegisteredEvents(programId: string, orgUnitId: string) {
     this.eventRegistered = [];
     this.trackerService.loadMetaData('events', [`orgUnit=${orgUnitId}`, `program=${programId}`, '&order=dueDate'])

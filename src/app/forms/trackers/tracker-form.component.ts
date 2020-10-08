@@ -191,6 +191,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.eventModel.status = 'COMPLETED';
     if (this.trackerForm.valid){
       this.saveData();
+      this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
       this.mainService.alertSave(title);
     }
     if (this.trackerForm.invalid) {
@@ -211,13 +212,14 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.eventModel.dataValues = this.dataValues;
       if (this.eventId) {
         this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
-         // this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+          console.log(result);
+          this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
           this.mainService.alertSave(title);
         });
         this.mainService.alertSave(title);
       }else {
         this.trackerService.save(this.eventModel).subscribe(result => {
-        //  this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
+         this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
           this.mainService.alertSave(title);
         })
       }
