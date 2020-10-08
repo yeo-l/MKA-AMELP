@@ -3,6 +3,7 @@ import {DataValueSet} from '../models/dataSetValues.model';
 import {DataValue} from '../models/dataValues.model';
 import {MainService} from './main.service';
 import {NgxDhis2HttpClientService} from '@iapps/ngx-dhis2-http-client';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,36 +14,40 @@ export class AggregateService extends MainService{
     super(service);
   }
 
-  loadDataSets(params?: string[]) {
-    if (params)
+  loadDataSets(params?: string[]): Observable<any> {
+    if (params) {
       return this.loadMetaData('dataSets', params);
-    else
+    } else {
       return this.loadMetaData('dataSets', ['fields=id,name,description,code']);
+    }
   }
 
-  loadOneDataSet(dataSetId: string, params?: string[]) {
-    if (params)
+  loadOneDataSet(dataSetId: string, params?: string[]): Observable<any> {
+    if (params) {
       return this.loadMetaData(`dataSets/${dataSetId}`, params);
-    else
+    } else {
       return this.loadMetaData(`dataSets/${dataSetId}`, ['fields=id,name,description,code']);
+    }
   }
 
-  postDataValue(dataValueSet: DataValueSet){
+  postDataValue(dataValueSet: DataValueSet): Observable<any>{
     return this.service.post( 'dataValueSets', dataValueSet);
   }
 
-  save(dataElementId: string, orgUnitId: string, period: string, value: string, categoryOption?: string) {
-    if (categoryOption)
+  save(dataElementId: string, orgUnitId: string, period: string, value: string, categoryOption?: string): Observable<any> {
+    if (categoryOption) {
       return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}&co=${categoryOption}&value=${value}`, null);
-    else
+    } else {
       return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}&value=${value}`, null);
+    }
   }
 
-  remove(dataElementId: string, orgUnitId: string, period: string, categoryOption?: string){
-    if (categoryOption)
+  remove(dataElementId: string, orgUnitId: string, period: string, categoryOption?: string): Observable<any>{
+    if (categoryOption) {
       return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}&co=${categoryOption}`, null);
-    else
+    } else {
       return this.service.post(`dataValues?de=${dataElementId}&pe=${period}&ou=${orgUnitId}`, null);
+    }
   }
   // addData(fieldName, value, idOu, idDs, period) {
   //   const dataValue = new DataValue(fieldName.split('-')[0], fieldName.split('-')[1], value);
@@ -54,13 +59,13 @@ export class AggregateService extends MainService{
   //     console.log(result);
   //   });
   // }
-  completeRegistration(data: { completeDataSetRegistrations: any[] }) {
+  completeRegistration(data: { completeDataSetRegistrations: any[] }): Observable<any> {
     return this.service.post('completeDataSetRegistrations?skipExistingCheck=true', data);
   }
-  loadAvailableDataValues(dataSetId: string) {
+  loadAvailableDataValues(dataSetId: string): Observable<any> {
     return this.loadMetaData(`dataSets/${dataSetId}/dataValueSet.json`);
   }
-  loadOneDataSetValues(url: string) {
+  loadOneDataSetValues(url: string): Observable<any> {
     return this.service.get(url);
   }
 }

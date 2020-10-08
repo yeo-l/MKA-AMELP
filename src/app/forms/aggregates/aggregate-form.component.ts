@@ -5,11 +5,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
-import Inputmask from 'inputmask';
 import IMask from 'imask';
 import {MainService} from '../../services/main.service';
 import {Observable} from 'rxjs';
-import {element} from 'protractor';
 
 @Component({
   selector: 'app-aggregate-form',
@@ -73,11 +71,6 @@ export class AggregateFormComponent implements OnInit {
     this.getHtmlFile(`assets/aggregates/aggregate${this.dataSetCode}.html`).subscribe(data => {
       document.querySelector('#input-form').innerHTML = '';
       this.form.nativeElement.insertAdjacentHTML('beforeend', data);
-      // Inputmask('9{1,*}', {
-      //   positionCaretOnClick: 'ignore',
-      //   placeholder: '',
-      //   autoclear: false
-      // }).mask(document.querySelectorAll('input.form-control'));
       const elements = document.querySelectorAll('input.form-control').forEach(el => {
         const e = el as HTMLElement;
         e.setAttribute('class', 'text-center form-control');
@@ -129,7 +122,7 @@ export class AggregateFormComponent implements OnInit {
   onChange(event): void {
     const name: string = event.target.name;
     const title = 'Save successfully';
-    if (event.target.value){
+    if (event.target.value) {
       if (name.split('-').length > 1){
         this.service.save(name.split('-')[0],
           this.currentDataSet?.organisationUnits[0].id,

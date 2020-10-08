@@ -11,5 +11,21 @@
 </div>
 
 <div id="main" class="">
-  <router-outlet></router-outlet>
+  <div class="row">
+    <div class="col-3" *ngIf="!hideBar">
+      <h5 class="alert m-0 text-secondary shadow shadow-sm"><i class="fa fa-globe"></i> Project areas IR (Intermediate Result)</h5>
+      <div class="card shadow shadow-sm p-0">
+        <div class="card-body m-0 p-0">
+          <!--        <div class="alert alert-primary {{!isLast ? 'mb-1' : 'mb-0'}} pt-3 pb-3" *ngFor="let area of dataStore?.areaGroups; let index = index; let isLast = last">-->
+          <div class="alert alert-primary {{!isLast ? 'mb-1' : 'mb-0'}} pt-3 pb-3" *ngFor="let area of organisationUnits; let index = index; let isLast = last">
+            <!--          <h5 class="mb-0"><a style="cursor: pointer" (click)="getAreaDataSets(area.id)">{{area.name}}</a></h5>-->
+            <h5 class="mb-0"><a style="cursor: pointer" [routerLink]="['/home',area.id]">{{area.name}}</a></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="{{ hideBar ? 'col-12' : 'col-9' }}">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

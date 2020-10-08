@@ -38,7 +38,10 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   workStreams: any = [{}];
   get period(): AbstractControl {return this.trackerForm.get('period'); }
 
-  constructor(private trackerService: TrackerService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
+  constructor(private trackerService: TrackerService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private http: HttpClient,
               private mainService: MainService) { }
 
   ngOnInit(): void {
@@ -79,6 +82,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         this.eventModel = new EventModel(eventResults.program, eventResults.orgUnit);
         this.eventModel.eventDate = eventResults.eventDate;
         this.eventModel.status = eventResults.status;
+        this.toggleReadOnly(this.eventModel);
         document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
           const id = el.getAttribute('id');
           const name = el.getAttribute('name');
@@ -108,8 +112,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
               if (this.getDataValue(name)) {
                  input.checked = true;
               }
-            }
-            else {
+            } else {
               input.value = this.getDataValue(name);
             }
           }
@@ -206,23 +209,30 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  ngOnDestroy() {
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
   saveData(): void {
-    const title = 'Save successfully';
+    const title = 'Saved successfully';
     if (this.trackerForm.valid) {
       this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
       this.eventModel.dataValues = this.dataValues;
       if (this.eventId) {
-        this.trackerService.update(this.eventId, this.eventModel).subscribe(result => {
-          this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
+        this.trackerService.update(this.eventId, this.eventModel).subscribe((result: any) => {
+          if (this.eventModel.status === 'COMPLETED'){
+            this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
+          }
           this.mainService.alertSave(title);
         });
         this.mainService.alertSave(title);
       }else {
-        this.trackerService.save(this.eventModel).subscribe(result => {
-          this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
+        this.trackerService.save(this.eventModel).subscribe((result: any) => {
+          console.log(result.response.reference);
+          if (this.eventModel.status === 'COMPLETED'){
+            this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
+          }
+          this.getOneEvent(result.response.reference);
           this.mainService.alertSave(title);
         });
       }
@@ -259,5 +269,29 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
        this.removeDataValue(data.target.name);
        this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
     }
+  }
+
+  unCompleteData(id: string): void {
+    this.trackerService.loadEvent(id).subscribe(result => {
+      this.eventModel = result;
+      this.eventModel.status = 'ACTIVE';
+      result.status = 'ACTIVE';
+      result.completeDate = null;
+      this.toggleReadOnly(this.eventModel);
+      this.trackerService.save(result).subscribe(res => {
+        console.log(res);
+        this.getOneEvent(this.eventId);
+      });
+    });
+  }
+
+  toggleReadOnly(e: EventModel): void {
+    document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
+      if (e.status === 'COMPLETED') {
+        el.setAttribute('disabled', 'true');
+      } else {
+        el.removeAttribute('disabled');
+      }
+    });
   }
 }

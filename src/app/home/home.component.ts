@@ -3,7 +3,7 @@ import {AggregateService} from '../services/aggregate.service';
 import {HttpClient} from '@angular/common/http';
 import {DataStore} from '../models/dataStore.model';
 import {AreaGroup} from '../models/areaGroups.model';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,32 +18,26 @@ export class HomeComponent implements OnInit {
   loading: boolean;
   content: string;
   selectedProject: string;
-  organisationUnits: any[] = [];
 
   constructor(private aggregationService: AggregateService, private route: ActivatedRoute, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.getAreaOrgUnit();
     this.content = 'Select a project area on the left side to view indicators';
     this.route.params.subscribe(params => {
       this.getAreaDataStore(params['id']);
 
     });
   }
-  getAreaDataStore(id?) {
+  getAreaDataStore(id?): void {
     this.aggregationService.getDataStore().subscribe(dataStore => {
       this.dataStore = dataStore;
-      if (id)
+      if (id) {
       this.getAreaDataSets(id);
+      }
     });
   }
-  getAreaOrgUnit(){
-    const params: string[] = ['fields=id,name&userDataViewOnly=true&filter=level:eq:' + 3];
-    this.aggregationService.loadOrgUnits(params).subscribe((data: any) =>{
-      this.organisationUnits = data.organisationUnits;
-    })
-  }
-  getAreaDataSets(id){
+
+  getAreaDataSets(id): void{
     this.dataSets = [];
     this.loading = true;
     for (let i = 0; i < this.dataStore.areaGroups.length; i++){
@@ -51,6 +45,7 @@ export class HomeComponent implements OnInit {
         this.selectedProject = this.dataStore.areaGroups[i].name;
         this.type = this.dataStore.areaGroups[i].type;
         const ids = [];
+        // tslint:disable-next-line:prefer-for-of
         for (let j = 0; j < this.dataStore.areaGroups[i].dataSets.length; j++) {
           ids.push(this.dataStore.areaGroups[i].dataSets[j].id);
         }
