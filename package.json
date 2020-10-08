@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json --port=4201 --open",
-    "build": "ng build --prod --aot && cd dist/mka-amelp && zip a -tzip mka-amelp.zip .",
+    "build": "ng build --prod --aot && cd dist/MKA-AMELP && zip -r -D mka-amelp.zip .",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -2,9 +2,10 @@ export class UsefulFunctions {
 
   constructor(){}
 
-  static getMonthlyPeriod(year: number) {
+  static getMonthlyPeriod(year: number): any {
+    // tslint:disable-next-line:prefer-const
     let periods: [{id: string, value: string}];
-    let months = [
+    const months = [
       {id: '01', name: 'January'},
       {id: '02', name: 'February'},
       {id: '03', name: 'March'},
@@ -23,39 +24,40 @@ export class UsefulFunctions {
     }
     return periods;
   }
-   static getQuarter(d) {
+   static getQuarter(d): string {
     d = d || new Date();
     let m = Math.floor(d.getMonth() / 3) + 1;
     m -= m > 4 ? 4 : 0;
-    let y = d.getFullYear() + (m == 1? 1 : 0);
-    return [y,m].join('Q');
+    const y = d.getFullYear() + (m === 1 ? 1 : 0);
+    return [y, m].join('Q');
   }
-  static getQuarterlyPeriod(year: number) {
-    let periods: any[] = [];
-    let months = [
+  static getQuarterlyPeriod(year: number): any {
+    const periods: any[] = [];
+    const months = [
       {id: 'Q1', name: 'January - March'},
       {id: 'Q2', name: 'April - June'},
       {id: 'Q3', name: 'July - September'},
       {id: 'Q4', name: 'October - December'}
     ];
     for (let i = 0; i < months.length; i++) {
-      let currentQuarter = this.getQuarter(null);
-      let quarter = year + months[i].id;
+      const currentQuarter = this.getQuarter(null);
+      const quarter = year + months[i].id;
       if (currentQuarter === quarter){
-        break
+        break;
       }
       periods.push({id: year + months[i].id, value: months[i].name + ' ' + year});
     }
     return periods;
   }
-   static formatDateSimple(d1: Date) {
-    let day = d1.getDate();
-    let month = d1.getMonth() + 1;
-    let year = d1.getFullYear();
-     return year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+   static formatDateSimple(d1: Date): string {
+    const day = d1.getDate();
+    const month = d1.getMonth() + 1;
+    const year = d1.getFullYear();
+    return year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
   }
-  static completeDataSet(ou, pe, ds){
+  static completeDataSet(ou, pe, ds): any {
     let completeDataSetRegistration: any;
+    console.log(UsefulFunctions.formatDateSimple(new Date()));
     completeDataSetRegistration = {
       completeDataSetRegistrations: [
         {

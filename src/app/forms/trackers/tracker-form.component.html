@@ -30,7 +30,12 @@
     </div>
   </div>
   <div class="text-center border-top" *ngIf="!loading">
-    <button class="btn btn-info mt-2 mr-2" (click)="saveData()">Save</button>
-    <button class="btn btn-primary mt-2" (click)="completeData()">Save and Complete</button>
+    <div *ngIf="eventModel.status === 'COMPLETED'">
+      <button class="btn btn-primary mt-2" (click)="unCompleteData(eventId)">Open form to edit</button>
+    </div>
+    <div *ngIf="eventModel.status !== 'COMPLETED'">
+      <button class="btn btn-info mt-2 mr-2" (click)="saveData()">Save</button>
+      <button class="btn btn-primary mt-2" (click)="completeData()">Save and Complete</button>
+    </div>
   </div>
 </form>

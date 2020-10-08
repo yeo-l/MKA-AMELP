@@ -28,4 +28,7 @@ export class TrackerService extends MainService {
     return this.service.put(`events/${eventId}`, payload);
   }
 
+  loadEvent(id: string) {
+    return this.loadMetaData(`events/${id}`, ['fields=']);
+  }
 }
