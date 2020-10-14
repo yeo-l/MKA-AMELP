@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TrackerService} from '../../services/tracker.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Program} from '../../models/program.model';
-import {AggregateService} from "../../services/aggregate.service";
+import {UsefulFunctions} from '../../shared/useful-functions';
 
 @Component({
   selector: 'app-tracker',
@@ -64,5 +64,9 @@ export class TrackerComponent implements OnInit {
   edited() {
     this.editable = false
     console.log('Editable', this.editable);
+  }
+
+  getFiscalYearFormat(period: string): string {
+    return UsefulFunctions.getFiscalYear(period);
   }
 }

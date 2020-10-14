@@ -71,10 +71,13 @@ export class AggregateComponent implements OnInit {
             console.log(this.dataValueSets);
           });
         }
-      })
+      });
     });
   }
 
+  getFiscalYearFormat(period: string): string {
+    return UsefulFunctions.getFiscalYear(period);
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

@@ -57,7 +57,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
             eventResults.dataValues.forEach(dataV => {
               if (dataV.dataElement === 's08WlYaNIno'){
                 if (dataV.value){
-                  this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0], 10));
+                  if (dataV.value.split('Q')[1] === '4') {
+                    this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0], 10) + 1);
+                  } else {
+                    this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0], 10));
+                  }
                 }
               }
             });
@@ -68,6 +72,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   editForm(): void{
     this.disabled = false;
   }

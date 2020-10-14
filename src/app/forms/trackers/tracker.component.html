@@ -27,7 +27,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let e of eventRegistered">
-        <td>{{ e?.period}}</td>
+        <td>{{ getFiscalYearFormat(e?.period) }}</td>
         <td>{{ e?.eventDate | date: 'yyy-MM-dd'}}</td>
         <td>{{e?.orgUnitName}}</td>
         <td>{{ e?.productName}}</td>

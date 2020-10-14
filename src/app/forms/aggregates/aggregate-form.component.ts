@@ -35,7 +35,11 @@ export class AggregateFormComponent implements OnInit {
       this.dataSetCode = params['code'];
       if (params['period']){
         this.currentPeriod = params['period'];
-        this.currentYear = parseInt(this.currentPeriod.split('Q')[0]);
+        if (this.currentPeriod.split('Q')[1] === '4') {
+          this.currentYear = parseInt(this.currentPeriod.split('Q')[0]) + 1;
+        } else {
+          this.currentYear = parseInt(this.currentPeriod.split('Q')[0]);
+        }
         this.getPeriod();
       }
       this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]'])
@@ -81,7 +85,7 @@ export class AggregateFormComponent implements OnInit {
       // numericInput:true
       if (this.currentPeriod){
         document.querySelectorAll('input.form-control').forEach(el => {
-          if(el.getAttribute('name') !== 'reportingPeriod'){
+          if (el.getAttribute('name') !== 'reportingPeriod'){
             el.addEventListener('change', this.onChange.bind(this));
           }
         });

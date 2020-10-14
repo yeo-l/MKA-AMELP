@@ -34,22 +34,33 @@ export class UsefulFunctions {
   static getQuarterlyPeriod(year: number): any {
     const periods: any[] = [];
     const months = [
-      {id: 'Q1', name: 'October - December'},
-      {id: 'Q2', name: 'January - March'},
-      {id: 'Q3', name: 'April - June'},
-      {id: 'Q4', name: 'July - September'}
+      {id: 'Q4', name: 'October - December'},
+      {id: 'Q1', name: 'January - March'},
+      {id: 'Q2', name: 'April - June'},
+      {id: 'Q3', name: 'July - September'}
     ];
+
     for (let i = 0; i < months.length; i++) {
-      const currentQuarter = this.getQuarter(null);
-      const quarter = year + months[i].id;
-      if (currentQuarter === quarter){
-        break;
+      if (months[i].id === 'Q4') {
+        periods.push({id: (year - 1) + months[i].id, value: months[i].name + ' ' + (year - 1)});
+      } else {
+        periods.push({id: year + months[i].id, value: months[i].name + ' ' + year});
       }
-      periods.push({id: year + months[i].id, value: months[i].name + ' ' + year});
     }
+    const currentQuarter = this.getQuarter(null);
+    const result = periods.filter(p => p.id === currentQuarter);
+    if (result.length) {
+      const index: number = periods.indexOf(result[0]);
+      if (index !== -1) {
+        periods.splice(index);
+      }
+    }
+    // if (currentQuarter === quarter){
+    //   break;
+    // }
     return periods;
   }
-   static formatDateSimple(d1: Date): string {
+  static formatDateSimple(d1: Date): string {
     const day = d1.getDate();
     const month = d1.getMonth() + 1;
     const year = d1.getFullYear();
@@ -57,7 +68,7 @@ export class UsefulFunctions {
   }
   static completeDataSet(ou, pe, ds): any {
     let completeDataSetRegistration: any;
-    console.log(UsefulFunctions.formatDateSimple(new Date()));
+    // console.log(UsefulFunctions.formatDateSimple(new Date()));
     completeDataSetRegistration = {
       completeDataSetRegistrations: [
         {
@@ -69,5 +80,23 @@ export class UsefulFunctions {
       ]
     };
     return completeDataSetRegistration;
+  }
+
+  static getFiscalYear(period): string {
+    const values = period.split('Q');
+    // console.log(values);
+    if (values.length !== 2) {
+      return '';
+    }
+    const year = parseInt(values[0], 10);
+    if (values[1] === '4') {
+      return 'Q1-FY' + (year + 1);
+    } else if (values[1] === '1') {
+      return 'Q2-FY' + year;
+    } else if (values[1] === '2') {
+      return 'Q3-FY' + year;
+    } else if (values[1] === '3') {
+      return 'Q4-FY' + year;
+    }
   }
 }

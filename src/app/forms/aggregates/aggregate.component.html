@@ -23,7 +23,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let ds of dataValueSets">
-      <td>{{ ds?.period }}</td>
+      <td>{{ getFiscalYearFormat(ds?.period) }}</td>
       <td>{{ds.completeDate ? 'COMPLETED' : 'NOT COMPLETED' }}</td>
       <td>{{ds?.completeDate | date: 'yyy-MM-dd'}}</td>
       <td>{{ds.dataValues.length}} / {{ ds.available}} </td>

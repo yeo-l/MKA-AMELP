@@ -3,12 +3,14 @@
     "target": "https://integration.usaidmomentum.org",
     "secure": "true",
     "auth": "admin:District@1",
-    "changeOrigin": "true"
+    "changeOrigin": "true",
+    "logLevel": "debug"
   },
   "/": {
     "target": "https://integration.usaidmomentum.org",
     "secure": "true",
     "auth": "admin:District@1",
-    "changeOrigin": "true"
+    "changeOrigin": "true",
+    "logLevel": "debug"
   }
 }
