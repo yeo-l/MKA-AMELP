@@ -25,8 +25,6 @@ export class AggregateComponent implements OnInit {
       this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]']).subscribe((result: any) => {
         this.currentDataSet = result as DataSet;
         this.getDataValueSets(this.currentDataSet.id, this.currentDataSet.organisationUnits[0].id);
-        console.log('code', this.currentDataSet.code);
-        console.log('id', this.currentDataSet.id);
       });
     });
   }
@@ -60,15 +58,12 @@ export class AggregateComponent implements OnInit {
   getDataValueSets(dataSetId: string, orgUnitId: string) {
     this.dataValueSets = [];
     this.getLastQuarters(new Date(), 20).forEach(period => {
-      console.log(' last Quaters period',period);
       this.service.loadMetaData('dataValueSets', [`orgUnit=${orgUnitId}`, `dataSet=${dataSetId}`, `period=${period}`])
         .subscribe(result => {
-         console.log('Quaters results: ',result);
         if (result.dataValues){
           this.service.loadAvailableDataValues(result.dataSet).subscribe((data: any) => {
             result['available'] = data.dataValues.length;
             this.dataValueSets.push(result);
-            console.log(this.dataValueSets);
           });
         }
       });

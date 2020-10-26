@@ -74,7 +74,6 @@ export class AggregateFormComponent implements OnInit {
     this.getHtmlFile(`assets/aggregates/aggregate${this.dataSetCode}.html`).subscribe(data => {
       document.querySelector('#input-form').innerHTML = '';
       this.form.nativeElement.insertAdjacentHTML('beforeend', data);
-     // Inputmask('9{1,*}').mask(document.querySelectorAll('input.form-control'));
       const elements = document.querySelectorAll('input.form-control').forEach(el => {
         const e = el as HTMLElement;
         e.setAttribute('class', 'text-center form-control');
@@ -82,7 +81,6 @@ export class AggregateFormComponent implements OnInit {
           mask: Number
         });
       });
-      // numericInput:true
       if (this.currentPeriod){
         document.querySelectorAll('input.form-control').forEach(el => {
           if (el.getAttribute('name') !== 'reportingPeriod'){
@@ -100,7 +98,6 @@ export class AggregateFormComponent implements OnInit {
           el.setAttribute('disabled', 'true');
         }
         else{
-          // el.setAttribute('enabled', 'true');
           el.removeAttribute('disabled');
         }
 
@@ -135,7 +132,6 @@ export class AggregateFormComponent implements OnInit {
   }
   onChange(event) {
     let name: string = event.target.name;
-    console.log(event.target.value);
     let title = "Saved successfully";
     if (event.target.value){
       if (name.split('-').length > 1){

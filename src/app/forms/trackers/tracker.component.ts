@@ -21,7 +21,6 @@ export class TrackerComponent implements OnInit {
   ngOnInit(): void {
     this.editable = true;
     this.sub = this.route.params.subscribe(params => {
-      console.log('param', params['id']);
       this.trackerCode = params['code'];
       this.trackerService.loadPrograms(params['id']).subscribe((programResult: any) => {
         this.currentProgram = programResult;
@@ -38,8 +37,6 @@ export class TrackerComponent implements OnInit {
           e['productName'] = this.getEventProductName(e.dataValues);
           this.eventRegistered.push(e);
         })
-      //this.eventRegistered = eventResults.events;
-      console.log(this.eventRegistered);
     });
   }
   getEventPeriod(dataValues){
@@ -53,19 +50,15 @@ export class TrackerComponent implements OnInit {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
   deleteEvent(eventId: string) {
     this.trackerService.remove(eventId).subscribe( data => {
       // this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
       location.reload();
     })
   }
-
   edited() {
     this.editable = false
-    console.log('Editable', this.editable);
   }
-
   getFiscalYearFormat(period: string): string {
     return UsefulFunctions.getFiscalYear(period);
   }

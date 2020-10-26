@@ -76,14 +76,12 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   editForm(): void{
     this.disabled = false;
   }
-
   getOneEvent(eventId: string): void {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
       .subscribe((eventResults: any) => {
         eventResults.dataValues.forEach(dataV => {
           this.dataValues.push(this.createDataValue(dataV.dataElement, dataV.value));
         });
-        console.log('data values loaded : ', this.dataValues);
         this.eventModel = new EventModel(eventResults.program, eventResults.orgUnit);
         this.eventModel.eventDate = eventResults.eventDate;
         this.eventModel.status = eventResults.status;
@@ -187,29 +185,18 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           this.dataValues.push(this.createDataValue(event.target.name, event.target.value));
         }
       }
-      // if (event.target.id === 'workStream') {
-      //   const name = event.target.value;
-      //   const description = this.workStreams[name].description;
-      //   const el = document.querySelector('.tooltip-text');
-      //   // el.innerHTML = description;
-      //   el.setAttribute('title', description);
-      // }
     }
-    // console.log(this.dataValues);
   }
   getDescription(): void{
     this.description = '';
     this.mainService.getDataStore().subscribe((data: any) => {
       this.workStreams = data.workstreams;
       for (const [key, value] of Object.entries(this.workStreams)) {
-        // console.log(`${key}: ${value}`);
         const desc = value as any;
         this.description += '<span class="font-weight-bold">' + desc.name + '</span> : ';
         this.description += '<span class="text-justify">' + desc.description + '</span> <hr>';
       }
-      // console.log('description : ', this.description);
       const el = document.querySelector('#tooltip-text');
-      console.log(el);
       el.innerHTML = this.description;
     });
   }
@@ -228,7 +215,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  // tslint:disable-next-line:use-lifecycle-interface
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
@@ -247,7 +233,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         this.mainService.alertSave(title);
       }else {
         this.trackerService.save(this.eventModel).subscribe((result: any) => {
-          console.log(result.response.reference);
           if (this.eventModel.status === 'COMPLETED'){
             this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
           }
@@ -289,7 +274,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
        this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
     }
   }
-
   unCompleteData(id: string): void {
     this.trackerService.loadEvent(id).subscribe(result => {
       this.eventModel = result;
@@ -299,11 +283,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.toggleReadOnly(this.eventModel);
       this.trackerService.save(result).subscribe(res => {
         console.log(res);
-        // this.getOneEvent(this.eventId);
       });
     });
   }
-
   toggleReadOnly(e: EventModel): void {
     document.querySelectorAll('.form-control, .form-check-input').forEach(el => {
       if (e.status === 'COMPLETED') {

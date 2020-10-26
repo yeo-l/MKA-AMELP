@@ -1,28 +1,28 @@
 <div class="row">
   <div class="col-12">
     <div class="form-group row">
-      <label for="selectedIndicator" class="col-2">Selected Indicator</label>
+      <label for="selectedIndicator" class="col-2">Selected Indicator <b class="redStar">*</b></label>
       <div class="col-2">
-        <input type="text" id="selectedIndicator" name="selectedIndicator" value="programCode" class="form-control " readonly>
+        <input required type="text" id="selectedIndicator" name="selectedIndicator" value="programCode" class="form-control " readonly>
       </div>
     </div>
     <div class="form-group row">
-      <label for="indicatorName" class="col-2">Indicator Name</label>
+      <label for="indicatorName" class="col-2">Indicator Name <b class="redStar">*</b></label>
       <div class="col-10">
-        <textarea type="text" id="indicatorName" name="indicatorName" class="form-control" readonly>programName</textarea>
+        <textarea required id="indicatorName" name="indicatorName" class="form-control" readonly>programName</textarea>
       </div>
     </div>
     <div class="form-group row">
-      <label for="nameReportInstances" class="col-2">Name of reported instances of MKA-developed systems, mechanisms, tools, products and/or innovations applied </label>
+      <label for="nameReportInstances" class="col-2">Name of reported instances of MKA-developed systems, mechanisms, tools, products and/or innovations applied <b class="redStar">*</b></label>
       <div class="col-6">
-        <input type="text" id="nameReportInstances" name="wyGgGonH2he" class="form-control ">
+        <input required type="text" id="nameReportInstances" name="wyGgGonH2he" class="form-control ">
         <!--        <input type="text" id="nameReportInstances" name="CNScOSLfjHM" class="form-control ">-->
       </div>
     </div>
     <div class="form-group row">
-      <label for="workStream" class="col-2">Workstream</label>
+      <label for="workStream" class="col-2">Workstream <b class="redStar">*</b></label>
       <div class="col-4">
-        <select id="workStream" name="tVQfcoPi477" class="form-control ">
+        <select required id="workStream" name="tVQfcoPi477" class="form-control ">
           <option value=""></option>
           <option value="yQXS2o6Tkrb">Systems</option>
           <option value="ehTw17lZ05c">Mechanism</option>
@@ -38,43 +38,45 @@
     </div>
     <hr>
     <div class="form-group row">
-      <label class="col-2">Region</label>
+      <label class="col-2">Region <b class="redStar">*</b></label>
       <div class="col-10">
         <div class="row">
-          <div class="form-check col-2">
-            <input class="form-check-input" name="HylBieZWXz5" type="checkbox" id="NorthAmerica" value="true">
-            <label class="form-check-label" for="NorthAmerica">North America</label>
+            <div class="form-check col-2">
+              <input class="form-check-input" name="HylBieZWXz5" type="checkbox" id="NorthAmerica" value="true">
+              <label class="form-check-label" for="NorthAmerica">North America</label>
+            </div>
+            <div class="form-check col-2">
+              <input class="form-check-input" name="MMW1KJgHoLE" type="checkbox" id="CentralAmerica" value="true">
+              <label class="form-check-label" for="CentralAmerica">Central America</label>
+            </div>
+            <div class="form-check col-2">
+              <input class="form-check-input" name="cBjIwkJzVbt" type="checkbox" id="SouthAmerica" value="true">
+              <label class="form-check-label" for="SouthAmerica">South America</label>
+            </div>
+            <div class="form-check col-4">
+              <input class="form-check-input" name="DOszN4q4Spz" type="checkbox" id="Caribbean" value="true">
+              <label class="form-check-label" for="Caribbean">Caribbean</label>
+            </div>
           </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="MMW1KJgHoLE" type="checkbox" id="CentralAmerica" value="true">
-            <label class="form-check-label" for="CentralAmerica">Central America</label>
-          </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="cBjIwkJzVbt" type="checkbox" id="SouthAmerica" value="true">
-            <label class="form-check-label" for="SouthAmerica">South America</label>
-          </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="DOszN4q4Spz" type="checkbox" id="Caribbean" value="true">
-            <label class="form-check-label" for="Caribbean">Caribbean</label>
-          </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="LNW3RLSWCdz" type="checkbox" id="EastAfrica" value="true">
-            <label class="form-check-label" for="EastAfrica">East Africa</label>
-          </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="PIsf7knFHT7" type="checkbox" id="NorthAfrica" value="true">
-            <label class="form-check-label" for="NorthAfrica">North Africa</label>
-          </div>
-        </div>
         <div class="row">
-          <div class="form-check col-2">
-            <input class="form-check-input" name="HVjO3QIfUPY" type="checkbox" id="WestCentralAfrica" value="true">
-            <label class="form-check-label" for="WestCentralAfrica">West & Central Africa</label>
-          </div>
-          <div class="form-check col-2">
+            <div class="form-check col-2">
+              <input class="form-check-input" name="LNW3RLSWCdz" type="checkbox" id="EastAfrica" value="true">
+              <label class="form-check-label" for="EastAfrica">East Africa</label>
+            </div>
+            <div class="form-check col-2">
+              <input class="form-check-input" name="PIsf7knFHT7" type="checkbox" id="NorthAfrica" value="true">
+              <label class="form-check-label" for="NorthAfrica">North Africa</label>
+            </div>
+            <div class="form-check col-2">
             <input class="form-check-input" name="eNZHTFPPboL" type="checkbox" id="SouthernAfrica" value="true">
             <label class="form-check-label" for="SouthernAfrica">Southern Africa</label>
           </div>
+            <div class="form-check col-4">
+              <input class="form-check-input" name="HVjO3QIfUPY" type="checkbox" id="WestCentralAfrica" value="true">
+              <label class="form-check-label" for="WestCentralAfrica">West & Central Africa</label>
+            </div>
+          </div>
+        <div class="row">
           <div class="form-check col-2">
             <input class="form-check-input" name="AzMkOfwkc30" type="checkbox" id="CentralAsia" value="true">
             <label class="form-check-label" for="CentralAsia">Central Asia</label>
@@ -87,7 +89,7 @@
             <input class="form-check-input" name="z7sykURnkTd" type="checkbox" id="SouthAsia" value="true">
             <label class="form-check-label" for="SouthAsia">South Asia</label>
           </div>
-          <div class="form-check col-2">
+          <div class="form-check col-4">
             <input class="form-check-input" name="UqJ4BSBN4cf" type="checkbox" id="SouthEastAsia" value="true">
             <label class="form-check-label" for="SouthEastAsia">South-East Asia</label>
           </div>
@@ -110,7 +112,7 @@
     </div>
     <hr>
     <div class="form-group row">
-      <label class="col-2">MOMENTUM suite/external use</label>
+      <label class="col-2">MOMENTUM suite/external use <b class="redStar">*</b></label>
       <div class="col-10">
         <div class="row">
           <div class="form-check col-2">

@@ -125,3 +125,25 @@ input[type=text]{
 #tooltip:hover #tooltip-text {
   visibility: visible;
 }
+.darkLineLeft {
+  /*border-left-color: black;*/
+  border: black solid 2px;
+}
+.darkLineRight {
+  /*border: black solid 2px;*/
+  border-right: black solid 2px;
+}
+.borderLineDarkLeft {
+  border-left: black solid 2px;
+}
+th {
+  border: lightgray solid 1px;
+}
+td {
+  border: lightgray solid 1px;
+}
+.redStar {
+  color: red;
+  z-index: 10;
+  font-size: 20px;
+}
