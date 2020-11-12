@@ -5,23 +5,26 @@
       <div class="col-2">
         <input required type="text" id="selectedIndicator" name="selectedIndicator" value="programCode" class="form-control " readonly>
       </div>
+      <div class="error" id="selectedIndicator-error"></div>
     </div>
     <div class="form-group row">
       <label for="indicatorName" class="col-2">Indicator Name <b class="redStar">*</b></label>
       <div class="col-10">
         <textarea required id="indicatorName" name="indicatorName" class="form-control" readonly>programName</textarea>
       </div>
+      <div class="error" id="indicatorName-error"></div>
     </div>
     <div class="form-group row">
       <label for="indicatorName" class="col-2">Name of Innovation </label>
       <div class="col-10">
-        <input required type="text" id="NameInnovation" name="wyGgGonH2he" class="form-control">
+        <input required type="text" id="nameInnovation" name="wyGgGonH2he" class="form-control">
       </div>
+      <div class="error" id="nameInnovation-error"></div>
     </div>
     <div class="form-group row">
-      <label for="DescriptiopnInnovation" class="col-2">Description of Innovation</label>
+      <label for="DescriptionInnovation" class="col-2">Description of Innovation</label>
       <div class="col-6">
-        <textarea id="DescriptiopnInnovation" name="hXWMhhLFcqg" class="form-control "></textarea>
+        <textarea id=DescriptionInnovation" name="hXWMhhLFcqg" class="form-control "></textarea>
       </div>
     </div>
     <hr>
@@ -35,16 +38,16 @@
           </div>
           <div class="form-check col-2">
             <input class="form-check-input" name="yWO7vUoOs0c" type="checkbox" id="SCAmericanCarr" value="true">
-            <label class="form-check-label" for="SCAmericanCarr">South/Central America & Carribean</label>
+            <label class="form-check-label" for="SCAmericanCarr">South America & Carribean</label>
           </div>
           <div class="form-check col-2">
             <input class="form-check-input" name="PGwc5p89Yuj" type="checkbox" id="SubSaharanAfr" value="true">
             <label class="form-check-label" for="SubSaharanAfr">Sub-saharan Africa</label>
           </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="zAaQClnHimH" type="checkbox" id="Europe" value="true">
-            <label class="form-check-label" for="Europe">Europe</label>
-          </div>
+<!--          <div class="form-check col-2">-->
+<!--            <input class="form-check-input" name="zAaQClnHimH" type="checkbox" id="Europe" value="true">-->
+<!--            <label class="form-check-label" for="Europe">Europe</label>-->
+<!--          </div>-->
           <div class="form-check col-2">
             <input class="form-check-input" name="lw8Rcqhx780" type="checkbox" id="Asia" value="true">
             <label class="form-check-label" for="Asia">Asia</label>
@@ -53,88 +56,91 @@
             <input class="form-check-input" name="ag12DudxiQj" type="checkbox" id="NAMEast" value="true">
             <label class="form-check-label" for="NAMEast">North Africa/Middle East</label>
           </div>
-          <div class="form-check col-2">
-            <input class="form-check-input" name="jO189Kdvlcy" type="checkbox" id="Australia" value="true">
-            <label class="form-check-label" for="Australia">Australia</label>
-          </div>
+<!--          <div class="form-check col-2">-->
+<!--            <input class="form-check-input" name="jO189Kdvlcy" type="checkbox" id="Australia" value="true">-->
+<!--            <label class="form-check-label" for="Australia">Australia</label>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
     <hr>
-    <div class="form-group row">
+    <div class="form-group row required">
       <label class="col-2">New this period / Ongoing this period</label>
       <div class="col-10">
+        <div class="error" id="npop-error"></div>
         <div class="row">
           <div class="form-check col-2">
-            <input class="form-check-input" name="NMcnsDHPQat" type="radio" id="newPeriod" value="IrduMnrBgeQ">
+            <input class="form-check-input npop" name="NMcnsDHPQat" type="radio" id="newPeriod" value="IrduMnrBgeQ">
             <label class="form-check-label" for="newPeriod"> New this period</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="NMcnsDHPQat" type="radio" id="ongoingPeriod" value="UEH7USW8PqG">
+            <input class="form-check-input npop" name="NMcnsDHPQat" type="radio" id="ongoingPeriod" value="UEH7USW8PqG">
             <label class="form-check-label" for="ongoingPeriod">Ongoing this period</label>
           </div>
         </div>
       </div>
     </div>
     <hr>
-    <div class="form-group row">
+    <div class="form-group row required">
       <label class="col-2">Developed by MKA/Innovation Spread by MKA</label>
       <div class="col-10">
+        <div class="error" id="dmis-error"></div>
         <div class="row">
           <div class="form-check col-2">
-            <input class="form-check-input" name="ECPcv02BCgo"type="radio" id="developedMKA" value="jsPKcMwm8HB">
+            <input class="form-check-input dmis" name="ECPcv02BCgo"type="radio" id="developedMKA" value="jsPKcMwm8HB">
             <label class="form-check-label" for="developedMKA">Developed by MKA </label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="ECPcv02BCgo" type="radio" id="innovationMKA" value="FZ7TLabTYOA">
+            <input class="form-check-input dmis" name="ECPcv02BCgo" type="radio" id="innovationMKA" value="FZ7TLabTYOA">
             <label class="form-check-label" for="innovationMKA">Innovation Spread by MKA</label>
           </div>
         </div>
       </div>
     </div>
     <hr>
-    <div class="form-group row">
+    <div class="form-group row required">
       <label class="col-2">Technical and Cross-cutting area <b class="redStar">*</b></label>
       <div class="col-10">
+        <div class="error" id="tcua-error"></div>
         <div class="row">
           <div class="form-check col-2">
-            <input class="form-check-input" name="pLKcoSBVWfF" type="checkbox" id="MaternalHealth" value="true">
+            <input class="form-check-input tcua" name="pLKcoSBVWfF" type="checkbox" id="MaternalHealth" value="true">
             <label class="form-check-label" for="MaternalHealth">Maternal Health</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="EacMEGODH1M" type="checkbox" id="NeonatalNewBornHealth" value="true">
+            <input class="form-check-input tcua" name="EacMEGODH1M" type="checkbox" id="NeonatalNewBornHealth" value="true">
             <label class="form-check-label" for="NeonatalNewBornHealth">Newborn Health</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="IvsTb26nSsY" type="checkbox" id="ChildHealth" value="true">
+            <input class="form-check-input tcua" name="IvsTb26nSsY" type="checkbox" id="ChildHealth" value="true">
             <label class="form-check-label" for="ChildHealth">Child Health</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="eG4LSvc5VIJ" type="checkbox" id="ReproductiveHealth" value="true">
+            <input class="form-check-input tcua" name="eG4LSvc5VIJ" type="checkbox" id="ReproductiveHealth" value="true">
             <label class="form-check-label" for="ReproductiveHealth">Reproductive Health</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="lMLFafTuFOO" type="checkbox" id="VoFP" value="true">
+            <input class="form-check-input tcua" name="lMLFafTuFOO" type="checkbox" id="VoFP" value="true">
             <label class="form-check-label" for="VoFP">Voluntary Family Planning</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="npqcE648Haa" type="checkbox" id="Nutrition" value="true">
+            <input class="form-check-input tcua" name="npqcE648Haa" type="checkbox" id="Nutrition" value="true">
             <label class="form-check-label" for="Nutrition">Nutrition</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="lOXkFGyvVEW" type="checkbox" id="Immunization" value="true">
+            <input class="form-check-input tcua" name="lOXkFGyvVEW" type="checkbox" id="Immunization" value="true">
             <label class="form-check-label" for="Immunization">Immunization</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="djTee58rKR5" type="checkbox" id="SaferSurgeries" value="true">
+            <input class="form-check-input tcua" name="djTee58rKR5" type="checkbox" id="SaferSurgeries" value="true">
             <label class="form-check-label" for="SaferSurgeries">Safer Surgeries</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="Ata66fdsapv" type="checkbox" id="AccessCoverage" value="true">
+            <input class="form-check-input tcua" name="Ata66fdsapv" type="checkbox" id="AccessCoverage" value="true">
             <label class="form-check-label" for="AccessCoverage">Access/Coverage</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="fIi0UZwuVGl" type="checkbox" id="CapacityStr" value="true">
+            <input class="form-check-input tcua" name="fIi0UZwuVGl" type="checkbox" id="CapacityStr" value="true">
             <label class="form-check-label" for="CapacityStr">Capacity Strengthening</label>
           </div>
 <!--          <div class="form-check col-2">-->
@@ -142,71 +148,71 @@
 <!--            <label class="form-check-label" for="Collaboration">Collaboration</label>-->
 <!--          </div>-->
           <div class="form-check col-2">
-            <input class="form-check-input" name="MHuX39LFKBH" type="checkbox" id="LearningAdapting" value="true">
+            <input class="form-check-input tcua" name="MHuX39LFKBH" type="checkbox" id="LearningAdapting" value="true">
             <label class="form-check-label" for="LearningAdapting">Collaboration, Learning and Adapting </label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="DAT9Li1R0et" type="checkbox" id="CoCSE" value="true">
+            <input class="form-check-input tcua" name="DAT9Li1R0et" type="checkbox" id="CoCSE" value="true">
             <label class="form-check-label" for="CoCSE">Community and Civil Society Engagement</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="SaDhjV9loJg" type="checkbox" id="COVID19" value="true">
+            <input class="form-check-input tcua" name="SaDhjV9loJg" type="checkbox" id="COVID19" value="true">
             <label class="form-check-label" for="COVID19">COVID-19</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="vbBsQa4uFXY" type="checkbox" id="Equity" value="true">
+            <input class="form-check-input tcua" name="vbBsQa4uFXY" type="checkbox" id="Equity" value="true">
             <label class="form-check-label" for="Equity">Gender & Equity</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="NToX1ePvdRd" type="checkbox" id="FragileSettings" value="true">
+            <input class="form-check-input tcua" name="NToX1ePvdRd" type="checkbox" id="FragileSettings" value="true">
             <label class="form-check-label" for="FragileSettings">Fragile Settings</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="UMuEB9q8eyT" type="checkbox" id="GlobalLeadership" value="true">
+            <input class="form-check-input tcua" name="UMuEB9q8eyT" type="checkbox" id="GlobalLeadership" value="true">
             <label class="form-check-label" for="GlobalLeadership">Global Leadership</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="HBdiecAoVcj" type="checkbox" id="HealthSStr" value="true">
+            <input class="form-check-input tcua" name="HBdiecAoVcj" type="checkbox" id="HealthSStr" value="true">
             <label class="form-check-label" for="HealthSStr">Health Systems Strengthening</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="Pl3LbIdO8pf" type="checkbox" id="PrivateSector" value="true">
+            <input class="form-check-input tcua" name="Pl3LbIdO8pf" type="checkbox" id="PrivateSector" value="true">
             <label class="form-check-label" for="PrivateSector">Private Health Sector</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="T0TSL4MzY8b" type="checkbox" id="QualityCare" value="true">
+            <input class="form-check-input tcua" name="T0TSL4MzY8b" type="checkbox" id="QualityCare" value="true">
             <label class="form-check-label" for="QualityCare">Quality of Care</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="cOlkFAIuUFS" type="checkbox" id="Resilience" value="true">
+            <input class="form-check-input tcua" name="cOlkFAIuUFS" type="checkbox" id="Resilience" value="true">
             <label class="form-check-label" for="Resilience">Resilience</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="l5rc4CUYNoN" type="checkbox" id="ScaleEInt" value="true">
+            <input class="form-check-input tcua" name="l5rc4CUYNoN" type="checkbox" id="ScaleEInt" value="true">
             <label class="form-check-label" for="ScaleEInt">Scale-up of Effective Interventions</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="gW2MhdcH13z" type="checkbox" id="SocialBChange" value="true">
+            <input class="form-check-input tcua" name="gW2MhdcH13z" type="checkbox" id="SocialBChange" value="true">
             <label class="form-check-label" for="SocialBChange">Social and Behavioral Change</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="m8IDRgRABIt" type="checkbox" id="StPartnerships" value="true">
+            <input class="form-check-input tcua" name="m8IDRgRABIt" type="checkbox" id="StPartnerships" value="true">
             <label class="form-check-label" for="StPartnerships">Strategic Partnerships</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="m1iiM6s27f9" type="checkbox" id="SusInst" value="true">
+            <input class="form-check-input tcua" name="m1iiM6s27f9" type="checkbox" id="SusInst" value="true">
             <label class="form-check-label" for="SusInst">Sustainability /Institutionalization</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="AlGd0eRiMzO" type="checkbox" id="WASH" value="true">
+            <input class="form-check-input tcua" name="AlGd0eRiMzO" type="checkbox" id="WASH" value="true">
             <label class="form-check-label" for="WASH">WASH</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="AXVLYsOkC3S" type="checkbox" id="DigitalHealth" value="true">
+            <input class="form-check-input tcua" name="AXVLYsOkC3S" type="checkbox" id="DigitalHealth" value="true">
             <label class="form-check-label" for="DigitalHealth">Digital Health</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="kbFa1rnjN4e" type="checkbox" id="Other" value="true">
+            <input class="form-check-input tcua" name="kbFa1rnjN4e" type="checkbox" id="Other" value="true">
             <label class="form-check-label" for="Other">Other</label>
           </div>
         </div>

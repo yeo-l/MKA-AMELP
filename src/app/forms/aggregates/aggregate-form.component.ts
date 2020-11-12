@@ -7,6 +7,8 @@ import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
 import IMask from 'imask';
 import {MainService} from '../../services/main.service';
+import {ValidationResult} from "../../models/validationResultModel.model";
+import {element} from "protractor";
 
 @Component({
   selector: 'app-aggregate-form',
@@ -23,12 +25,16 @@ export class AggregateFormComponent implements OnInit {
   currentYear: number;
   period: string;
   periodList: any;
+  validatedMessage: string;
+  validated: boolean;
+  validationResults: ValidationResult[];
   @ViewChild('form') form: ElementRef;
 
   constructor(private service: AggregateService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
               private mainService: MainService) { }
 
   ngOnInit(): void {
+    //this.dataValidation();
     this.loading = false;
     this.getPeriod();
     this.sub = this.route.params.subscribe(params => {
@@ -168,12 +174,15 @@ export class AggregateFormComponent implements OnInit {
     }
   }
   completeForm() {
+    this.validatorRequired();
     let title = "completed successfully";
-    this.service.completeRegistration(UsefulFunctions.completeDataSet(this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, this.currentDataSet?.id))
-      .subscribe(response => {
-        this.mainService.alertSave(title);
-        this.router.navigate(['aggregate',this.currentDataSet?.code, this.currentDataSet?.id]);
-      });
+    if (this.validated) {
+      this.service.completeRegistration(UsefulFunctions.completeDataSet(this.currentDataSet?.organisationUnits[0].id, this.currentPeriod, this.currentDataSet?.id))
+        .subscribe(response => {
+          this.mainService.alertSave(title);
+           this.router.navigate(['aggregate',this.currentDataSet?.code, this.currentDataSet?.id]);
+        });
+    }
   }
   unCompleteForm() {
     let title = "Data uncompleted successfully, your can edit the form";
@@ -186,5 +195,72 @@ export class AggregateFormComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+  validatorRequired() {
+    this.validated = true;
+    this.clearError();
+    document.querySelectorAll('.form-control').forEach((e) => {
+      let  element = e as HTMLInputElement;
+      if (element.getAttribute('required') !== null && (element.value === null || element.value.trim() === '')) {
+        this.validated = false;
+        // element.setAttribute('class', 'form-control is-invalid');
+        element.classList.add('is-invalid');
+      }else {
+        element.classList.remove('is-invalid');
+      }
+    });
+  }
+  clearError(){
+    document.querySelectorAll('.error').forEach(e =>{
+      e.innerHTML = '';
+    });
+  }
+  dataValidation(vrgId){
+    const period = UsefulFunctions.getPeriodFromQuarter(this.currentPeriod);
+    const  params = {
+      ou:this.currentDataSet?.organisationUnits[0].id,
+      startDate:period.firstDate, endDate:period.lastDate,
+      vrg:vrgId
+    }
+    this.validated = true;
+    this.service.dataValidation(params).subscribe((data: any[]) => {
+      if (data.length > 0) {
+          this.validationResults = data;
+          this.validated = false;
+        }else {
+          this.completeForm();
+        }
+      })
+  }
+  runDataValidation(){
+    this.service.loadValidationGroup(this.currentDataSet.code).subscribe(result => {
+      if (result){
+        this.dataValidation(result.validationRuleGroups[0].id);
+      }
+    })
+  }
+  executeDataValidation(vrgId){
+    const period = UsefulFunctions.getPeriodFromQuarter(this.currentPeriod);
+    const  params = {
+      ou:this.currentDataSet?.organisationUnits[0].id,
+      startDate:period.firstDate, endDate:period.lastDate,
+      vrg:vrgId
+    }
+    this.validated = true;
+    this.service.dataValidation(params).subscribe((data: any[]) => {
+      if (data.length > 0) {
+        this.validationResults = data;
+        this.validated = false;
+      }else {
+        this.validated = true;
+      }
+    })
+  }
+  executeValidation(){
+    this.service.loadValidationGroup(this.currentDataSet.code).subscribe(result => {
+      if (result){
+        this.executeDataValidation(result.validationRuleGroups[0].id);
+      }
+    })
   }
 }

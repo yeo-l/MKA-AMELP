@@ -66,4 +66,10 @@ export class AggregateService extends MainService{
   loadOneDataSetValues(url: string) {
     return this.service.get(url);
   }
+  dataValidation(params) {
+    return this.service.post('dataAnalysis/validationRules', params);
+  }
+  loadValidationGroup(dsCode){
+    return this.service.get(`validationRuleGroups?paging=false&filter=code:eq:${dsCode}`);
+  }
 }

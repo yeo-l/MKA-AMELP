@@ -5,12 +5,14 @@
       <div class="col-2">
         <input required type="text" id="selectedIndicator" name="selectedIndicator" value="programCode" class="form-control " readonly>
       </div>
+      <div class="error" id="selectedIndicator-error"></div>
     </div>
     <div class="form-group row">
       <label for="indicatorName" class="col-2">Indicator Name <b class="redStar">*</b></label>
       <div class="col-10">
         <textarea required id="indicatorName" name="indicatorName" class="form-control" readonly>programName</textarea>
       </div>
+      <div class="error" id="indicatorName-error"></div>
     </div>
     <div class="form-group row">
       <label for="nameReportInstances" class="col-2">Name of reported instances of MKA-developed systems, mechanisms, tools, products and/or innovations applied <b class="redStar">*</b></label>
@@ -18,6 +20,7 @@
         <input required type="text" id="nameReportInstances" name="wyGgGonH2he" class="form-control ">
         <!--        <input type="text" id="nameReportInstances" name="CNScOSLfjHM" class="form-control ">-->
       </div>
+      <div class="error" id="nameReportInstances-error"></div>
     </div>
     <div class="form-group row">
       <label for="workStream" class="col-2">Workstream <b class="redStar">*</b></label>
@@ -31,96 +34,99 @@
           <option value="dlRNbrBiEnV">Innovation</option>
         </select>
       </div>
+      <div class="error" id="workStream-error"></div>
       <div id="tooltip">
         <i class="fa fa-question-circle fa-2x"></i>
         <div><span id="tooltip-text"></span></div>
       </div>
     </div>
     <hr>
-    <div class="form-group row">
+    <div class="form-group row required">
       <label class="col-2">Region <b class="redStar">*</b></label>
       <div class="col-10">
+        <div class="error" id="region-error"></div>
         <div class="row">
             <div class="form-check col-2">
-              <input class="form-check-input" name="HylBieZWXz5" type="checkbox" id="NorthAmerica" value="true">
+              <input class="form-check-input region" name="HylBieZWXz5" type="checkbox" id="NorthAmerica" value="true">
               <label class="form-check-label" for="NorthAmerica">North America</label>
             </div>
             <div class="form-check col-2">
-              <input class="form-check-input" name="MMW1KJgHoLE" type="checkbox" id="CentralAmerica" value="true">
+              <input class="form-check-input region" name="MMW1KJgHoLE" type="checkbox" id="CentralAmerica" value="true">
               <label class="form-check-label" for="CentralAmerica">Central America</label>
             </div>
             <div class="form-check col-2">
-              <input class="form-check-input" name="cBjIwkJzVbt" type="checkbox" id="SouthAmerica" value="true">
+              <input class="form-check-input region" name="cBjIwkJzVbt" type="checkbox" id="SouthAmerica" value="true">
               <label class="form-check-label" for="SouthAmerica">South America</label>
             </div>
             <div class="form-check col-4">
-              <input class="form-check-input" name="DOszN4q4Spz" type="checkbox" id="Caribbean" value="true">
+              <input class="form-check-input region" name="DOszN4q4Spz" type="checkbox" id="Caribbean" value="true">
               <label class="form-check-label" for="Caribbean">Caribbean</label>
             </div>
           </div>
         <div class="row">
             <div class="form-check col-2">
-              <input class="form-check-input" name="LNW3RLSWCdz" type="checkbox" id="EastAfrica" value="true">
+              <input class="form-check-input region" name="LNW3RLSWCdz" type="checkbox" id="EastAfrica" value="true">
               <label class="form-check-label" for="EastAfrica">East Africa</label>
             </div>
             <div class="form-check col-2">
-              <input class="form-check-input" name="PIsf7knFHT7" type="checkbox" id="NorthAfrica" value="true">
+              <input class="form-check-input region" name="PIsf7knFHT7" type="checkbox" id="NorthAfrica" value="true">
               <label class="form-check-label" for="NorthAfrica">North Africa</label>
             </div>
             <div class="form-check col-2">
-            <input class="form-check-input" name="eNZHTFPPboL" type="checkbox" id="SouthernAfrica" value="true">
+            <input class="form-check-input region" name="eNZHTFPPboL" type="checkbox" id="SouthernAfrica" value="true">
             <label class="form-check-label" for="SouthernAfrica">Southern Africa</label>
           </div>
             <div class="form-check col-4">
-              <input class="form-check-input" name="HVjO3QIfUPY" type="checkbox" id="WestCentralAfrica" value="true">
+              <input class="form-check-input region" name="HVjO3QIfUPY" type="checkbox" id="WestCentralAfrica" value="true">
               <label class="form-check-label" for="WestCentralAfrica">West & Central Africa</label>
             </div>
           </div>
         <div class="row">
           <div class="form-check col-2">
-            <input class="form-check-input" name="AzMkOfwkc30" type="checkbox" id="CentralAsia" value="true">
+            <input class="form-check-input region" name="AzMkOfwkc30" type="checkbox" id="CentralAsia" value="true">
             <label class="form-check-label" for="CentralAsia">Central Asia</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="XKZaDSyjoJi" type="checkbox" id="EastAsia" value="true">
+            <input class="form-check-input region" name="XKZaDSyjoJi" type="checkbox" id="EastAsia" value="true">
             <label class="form-check-label" for="EastAsia">East Asia</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="z7sykURnkTd" type="checkbox" id="SouthAsia" value="true">
+            <input class="form-check-input region" name="z7sykURnkTd" type="checkbox" id="SouthAsia" value="true">
             <label class="form-check-label" for="SouthAsia">South Asia</label>
           </div>
           <div class="form-check col-4">
-            <input class="form-check-input" name="UqJ4BSBN4cf" type="checkbox" id="SouthEastAsia" value="true">
+            <input class="form-check-input region" name="UqJ4BSBN4cf" type="checkbox" id="SouthEastAsia" value="true">
             <label class="form-check-label" for="SouthEastAsia">South-East Asia</label>
           </div>
         </div>
         <div class="row">
           <div class="form-check col-2">
-            <input class="form-check-input" name="i1Flpc3UaAb" type="checkbox" id="MiddleEast" value="true">
+            <input class="form-check-input region" name="i1Flpc3UaAb" type="checkbox" id="MiddleEast" value="true">
             <label class="form-check-label" for="MiddleEast">Middle East</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="zAaQClnHimH" type="checkbox" id="Europe" value="true">
+            <input class="form-check-input region" name="zAaQClnHimH" type="checkbox" id="Europe" value="true">
             <label class="form-check-label" for="Europe">Europe</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="jO189Kdvlcy" type="checkbox" id="Australia" value="true">
+            <input class="form-check-input region" name="jO189Kdvlcy" type="checkbox" id="Australia" value="true">
             <label class="form-check-label" for="Australia">Australia</label>
           </div>
         </div>
       </div>
     </div>
     <hr>
-    <div class="form-group row">
+    <div class="form-group row required">
       <label class="col-2">MOMENTUM suite/external use <b class="redStar">*</b></label>
       <div class="col-10">
+        <div class="error" id="MOMENTUM-error"></div>
         <div class="row">
           <div class="form-check col-2">
-            <input class="form-check-input" name="SqDo4xxi2BY" type="radio" id="useMomentumAward" value="aoLjM1QHZQD">
+            <input class="form-check-input MOMENTUM" name="SqDo4xxi2BY" type="radio" id="useMomentumAward" value="aoLjM1QHZQD">
             <label class="form-check-label" for="useMomentumAward">Used by MOMENTUM suite awardee</label>
           </div>
           <div class="form-check col-2">
-            <input class="form-check-input" name="SqDo4xxi2BY" type="radio" id="useOrgMomentum" value="q9SJSUuYX1r">
+            <input class="form-check-input MOMENTUM" name="SqDo4xxi2BY" type="radio" id="useOrgMomentum" value="q9SJSUuYX1r">
             <label class="form-check-label" for="useOrgMomentum">Used by organization external to MOMENTUM</label>
           </div>
         </div>

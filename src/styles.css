@@ -101,6 +101,9 @@ select.ng-valid{
 input[type=text]{
   min-width: 60px;
 }
+table tbody input[type=text]{
+  max-width: 100px;
+}
 
 #tooltip {
   /*position: relative;*/

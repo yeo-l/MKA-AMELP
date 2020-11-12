@@ -31,6 +31,16 @@ export class UsefulFunctions {
     const y = d.getFullYear() + (m === 1 ? 1 : 0);
     return [y, m].join('Q');
   }
+  static getPeriodFromQuarter(quarter: string){
+    const year = quarter.split('Q')[0];
+    const periods = {
+      Q4:{firstDate: year +'-10-01', lastDate: year +'-12-31'},
+      Q1:{firstDate: year +'-01-01', lastDate: year +'-03-31'},
+      Q2:{firstDate: year +'-04-01', lastDate: year +'-06-30'},
+      Q3:{firstDate: year +'-07-01', lastDate: year +'-09-30'}
+    };
+    return periods['Q' + quarter.split('Q')[1]]
+  }
   static getQuarterlyPeriod(year: number): any {
     const periods: any[] = [];
     const months = [

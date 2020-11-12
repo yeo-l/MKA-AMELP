@@ -16,7 +16,7 @@
       <div class="input-group-prepend">
         <button class="input-group-text btn btn-primary" (click)="previewsYearPeriod()" title="Previews year"> <i class="fa fa-arrow-left"></i> </button>
       </div>
-      <select required name="reportingPeriod" id="reportingPeriod" class="form-control" (change)="selectPeriod()" [(ngModel)]="currentPeriod">
+      <select name="reportingPeriod" id="reportingPeriod" class="form-control" (change)="selectPeriod()" [(ngModel)]="currentPeriod">
         <option value=""></option>
         <option *ngFor="let period of periodList" [selected]="currentPeriod === period.id" value="{{period.id}}">{{period.value}}</option>
       </select>
@@ -26,18 +26,33 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-2">Intermediate Result <b class="redStar">*</b></label>
+    <label class="col-2">Intermediate Result</label>
     <div class="col-10">
       <label class="col-8">{{currentDataSet?.organisationUnits[0]?.name}}</label>
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-2">Indicator Name <b class="redStar">*</b></label>
+    <label class="col-2">Indicator Name</label>
     <div class="col-10">
       <label class="col-10">{{currentDataSet?.name}}</label>
     </div>
   </div>
-
+  <div *ngIf="validationResults">
+    <table>
+      <thead>
+      <tr>
+        <th>Descriptions</th>
+        <th>Errors</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let v of validationResults">
+        <td style="color: red">{{v.validationRuleDescription}}</td>
+        <td style="color: red">{{v.leftSideValue}} {{v.operator}} {{v.rightSideValue}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <div #form class="mt-2" id="input-form" *ngIf="currentPeriod"></div>
   <div class="text-center p-5 alert alert-info" *ngIf="loading"><h4>Loading form ... </h4></div>
   <div class="text-center p-5 alert alert-info" *ngIf="!currentPeriod && !loading">
@@ -49,7 +64,8 @@
   </div>
   <div class="text-center border-top" *ngIf="!loading && currentPeriod && !dataValueSet?.completeDate">
     <button class="btn btn-dark mt-2 mr-2" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id]">Back to list</button>
-    <button class="btn btn-primary mt-2" (click)="completeForm()">Mark as completed</button>
+    <button class="btn btn-secondary mt-2 mr-2" (click)="executeValidation()">Run Validation</button>
+    <button class="btn btn-primary mt-2" (click)="runDataValidation()">Mark as completed</button>
   </div>
 </form>
 

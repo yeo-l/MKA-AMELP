@@ -10,6 +10,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import Swal from 'sweetalert2';
 import {MainService} from '../../services/main.service';
 import {Observable} from 'rxjs';
+import {element} from "protractor";
 
 @Component({
   selector: 'app-tracker-form',
@@ -32,6 +33,8 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   disabled: boolean;
   selectValue: string;
   description: string;
+  validatedMessage: string;
+  validated: boolean;
   trackerForm = new FormGroup({
     period: new FormControl('', Validators.required),
   });
@@ -187,40 +190,28 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  getDescription(): void{
-    this.description = '';
-    this.mainService.getDataStore().subscribe((data: any) => {
-      this.workStreams = data.workstreams;
-      for (const [key, value] of Object.entries(this.workStreams)) {
-        const desc = value as any;
-        this.description += '<span class="font-weight-bold">' + desc.name + '</span> : ';
-        this.description += '<span class="text-justify">' + desc.description + '</span> <hr>';
-      }
-      const el = document.querySelector('#tooltip-text');
-      el.innerHTML = this.description;
-    });
-  }
   completeData(): void {
     const title = 'Completed successfully';
     this.eventModel.status = 'COMPLETED';
-    if (this.trackerForm.valid){
+    if (this.trackerForm.valid && this.validated){
       this.saveData();
       this.mainService.alertSave(title);
     }
-    if (this.trackerForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Period is required please!',
-      });
-    }
+    // if (this.trackerForm.invalid) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Period is required please!',
+    //   });
+    // }
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
   saveData(): void {
+    this.validatorRequired();
     const title = 'Saved successfully';
-    if (this.trackerForm.valid) {
+    if (this.trackerForm.valid && this.validated) {
       this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
       this.eventModel.dataValues = this.dataValues;
       if (this.eventId) {
@@ -241,13 +232,13 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         });
       }
     }
-    if (this.trackerForm.invalid)  {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Reporting Period is required please!',
-      });
-    }
+    // if (this.trackerForm.invalid)  {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Reporting Period is required please!',
+    //   });
+    // }
   }
   getPeriod(year: number): void {
     this.periodList = [];
@@ -293,6 +284,76 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       } else {
         el.removeAttribute('disabled');
       }
+    });
+  }
+  getDescription(): void{
+    this.description = '';
+    this.mainService.getDataStore().subscribe((data: any) => {
+      this.workStreams = data.workstreams;
+      for (const [key, value] of Object.entries(this.workStreams)) {
+        const desc = value as any;
+        this.description += '<span class="font-weight-bold">' + desc.name + '</span> : ';
+        this.description += '<span class="text-justify">' + desc.description + '</span> <hr>';
+      }
+      const el = document.querySelector('#tooltip-text');
+      el.innerHTML = this.description;
+    });
+  }
+  validatorRequired() {
+    this.clearError();
+    this.validated = true;
+    document.querySelectorAll('.form-control').forEach((e) => {
+      let  element = e as HTMLInputElement;
+      console.log(element);
+      console.log(element.getAttribute('required'));
+      if (element.getAttribute('required') !== null && (element.value === null || element.value.trim() === '')) {
+        this.validated = false;
+        this.validatedMessage = '<span class="text-danger">This field is required</span>'
+        const errorId = element.getAttribute('id') +'-error'
+        const el = document.querySelector('#'+ errorId);
+        el.innerHTML = this.validatedMessage;
+        console.log(el);
+      }
+    });
+    this.checkValidated();
+  }
+  checkValidated(){
+    let oneIsChecked = false;
+    const BreakException = {};
+    try {
+      let i = 0;
+      document.querySelectorAll('.required').forEach(r => {
+        let errorId = '';
+        console.log('required-' + (++i));
+        let j = 0;
+        r.querySelectorAll('.form-check-input').forEach((element) => {
+          const e = element as HTMLInputElement;
+          console.log('--input-' + (++j));
+          if (errorId === '') {
+            errorId = e.getAttribute('class').split(' ')[1] + '-error';
+            console.log('--message-', errorId);
+          }
+          if (e.checked) {
+            oneIsChecked = true;
+            errorId = '';
+            throw BreakException;
+          }
+        });
+        if (!oneIsChecked){
+          this.validated = false;
+          this.validatedMessage = '<span class="text-danger">Select at least one checkbox</span>'
+          const el = document.querySelector('#'+ errorId);
+          el.innerHTML = this.validatedMessage;
+          console.log(el);
+        }
+      });
+
+    }catch (e){
+    }
+  }
+  clearError(){
+    document.querySelectorAll('.error').forEach(e =>{
+      e.innerHTML = '';
     });
   }
 }

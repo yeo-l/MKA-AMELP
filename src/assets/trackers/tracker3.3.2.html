@@ -5,12 +5,14 @@
       <div class="col-2">
         <input required type="text" id="selectedIndicator" name="selectedIndicator" value="programCode" class="form-control " readonly>
       </div>
+      <div class="error" id="selectedIndicator-error"></div>
     </div>
     <div class="form-group row">
       <label for="indicatorName" class="col-2">Indicator Name <b class="redStar">*</b></label>
       <div class="col-10">
         <textarea required id="indicatorName" name="indicatorName" class="form-control" readonly>programName</textarea>
       </div>
+      <div class="error" id="indicatorName-error"></div>
     </div>
     <div class="form-group row">
       <label for="nameOfGuidance" class="col-2">Name of  Guidance/Guideline <b class="redStar">*</b></label>
@@ -18,27 +20,29 @@
         <input required type="text" id="nameOfGuidance" name="wyGgGonH2he" class="form-control ">
 <!--        <input type="text" id="nameOfGuidance" name="s4oqi3gJRmw" class="form-control ">-->
       </div>
+      <div class="error" id="nameOfGuidance-error"></div>
     </div>
     <div class="form-group row">
-      <label for="DescriptiopnGuidance" class="col-2">Description of Guidance/Guideline</label>
+      <label for="DescriptionGuidance" class="col-2">Description of Guidance/Guideline</label>
       <div class="col-6">
-        <textarea id="DescriptiopnGuidance" name="oNgWzt1guUW" class="form-control "></textarea>
+        <textarea id="DescriptionGuidance" name="oNgWzt1guUW" class="form-control "></textarea>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row required">
       <label class="col-2">Type of Guidance/Guidelines <b class="redStar">*</b></label>
         <div class="col-10">
+          <div class="error" id="tGuidance-error"></div>
           <div class="row">
             <div class="form-check col-2">
-              <input class="form-check-input" name="Nl1cCkozu2Y" type="checkbox" id="measurement" value="true">
+              <input class="form-check-input tGuidance" name="Nl1cCkozu2Y" type="checkbox" id="measurement" value="true">
               <label class="form-check-label" for="measurement">Measurement</label>
             </div>
             <div class="form-check col-2">
-              <input class="form-check-input" name="cfVFc2kXBp1" type="checkbox" id="technicalArea" value="true">
+              <input class="form-check-input tGuidance" name="cfVFc2kXBp1" type="checkbox" id="technicalArea" value="true">
               <label class="form-check-label" for="technicalArea">Technical Area</label>
             </div>
             <div class="form-check col-2">
-              <input class="form-check-input" name="Bgiqo6ODq8s" type="checkbox" id="learningAgenda" value="true">
+              <input class="form-check-input tGuidance" name="Bgiqo6ODq8s" type="checkbox" id="learningAgenda" value="true">
               <label class="form-check-label" for="learningAgenda">Learning Agenda</label>
             </div>
           </div>
