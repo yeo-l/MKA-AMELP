@@ -139,9 +139,42 @@ table tbody input[type=text]{
 .borderLineDarkLeft {
   border-left: black solid 2px;
 }
+tbody {
+  /*overflow: auto;*/
+  /*height: 400px;*/
+  /*scroll-behavior: auto;*/
+}
+table{
+  height: 600px;
+}
+#header-fixed {
+  position: fixed;
+  top: 0px; display:none;
+}
+/*table {*/
+/*  overflow: auto;*/
+/*  height: 500px;*/
+/*}*/
 th {
   border: lightgray solid 1px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 2;
 }
+/*th[scope=row] {*/
+/*  !*position: -webkit-sticky;*!*/
+/*  position: sticky;*/
+/*  left: 0;*/
+/*  z-index: 2;*/
+/*}*/
+/*th:not([scope=row]) {*/
+/*  !*position: -webkit-sticky;*!*/
+/*  position: sticky;*/
+/*  top: 0;*/
+/*  z-index: 2;*/
+/*}*/
+
 td {
   border: lightgray solid 1px;
 }
