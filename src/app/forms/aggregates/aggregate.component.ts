@@ -77,5 +77,4 @@ export class AggregateComponent implements OnInit {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
 }
