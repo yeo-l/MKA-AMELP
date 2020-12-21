@@ -18,7 +18,7 @@
       </div>
       <select name="reportingPeriod" id="reportingPeriod" class="form-control" (change)="selectPeriod()" [(ngModel)]="currentPeriod">
         <option value=""></option>
-        <option *ngFor="let period of periodList" [selected]="currentPeriod === period.id" value="{{period.id}}">{{period.value}}</option>
+        <option *ngFor="let period of periodList" [selected]="currentPeriod === period?.id" value="{{period?.id}}">{{period?.value}}</option>
       </select>
       <div class="input-group-append">
         <button class="input-group-text btn btn-primary" (click)="nextYearPeriod()" title="Next year"> <i class="fa fa-arrow-right"></i> </button>
@@ -47,8 +47,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let v of validationResults">
-        <td style="color: red">{{v.validationRuleDescription}}</td>
-        <td style="color: red">{{v.leftSideValue}} {{v.operator}} {{v.rightSideValue}}</td>
+        <td style="color: red">{{v?.validationRuleDescription}}</td>
+        <td style="color: red">{{v?.leftSideValue}} {{v?.operator}} {{v?.rightSideValue}}</td>
       </tr>
       </tbody>
     </table>

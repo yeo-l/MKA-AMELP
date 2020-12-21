@@ -34,7 +34,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   selectValue: string;
   description: string;
   validatedMessage: string;
-  validated: boolean;
+  validated: boolean = true;
   trackerForm = new FormGroup({
     period: new FormControl('', Validators.required),
   });
@@ -191,26 +191,28 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     }
   }
   completeData(): void {
-    const title = 'Completed successfully';
     this.eventModel.status = 'COMPLETED';
+    this.validatorRequired();
+   // const title = 'Completed successfully';
+    if (this.trackerForm.valid && this.validated){
+      this.saveData()
+      // this.mainService.alertSave(title);
+    }
+  }
+  simpleSaveData(): void {
+   // const title = 'save successfully';
+    this.eventModel.status = 'ACTIVE';
     if (this.trackerForm.valid && this.validated){
       this.saveData();
-      this.mainService.alertSave(title);
+      // this.mainService.alertSave(title);
     }
-    // if (this.trackerForm.invalid) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Oops...',
-    //     text: 'Period is required please!',
-    //   });
-    // }
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
   saveData(): void {
-    this.validatorRequired();
-    const title = 'Saved successfully';
+     const title = 'Saved successfully';
+     const title1 = 'Completed successfully';
     if (this.trackerForm.valid && this.validated) {
       this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
       this.eventModel.dataValues = this.dataValues;
@@ -218,27 +220,23 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         this.trackerService.update(this.eventId, this.eventModel).subscribe((result: any) => {
           if (this.eventModel.status === 'COMPLETED'){
             this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
+            this.mainService.alertSave(title1);
           }
-          this.mainService.alertSave(title);
+           this.mainService.alertSave(title);
         });
-        this.mainService.alertSave(title);
       }else {
         this.trackerService.save(this.eventModel).subscribe((result: any) => {
-          if (this.eventModel.status === 'COMPLETED'){
+          if (this.eventModel.status === 'ACTIVE'){
+            this.getOneEvent(result.response.reference);
+            this.mainService.alertSave(title);
+          }else{
+
             this.router.navigate(['tracker', this.currentProgram.code, this.currentProgram.id]);
+            this.mainService.alertSave(title1);
           }
-          this.getOneEvent(result.response.reference);
-          this.mainService.alertSave(title);
         });
       }
     }
-    // if (this.trackerForm.invalid)  {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Oops...',
-    //     text: 'Reporting Period is required please!',
-    //   });
-    // }
   }
   getPeriod(year: number): void {
     this.periodList = [];
@@ -302,12 +300,14 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   validatorRequired() {
     this.clearError();
     this.validated = true;
+    this.eventModel.status = 'COMPLETED';
     document.querySelectorAll('.form-control').forEach((e) => {
       let  element = e as HTMLInputElement;
       console.log(element);
       console.log(element.getAttribute('required'));
       if (element.getAttribute('required') !== null && (element.value === null || element.value.trim() === '')) {
         this.validated = false;
+        this.eventModel.status = 'ACTIVE';
         this.validatedMessage = '<span class="text-danger">This field is required</span>'
         const errorId = element.getAttribute('id') +'-error'
         const el = document.querySelector('#'+ errorId);
@@ -324,14 +324,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       let i = 0;
       document.querySelectorAll('.required').forEach(r => {
         let errorId = '';
-        console.log('required-' + (++i));
         let j = 0;
         r.querySelectorAll('.form-check-input').forEach((element) => {
           const e = element as HTMLInputElement;
-          console.log('--input-' + (++j));
           if (errorId === '') {
             errorId = e.getAttribute('class').split(' ')[1] + '-error';
-            console.log('--message-', errorId);
           }
           if (e.checked) {
             oneIsChecked = true;
@@ -341,10 +338,15 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         });
         if (!oneIsChecked){
           this.validated = false;
+          this.eventModel.status = 'ACTIVE';
           this.validatedMessage = '<span class="text-danger">Select at least one checkbox</span>'
           const el = document.querySelector('#'+ errorId);
           el.innerHTML = this.validatedMessage;
           console.log(el);
+        }
+        else{
+          this.validated = true;
+          this.eventModel.status = 'COMPLETED';
         }
       });
 

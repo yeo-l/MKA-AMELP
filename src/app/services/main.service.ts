@@ -58,4 +58,11 @@ export class MainService {
       title: title
     });
   }
+  alertError(text){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: text,
+    })
+  }
 }

@@ -207,6 +207,7 @@ export class AggregateFormComponent implements OnInit {
         element.classList.add('is-invalid');
       }else {
         element.classList.remove('is-invalid');
+
       }
     });
   }
@@ -218,7 +219,7 @@ export class AggregateFormComponent implements OnInit {
   dataValidation(vrgId){
     const period = UsefulFunctions.getPeriodFromQuarter(this.currentPeriod);
     const  params = {
-      ou:this.currentDataSet?.organisationUnits[0].id,
+      ou:this.currentDataSet?.organisationUnits[0]?.id,
       startDate:period.firstDate, endDate:period.lastDate,
       vrg:vrgId
     }
@@ -235,7 +236,11 @@ export class AggregateFormComponent implements OnInit {
   runDataValidation(){
     this.service.loadValidationGroup(this.currentDataSet.code).subscribe(result => {
       if (result){
-        this.dataValidation(result.validationRuleGroups[0].id);
+        if(result.validationRuleGroups[0]?.id.length){
+          this.dataValidation(result.validationRuleGroups[0]?.id);
+        }else {
+          this.completeForm();
+        }
       }
     })
   }
@@ -259,7 +264,9 @@ export class AggregateFormComponent implements OnInit {
   executeValidation(){
     this.service.loadValidationGroup(this.currentDataSet.code).subscribe(result => {
       if (result){
-        this.executeDataValidation(result.validationRuleGroups[0].id);
+        if(result.validationRuleGroups[0]?.id.length){
+          this.executeDataValidation(result.validationRuleGroups[0]?.id);
+        }
       }
     })
   }
