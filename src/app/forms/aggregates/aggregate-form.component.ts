@@ -9,6 +9,7 @@ import IMask from 'imask';
 import {MainService} from '../../services/main.service';
 import {ValidationResult} from "../../models/validationResultModel.model";
 import {element} from "protractor";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-aggregate-form',
@@ -257,6 +258,12 @@ export class AggregateFormComponent implements OnInit {
         this.validationResults = data;
         this.validated = false;
       }else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Validation rule',
+          text: 'No validation rule,\n' +
+            'Please fill in the empty fields and click "Mark as Completed" button',
+        })
         this.validated = true;
       }
     })
@@ -266,6 +273,14 @@ export class AggregateFormComponent implements OnInit {
       if (result){
         if(result.validationRuleGroups[0]?.id.length){
           this.executeDataValidation(result.validationRuleGroups[0]?.id);
+        }
+        else{
+          Swal.fire({
+            icon: 'success',
+            title: 'Validation rule',
+            text: 'No validation rule for this form,\n' +
+              'Please fill in the empty fields and click "Marke as Compleded" button',
+          })
         }
       }
     })

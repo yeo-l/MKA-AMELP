@@ -30,7 +30,7 @@
     <div class="form-group row">
       <label for="workStream" class="col-2">Workstream <b class="redStar">*</b></label>
       <div class="col-4">
-        <select required id="workStream" name="tVQfcoPi477" class="form-control">
+        <select required id="workStream" name="tVQfcoPi477" class="form-control ">
           <option value=""></option>
           <option value="yQXS2o6Tkrb">Systems</option>
           <option value="ehTw17lZ05c">Mechanism</option>
@@ -39,16 +39,34 @@
           <option value="dlRNbrBiEnV">Innovation</option>
         </select>
       </div>
+      <div class="error" id="workStream-error"></div>
       <div id="tooltip">
         <i class="fa fa-question-circle fa-2x"></i>
         <div><span id="tooltip-text"></span></div>
       </div>
     </div>
+<!--    <div class="form-group row">-->
+<!--      <label for="workStream" class="col-2">Workstream <b class="redStar">*</b></label>-->
+<!--      <div class="col-4">-->
+<!--        <select required id="workStream" name="tVQfcoPi477" class="form-control">-->
+<!--          <option value=""></option>-->
+<!--          <option value="yQXS2o6Tkrb">Systems</option>-->
+<!--          <option value="ehTw17lZ05c">Mechanism</option>-->
+<!--          <option value="UTeK8ETNOqg">Tools</option>-->
+<!--          <option value="UFXO353SQ07">Products</option>-->
+<!--          <option value="dlRNbrBiEnV">Innovation</option>-->
+<!--        </select>-->
+<!--      </div>-->
+<!--      <div id="tooltip">-->
+<!--        <i class="fa fa-question-circle fa-2x"></i>-->
+<!--        <div><span id="tooltip-text"></span></div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="form-group row required">
       <label class="col-2">IR (Intermediate Result) / Project Area <b class="redStar">*</b></label>
       <div class="col-10">
         <div class="error" id="ir-error"></div>
-        <div class="row">
+        <div class="row checkgroup">
           <div class="form-check col-2">
             <input class="form-check-input ir" name="r8a5kwoEj7R" type="checkbox" id="MEvaluation" value="true">
             <label class="form-check-label" for="MEvaluation">Monitoring and Evaluation (ME/IR3.1)
@@ -78,7 +96,7 @@
       <div class="col-3" style="margin-top: 200px">
         <label><b>Technical Cross-cutting areas</b> <b class="redStar">*</b></label>
       </div>
-      <div class="col-9 border-left">
+      <div class="col-9 border-left checkgroup">
         <div class="error" id="ta-error"></div>
         <div class="row">
           <div class="col-12 text-center text-justify card-title">

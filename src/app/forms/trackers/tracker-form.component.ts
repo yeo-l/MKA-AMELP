@@ -51,6 +51,8 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.periodList = [];
     this.loading = true;
     this.disabled = true;
+    console.log(this.period);
+    console.log(this.currentPeriod);
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params.code;
       this.eventId = params.eventId;
@@ -193,6 +195,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   completeData(): void {
     this.eventModel.status = 'COMPLETED';
     this.validatorRequired();
+    // this.checkValidated();
    // const title = 'Completed successfully';
     if (this.trackerForm.valid && this.validated){
       this.saveData()
@@ -202,9 +205,12 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   simpleSaveData(): void {
    // const title = 'save successfully';
     this.eventModel.status = 'ACTIVE';
+    const text = 'Reporting Period required, please fill in the period'
     if (this.trackerForm.valid && this.validated){
       this.saveData();
-      // this.mainService.alertSave(title);
+    }else{
+      this.mainService.alertError(text);
+      console.log('error')
     }
   }
   ngOnDestroy(): void {
@@ -299,12 +305,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   }
   validatorRequired() {
     this.clearError();
+    this.checkValidated();
     this.validated = true;
     this.eventModel.status = 'COMPLETED';
     document.querySelectorAll('.form-control').forEach((e) => {
       let  element = e as HTMLInputElement;
-      console.log(element);
-      console.log(element.getAttribute('required'));
       if (element.getAttribute('required') !== null && (element.value === null || element.value.trim() === '')) {
         this.validated = false;
         this.eventModel.status = 'ACTIVE';
@@ -312,46 +317,81 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         const errorId = element.getAttribute('id') +'-error'
         const el = document.querySelector('#'+ errorId);
         el.innerHTML = this.validatedMessage;
-        console.log(el);
       }
     });
-    this.checkValidated();
+    // this.checkValidated();
   }
   checkValidated(){
-    let oneIsChecked = false;
-    const BreakException = {};
-    try {
-      let i = 0;
-      document.querySelectorAll('.required').forEach(r => {
-        let errorId = '';
-        let j = 0;
-        r.querySelectorAll('.form-check-input').forEach((element) => {
-          const e = element as HTMLInputElement;
-          if (errorId === '') {
-            errorId = e.getAttribute('class').split(' ')[1] + '-error';
-          }
-          if (e.checked) {
-            oneIsChecked = true;
-            errorId = '';
-            throw BreakException;
-          }
-        });
-        if (!oneIsChecked){
-          this.validated = false;
-          this.eventModel.status = 'ACTIVE';
-          this.validatedMessage = '<span class="text-danger">Select at least one checkbox</span>'
-          const el = document.querySelector('#'+ errorId);
-          el.innerHTML = this.validatedMessage;
-          console.log(el);
-        }
-        else{
-          this.validated = true;
+    this.validated = true;
+    // try {
+      document.querySelectorAll('.required').forEach((r) => {
+        let errorId = null;
+        r.querySelectorAll('.checkgroup').forEach((cg) => {
+          try {
+            let elements = cg.querySelectorAll('.form-check-input');
+            let oneIsChecked = false;
+            for (let i = 0; i < elements.length; i++){
+              const e = elements[i] as HTMLInputElement;
+              if (errorId == null) {
+                errorId = e.getAttribute('class').split(' ')[1] + '-error';
+              }
+              if (e.checked) {
+                if (oneIsChecked === false){
+                  oneIsChecked = true;
+                }
+                errorId = null;
+                break;
+              }
+              else {
+                if ((i+1) === elements.length){
+                  this.validatedMessage = '<span class="text-danger">Select at least one checkbox</span>'
+                  const el = document.querySelector('#'+ errorId);
+                  el.innerHTML = this.validatedMessage;
+                  errorId = null;
+                }
+              }
+            }
+            if (!oneIsChecked){
+                this.validated = false;
+                this.validatedMessage = '<span class="text-danger">Select at least one checkbox</span>'
+                const el = document.querySelector('#'+ errorId);
+                el.innerHTML = this.validatedMessage;
+                errorId = null;
+              }
+            // cg.querySelectorAll('.form-check-input').forEach((element) => {
+            //   const e = element as HTMLInputElement;
+            //   if (errorId == null) {
+            //     errorId = e.getAttribute('class').split(' ')[1] + '-error';
+            //   }
+            //   if (e.checked) {
+            //     oneIsChecked = true;
+            //     errorId = null;
+            //     throw BreakException;
+            //   }
+            // });
+            // if (!oneIsChecked){
+            //   this.validated = false;
+            //   this.eventModel.status = 'ACTIVE';
+            //   this.validatedMessage = '<span class="text-danger">Select at least one checkbox</span>'
+            //   const el = document.querySelector('#'+ errorId);
+            //   el.innerHTML = this.validatedMessage;
+            //   console.log(el);
+            //   errorId = null;
+            // }
+          }catch (e){}
+
+        })
+        if (this.validated){
+          // this.validated = true;
           this.eventModel.status = 'COMPLETED';
+        }else {
+          this.eventModel.status = 'ACTIVE';
         }
       });
 
-    }catch (e){
-    }
+    // }
+    // catch (e){
+    // }
   }
   clearError(){
     document.querySelectorAll('.error').forEach(e =>{
