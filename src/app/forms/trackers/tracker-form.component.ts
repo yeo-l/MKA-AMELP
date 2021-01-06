@@ -7,10 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {UsefulFunctions} from '../../shared/useful-functions';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import Swal from 'sweetalert2';
 import {MainService} from '../../services/main.service';
 import {Observable} from 'rxjs';
-import {element} from "protractor";
 
 @Component({
   selector: 'app-tracker-form',
@@ -30,6 +28,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   periodList: any;
   private currentYear: number;
   currentPeriod: any;
+  validatePeriod: boolean = false;
   disabled: boolean;
   selectValue: string;
   description: string;
@@ -51,12 +50,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.periodList = [];
     this.loading = true;
     this.disabled = true;
-    console.log(this.period);
-    console.log(this.currentPeriod);
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params.code;
       this.eventId = params.eventId;
       if (this.eventId){
+        this.validatePeriod = true;
         this.trackerService.loadMetaData(`events/${this.eventId}`, [`fields=`])
           .subscribe(eventResults => {
             eventResults.dataValues.forEach(dataV => {
@@ -76,10 +74,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         this.getPeriod(null);
       }
     });
-  }
-
-  editForm(): void{
-    this.disabled = false;
   }
   getOneEvent(eventId: string): void {
     this.trackerService.loadMetaData(`events/${eventId}`, [`fields=`])
@@ -193,24 +187,23 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     }
   }
   completeData(): void {
-    this.eventModel.status = 'COMPLETED';
     this.validatorRequired();
     // this.checkValidated();
    // const title = 'Completed successfully';
     if (this.trackerForm.valid && this.validated){
+      this.eventModel.status = 'COMPLETED';
       this.saveData()
       // this.mainService.alertSave(title);
     }
   }
   simpleSaveData(): void {
-   // const title = 'save successfully';
-    this.eventModel.status = 'ACTIVE';
     const text = 'Reporting Period required, please fill in the period'
-    if (this.trackerForm.valid && this.validated){
-      this.saveData();
-    }else{
+      if (this.trackerForm.valid && this.validated){
+        this.eventModel.status = 'ACTIVE';
+        this.saveData();
+      }
+    if (this.currentPeriod === null || this.validatePeriod === false){
       this.mainService.alertError(text);
-      console.log('error')
     }
   }
   ngOnDestroy(): void {
@@ -267,6 +260,11 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
        this.currentPeriod = data.target.value;
        this.removeDataValue(data.target.name);
        this.dataValues.push(this.createDataValue(data.target.name, data.target.value));
+      this.validatePeriod = true;
+    }
+    else {
+      this.currentPeriod = null;
+      this.validatePeriod = false;
     }
   }
   unCompleteData(id: string): void {
@@ -306,8 +304,6 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
   validatorRequired() {
     this.clearError();
     this.checkValidated();
-    this.validated = true;
-    this.eventModel.status = 'COMPLETED';
     document.querySelectorAll('.form-control').forEach((e) => {
       let  element = e as HTMLInputElement;
       if (element.getAttribute('required') !== null && (element.value === null || element.value.trim() === '')) {
@@ -318,6 +314,10 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         const el = document.querySelector('#'+ errorId);
         el.innerHTML = this.validatedMessage;
       }
+      // else {
+      //   this.validated = true;
+      //   this.eventModel.status = 'COMPLETED';
+      // }
     });
     // this.checkValidated();
   }

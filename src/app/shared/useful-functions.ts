@@ -28,7 +28,8 @@ export class UsefulFunctions {
     d = d || new Date();
     let m = Math.floor(d.getMonth() / 3) + 1;
     m -= m > 4 ? 4 : 0;
-    const y = d.getFullYear() + (m === 1 ? 1 : 0);
+    // const y = d.getFullYear() + (m === 1 ? 1 : 0);
+    const y = d.getFullYear() + (m === 0 ? 1 : 0);
     return [y, m].join('Q');
   }
   static getPeriodFromQuarter(quarter: string){
@@ -68,6 +69,9 @@ export class UsefulFunctions {
     // if (currentQuarter === quarter){
     //   break;
     // }
+    // console.log('current quarter',currentQuarter);
+    // console.log('current year',year);
+    // console.log('period',periods);
     return periods;
   }
   static formatDateSimple(d1: Date): string {
