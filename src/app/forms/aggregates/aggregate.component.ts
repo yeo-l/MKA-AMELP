@@ -3,7 +3,9 @@ import {DataSet, IDataSet} from '../../models/dataSets.model';
 import {ActivatedRoute} from '@angular/router';
 import {AggregateService} from '../../services/aggregate.service';
 import {UsefulFunctions} from '../../shared/useful-functions';
+import {Subject} from "rxjs";
 
+declare let $: any;
 @Component({
   selector: 'app-aggregate',
   templateUrl: './aggregate.component.html',
@@ -16,10 +18,22 @@ export class AggregateComponent implements OnInit {
   currentDataSet: IDataSet;
   dataSetCode: string;
 
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+
   constructor(private service: AggregateService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.dtTrigger.next();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu : [10, 20, 30, 40, 50],
+      processing: true,
+      retrieve: true,
+      paging: true,
+      pageLength: 10,
+    };
     this.sub = this.route.params.subscribe(params => {
       this.dataSetCode = params['code'];
       this.service.loadOneDataSet(params['id'], ['fields=id,name,description,code,organisationUnits[id,name]']).subscribe((result: any) => {
@@ -28,10 +42,6 @@ export class AggregateComponent implements OnInit {
       });
     });
   }
-  getEndDate(date: Date) {
-    return UsefulFunctions.formatDateSimple(this.add_months(date, 12));
-  }
-
   add_months(dt, n)
   {
     return new Date(dt.setMonth(dt.getMonth() - n));
@@ -64,6 +74,7 @@ export class AggregateComponent implements OnInit {
           this.service.loadAvailableDataValues(result.dataSet).subscribe((data: any) => {
             result['available'] = data.dataValues.length;
             this.dataValueSets.push(result);
+            this.dtTrigger.next();
           });
         }
       });
@@ -76,5 +87,6 @@ export class AggregateComponent implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    $.fn.dataTable.ext.search.pop();
   }
 }

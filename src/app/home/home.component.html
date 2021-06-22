@@ -1,64 +1,25 @@
+<h5 class="alert m-0 text-secondary shadow shadow-sm">
+  <i class="fa fa-bars"></i> Project Indicator Lists
+  <span *ngIf="selectedProject"> : <span class="text-primary">{{ selectedProject }}</span></span>
+</h5>
+<div class="card shadow shadow-sm">
+  <div class="card-body m-0 p-1">
+    <div class="card border bg-light {{!isLast ? 'mb-1' : 'mb-0'}}" *ngFor="let dataSet of dataSets; let index = index; let isLast = last" style="border-color: lightgray">
 
-<!--<div class="row">-->
-<!--  <div class="col-4">-->
-<!--    <h5 class="alert m-0 text-secondary shadow shadow-sm"><i class="fa fa-globe"></i> Project areas IR (Intermediate Result)</h5>-->
-<!--    <div class="card shadow shadow-sm p-0">-->
-<!--      <div class="card-body m-0 p-0">-->
-<!--        &lt;!&ndash;        <div class="alert alert-primary {{!isLast ? 'mb-1' : 'mb-0'}} pt-3 pb-3" *ngFor="let area of dataStore?.areaGroups; let index = index; let isLast = last">&ndash;&gt;-->
-<!--        <div class="alert alert-primary {{!isLast ? 'mb-1' : 'mb-0'}} pt-3 pb-3" *ngFor="let area of organisationUnits; let index = index; let isLast = last">-->
-<!--          &lt;!&ndash;          <h5 class="mb-0"><a style="cursor: pointer" (click)="getAreaDataSets(area.id)">{{area.name}}</a></h5>&ndash;&gt;-->
-<!--          <h5 class="mb-0"><a style="cursor: pointer" [routerLink]="['/home',area.id]">{{area.name}}</a></h5>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div class="col-8">-->
-    <h5 class="alert m-0 text-secondary shadow shadow-sm">
-      <i class="fa fa-bars"></i> Project Indicator Lists
-      <span *ngIf="selectedProject"> : <span class="text-primary">{{ selectedProject }}</span></span>
-    </h5>
-    <div class="card shadow shadow-sm">
-      <div class="card-body m-0 p-1">
-        <div class="card border bg-light {{!isLast ? 'mb-1' : 'mb-0'}}" *ngFor="let dataSet of dataSets; let index = index; let isLast = last" style="border-color: lightgray">
-
-          <div class="card-body text-secondary">
-            <div class="row">
-              <div class="col-10">
-                {{ dataSet?.name}}
-              </div>
-              <div class="col-2 text-right">
-                <button class="btn btn-primary btn-sm" [routerLink]="['/aggregate', dataSet.code, dataSet.id]" *ngIf="type !=='tracker'"> Data Entry </button>
-                <button class="btn btn-primary btn-sm" [routerLink]="['/tracker', dataSet.code, dataSet.id]" *ngIf="type === 'tracker'"> Data Entry </button>
-              </div>
-            </div>
+      <div class="card-body text-secondary">
+        <div class="row">
+          <div class="col-10">
+            {{ dataSet?.name}}
           </div>
-        </div>
-        <div class="alert alert-warning text-center mb-0" *ngIf="dataSets.length === 0">
-          <i class="fa fa-arrow-left"></i> {{content}}
+          <div class="col-2 text-right">
+            <button class="btn btn-primary btn-sm" [routerLink]="['/aggregate', dataSet.code, dataSet.id]" *ngIf="type !=='tracker'"> Data Entry </button>
+            <button class="btn btn-primary btn-sm" [routerLink]="['/tracker', dataSet.code, dataSet.id]" *ngIf="type === 'tracker'"> Data Entry </button>
+          </div>
         </div>
       </div>
     </div>
-    <!--      <div class="table-responsive">-->
-    <!--        <table class="table align-items-center table-flush">-->
-    <!--          <thead class="thead-light">-->
-    <!--          <tr class="text-center">-->
-    <!--            <th>Code</th>-->
-    <!--            <th>Indicator Name</th>-->
-    <!--            <th>Action</th>-->
-    <!--          </tr>-->
-    <!--          </thead>-->
-    <!--          <tbody>-->
-    <!--          <tr class="text-justify" *ngFor="let dataSet of dataValueSets">-->
-    <!--            <td>{{dataSet.code}}</td>-->
-    <!--            <td>{{dataSet.name}}</td>-->
-    <!--            <td>-->
-    <!--              <button class="btn btn-primary mr-2" [routerLink]="['/form'+dataSet.code, dataSet.id]" *ngIf="type !=='tracker'"> Data Entry </button>-->
-    <!--              <button class="btn btn-primary mr-2" [routerLink]="['/tracker', dataSet.code, dataSet.id]" *ngIf="type === 'tracker'"> Data Entry </button>-->
-    <!--&lt;!&ndash;              <button class="btn btn-warning" [routerLink]="['/form',dataSet.id]"><i class="fa fa-edit"></i> Edit</button>&ndash;&gt;-->
-    <!--            </td>-->
-    <!--          </tr>-->
-    <!--          </tbody>-->
-    <!--        </table>-->
-    <!--      </div>-->
-<!--  </div>-->
-<!--</div>-->
+    <div class="alert alert-warning text-center mb-0" *ngIf="dataSets.length === 0">
+      <i class="fa fa-arrow-left"></i> {{content}}
+    </div>
+  </div>
+</div>

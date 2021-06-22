@@ -43,7 +43,6 @@ a {
   margin-right: 5px;
   background-color: #ffffff;
   border: 1px solid #f2f2f2;
-  /*border-top: lightgray 1px solid;*/
   margin-top: 120px;
   min-height: 500px;
   padding: 5px;
@@ -65,13 +64,7 @@ a {
 .secondPart {
   width: auto;
   margin-left: 300px;
-  /*padding: 0;*/
-  /*overflow-x: scroll;*/
-  /*overflow-y: visible;*/
 }
-/*tdBody {*/
-/*  width: 250px;*/
-/*}*/
 select.ng-invalid{
   bolder-left: 5px solid red
 }
@@ -92,9 +85,6 @@ table tbody input[type=text]{
 }
 
 #tooltip {
-  /*position: relative;*/
-  /*display: inline-block;*/
-  /*border-bottom: 1px dotted black;*/
 }
 
 #tooltip #tooltip-text {
@@ -115,11 +105,9 @@ table tbody input[type=text]{
   visibility: visible;
 }
 .darkLineLeft {
-  /*border-left-color: black;*/
   border: black solid 2px;
 }
 .darkLineRight {
-  /*border: black solid 2px;*/
   border-right: black solid 2px;
 }
 .borderLineDarkLeft {
@@ -128,9 +116,6 @@ table tbody input[type=text]{
 td {
   border: lightgray solid 1px;
 }
-/*th {*/
-/*  background-color: #e6e6e6;*/
-/*}*/
 .redStar {
   color: red;
   z-index: 10;
@@ -155,6 +140,5 @@ td {
 .container-recap {
   margin: 0 auto;
   overflow: auto;
-  /*width: 50vw;*/
   height: 500px;
 }

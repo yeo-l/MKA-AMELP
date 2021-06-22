@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataValueSet} from '../../models/dataSetValues.model';
 import {DataSet} from '../../models/dataSets.model';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,7 +8,6 @@ import {UsefulFunctions} from '../../shared/useful-functions';
 import IMask from 'imask';
 import {MainService} from '../../services/main.service';
 import {ValidationResult} from "../../models/validationResultModel.model";
-import {element} from "protractor";
 import Swal from "sweetalert2";
 
 @Component({
@@ -26,7 +25,6 @@ export class AggregateFormComponent implements OnInit {
   currentYear: number;
   period: string;
   periodList: any;
-  validatedMessage: string;
   validated: boolean;
   validationResults: ValidationResult[];
   @ViewChild('form') form: ElementRef;

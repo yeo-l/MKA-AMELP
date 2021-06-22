@@ -11,7 +11,7 @@
     </div>
   </div>
   <hr>
-  <table class="table table-striped table-bordered table-sm">
+  <table class="table table-striped table-bordered table-sm" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
     <thead>
     <tr>
       <th>Period (Quarterly)</th>
@@ -31,9 +31,6 @@
         <button class="btn {{ds.completeDate ? 'btn-success' : 'btn-primary' }}" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id, 'form', ds?.period]">
           <i class="fa {{ds.completeDate ? 'fa-eye' : 'fa-edit' }}"></i>
         </button>
-        <!--      <button class="btn btn-dark" [routerLink]="['/aggregate', currentDataSet?.code, currentDataSet?.id, 'form', ds?.period]">-->
-        <!--        <i class="fa fa-eye"></i>-->
-        <!--      </button>-->
       </td>
     </tr>
     </tbody>

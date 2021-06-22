@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DataStore} from './models/dataStore.model';
 import {AreaGroup} from './models/areaGroups.model';
 import {AggregateService} from './services/aggregate.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
 @Component({
@@ -20,14 +20,13 @@ export class AppComponent implements OnInit {
 
   constructor(private aggregationService: AggregateService,
               private route: ActivatedRoute,
-              private location: Location,
-              private router: Router) { }
+              private location: Location,) { }
   ngOnInit(): void {
     this.location.onUrlChange((url: string) => {
-      // console.log(url);
       if (url.includes('form')) {
         this.hideBar = true;
-      } else {
+      }
+      else {
         this.hideBar = false;
       }
     });

@@ -12,6 +12,7 @@ import { TrackerFormComponent } from './forms/trackers/tracker-form.component';
 import { AggregateFormComponent } from './forms/aggregates/aggregate-form.component';
 import { AggregateComponent } from './forms/aggregates/aggregate.component';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {DataTablesModule} from "angular-datatables";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     SweetAlert2Module.forRoot(),
     BrowserAnimationsModule,
     NgxDhis2MenuModule,
+    DataTablesModule,
     NgxDhis2HttpClientModule.forRoot({
       namespace: 'mka-amelp',
       version: 1,

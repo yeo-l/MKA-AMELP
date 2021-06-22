@@ -38,7 +38,9 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     period: new FormControl('', Validators.required),
   });
   workStreams: any = [{}];
-  get period(): AbstractControl {return this.trackerForm.get('period'); }
+  get period(): AbstractControl {
+    return this.trackerForm.get('period');
+  }
 
   constructor(private trackerService: TrackerService,
               private route: ActivatedRoute,
@@ -57,10 +59,14 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
         this.validatePeriod = true;
         this.trackerService.loadMetaData(`events/${this.eventId}`, [`fields=`])
           .subscribe(eventResults => {
+            this.currentPeriod = eventResults.reportingPeriod;
+           // console.log('current period' , this.currentPeriod);
+           // console.log('eventResults' , eventResults);
             eventResults.dataValues.forEach(dataV => {
               if (dataV.dataElement === 's08WlYaNIno'){
                 if (dataV.value){
                   if (dataV.value.split('Q')[1] === '4') {
+                    this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0], 10) + 1);
                     this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0], 10) + 1);
                   } else {
                     this.periodList = UsefulFunctions.getQuarterlyPeriod(parseInt(dataV.value.split('Q')[0], 10));
@@ -213,7 +219,8 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
      const title = 'Saved successfully';
      const title1 = 'Completed successfully';
     if (this.trackerForm.valid && this.validated) {
-      this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
+      // this.eventModel.eventDate = UsefulFunctions.formatDateSimple(new Date());
+      this.eventModel.eventDate = UsefulFunctions.getPeriodFromQuarter(this.trackerForm.get('period').value).lastDate;
       this.eventModel.dataValues = this.dataValues;
       if (this.eventId) {
         this.trackerService.update(this.eventId, this.eventModel).subscribe((result: any) => {

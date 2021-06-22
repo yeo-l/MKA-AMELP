@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {TrackerService} from '../../services/tracker.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Program} from '../../models/program.model';
 import {UsefulFunctions} from '../../shared/useful-functions';
+import {Subject} from "rxjs";
+
+declare let $: any;
 
 @Component({
   selector: 'app-tracker',
@@ -16,9 +19,21 @@ export class TrackerComponent implements OnInit {
   trackerCode: string;
   editable: boolean;
 
-  constructor(private trackerService: TrackerService, private route: ActivatedRoute,  private router: Router) { }
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+
+  constructor(private trackerService: TrackerService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.dtTrigger.next();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu : [10, 20, 30, 40, 50],
+      processing: true,
+      retrieve: true,
+      paging: true,
+      pageLength: 10,
+    };
     this.editable = true;
     this.sub = this.route.params.subscribe(params => {
       this.trackerCode = params['code'];
@@ -36,6 +51,7 @@ export class TrackerComponent implements OnInit {
           e['period'] = this.getEventPeriod(e.dataValues);
           e['productName'] = this.getEventProductName(e.dataValues);
           this.eventRegistered.push(e);
+          this.dtTrigger.next();
         })
     });
   }
@@ -49,10 +65,10 @@ export class TrackerComponent implements OnInit {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+    $.fn.dataTable.ext.search.pop();
   }
   deleteEvent(eventId: string) {
     this.trackerService.remove(eventId).subscribe( data => {
-      // this.router.navigate(['tracker',this.currentProgram.code, this.currentProgram.id]);
       location.reload();
     })
   }
@@ -62,4 +78,5 @@ export class TrackerComponent implements OnInit {
   getFiscalYearFormat(period: string): string {
     return UsefulFunctions.getFiscalYear(period);
   }
+
 }

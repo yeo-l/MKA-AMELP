@@ -11,7 +11,7 @@ export class MainService {
   constructor(private httpClient: NgxDhis2HttpClientService) { }
 
   loadMetaData(metaData: string, params?: string[]): Observable<any>{
-    return this.httpClient.get(metaData + '?paging=false' + (params ? '&' + params.join('&') : ''));
+    return this.httpClient.get(metaData + '?paging=true' + (params ? '&' + params.join('&') : ''));
   }
   // loadDataElements(params?: string[]): Observable<Object> {
   //   if (params)
