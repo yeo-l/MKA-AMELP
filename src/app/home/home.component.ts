@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
         this.aggregationService.loadMetaData(`${type}.json`, params).subscribe((result: any) => {
           if (type === 'programs') {
             this.dataSets = result.programs;
+            console.log('data set programs', this.dataSets);
           } else {
             this.dataSets = result.dataSets;
           }

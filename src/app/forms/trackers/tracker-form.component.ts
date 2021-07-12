@@ -53,6 +53,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.disabled = true;
     this.sub = this.route.params.subscribe(params => {
+      console.log('eventId', params.eventId , 'eventCode', params.code);
       this.trackerCode = params.code;
       this.eventId = params.eventId;
       if (this.eventId){
@@ -137,6 +138,7 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
       this.eventId = params.eventId;
       this.trackerService.loadPrograms(params.id).subscribe((programResult: any) => {
         this.currentProgram = programResult;
+        console.log('this.currentProgram for ngAfterViewInit',this.currentProgram)
         this.getHtmlFile(`assets/trackers/tracker${this.trackerCode}.html`).subscribe(data => {
           const html = data.replace('programName', this.currentProgram?.name).replace('programCode', this.currentProgram?.code);
           this.form.nativeElement.insertAdjacentHTML('beforeend', html);
@@ -149,6 +151,8 @@ export class TrackerFormComponent implements OnInit, AfterViewInit {
           if (params.eventId){
             this.getOneEvent(params.eventId);
           }else{
+            console.log('this.currentProgram id',this.currentProgram.id);
+            console.log('this.currentProgram code',this.currentProgram.code);
             this.eventModel = new EventModel(this.currentProgram.id, this.currentProgram.organisationUnits[0].id, '', 'ACTIVE', []);
             this.getPeriod(null);
           }
