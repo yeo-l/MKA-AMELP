@@ -67,7 +67,7 @@ export class TrackerComponent implements OnInit {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
-    // $.fn.dataTable.ext.search.pop();
+    //  $.fn.dataTable.ext.search.pop();
   }
   deleteEvent(eventId: string) {
     this.trackerService.remove(eventId).subscribe( data => {
